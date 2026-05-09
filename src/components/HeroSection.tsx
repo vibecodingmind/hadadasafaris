@@ -39,7 +39,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-white"
+          className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-white whitespace-nowrap"
         >
           Explore Tanzania&apos;s <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">Wonders</span>
         </motion.h1>
