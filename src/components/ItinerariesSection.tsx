@@ -1,9 +1,8 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Calendar, ArrowRight, Clock, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useRef, useState, useCallback, useEffect } from 'react';
+import { Calendar, ArrowRight, Clock, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const itineraries = [
   {
@@ -34,103 +33,200 @@ const itineraries = [
     groupSize: '2-4 People',
     tag: 'Beach',
   },
+  {
+    title: 'Dry Season Private Safari',
+    image: '/images/serengeti-elephants.png',
+    duration: '9 Days',
+    groupSize: '2-6 People',
+    tag: 'Exclusive',
+  },
+  {
+    title: 'Immersive Culture Trips',
+    image: '/images/cultural-experience.png',
+    duration: '5 Days',
+    groupSize: '4-10 People',
+    tag: 'Culture',
+  },
 ];
 
 export default function ItinerariesSection() {
   const ref = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', checkScroll);
+    return () => {
+      el.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [checkScroll]);
+
+  const scroll = useCallback((direction: 'left' | 'right') => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = 340;
+    const scrollAmount = direction === 'left' ? -cardWidth * 2 : cardWidth * 2;
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }, []);
 
   return (
     <section id="itineraries" className="py-24 bg-[#333333] relative overflow-hidden" ref={ref}>
       {/* Decorative */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/30 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+      <div className="relative z-10">
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            <Calendar className="w-4 h-4" />
-            Itineraries
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Curated Safari <span className="text-[#B78A42]">Experiences</span>
-          </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto">
-            Choose from our handpicked itineraries or let us customize one just for you
-          </p>
-        </motion.div>
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10"
+          >
+            <div>
+              <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
+                <Calendar className="w-4 h-4" />
+                Itineraries
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
+                Curated Safari <span className="text-[#B78A42]">Experiences</span>
+              </h2>
+              <p className="text-base text-white/50 max-w-xl leading-relaxed">
+                Choose from our handpicked itineraries or let us customize one just for you
+              </p>
+            </div>
 
-        {/* Itinerary cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {itineraries.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              className="group relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#B78A42]/30 transition-all duration-500"
-            >
-              <div className="flex flex-col md:flex-row">
+            {/* Navigation arrows + View All */}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <a
+                href="/itineraries"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-white transition-colors mr-2"
+              >
+                View All Itineraries
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <button
+                onClick={() => scroll('left')}
+                disabled={!canScrollLeft}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  canScrollLeft
+                    ? 'bg-white/15 hover:bg-[#B78A42] text-white'
+                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                }`}
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scroll('right')}
+                disabled={!canScrollRight}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  canScrollRight
+                    ? 'bg-white/15 hover:bg-[#B78A42] text-white'
+                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                }`}
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Scrollable itinerary cards - single row */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <div
+            ref={scrollRef}
+            className="flex gap-5 overflow-x-auto scrollbar-hide pl-4 md:pl-[max(1rem,calc((100vw-80rem)/2+1rem))] pr-4 md:pr-8 py-2"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {itineraries.map((item, i) => (
+              <motion.a
+                key={item.title}
+                href="/itineraries"
+                initial={{ opacity: 0, x: 30 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
+                className="group flex-shrink-0 w-[300px] md:w-[330px] relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-[#B78A42]/30 transition-all duration-500"
+              >
                 {/* Image */}
-                <div className="relative md:w-2/5 h-48 md:h-auto overflow-hidden">
+                <div className="relative h-52 overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#333333]/20 md:bg-gradient-to-r md:from-transparent md:to-[#333333]/40" />
-                  <span className="absolute top-3 left-3 px-3 py-1 bg-[#B78A42] text-white text-xs font-bold rounded-full tracking-wider">
+                  <div className="absolute inset-0 bg-[#000000]/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/70 via-transparent to-transparent" />
+
+                  {/* Tag */}
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-[#B78A42] text-white text-[10px] font-bold rounded-full tracking-wider uppercase">
                     {item.tag}
                   </span>
-                </div>
 
-                {/* Content */}
-                <div className="flex-1 p-6 flex flex-col justify-center">
-                  <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#B78A42] transition-colors">
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="flex items-center gap-1.5 text-white/50 text-sm">
-                      <Clock className="w-4 h-4 text-[#B78A42]" />
+                  {/* Duration & group size on image */}
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
+                    <span className="flex items-center gap-1 text-white/80 text-xs">
+                      <Clock className="w-3.5 h-3.5 text-[#B78A42]" />
                       {item.duration}
                     </span>
-                    <span className="flex items-center gap-1.5 text-white/50 text-sm">
-                      <Users className="w-4 h-4 text-[#B78A42]" />
+                    <span className="flex items-center gap-1 text-white/80 text-xs">
+                      <Users className="w-3.5 h-3.5 text-[#B78A42]" />
                       {item.groupSize}
                     </span>
                   </div>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-sm font-semibold text-[#B78A42] hover:text-white transition-colors group/link"
-                  >
-                    View Details
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
-                  </a>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="text-center mt-12"
-        >
-          <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/20 group">
-            VIEW ALL ITINERARIES
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+                {/* Content */}
+                <div className="p-5">
+                  <h3 className="text-base font-bold text-white leading-snug truncate group-hover:text-[#B78A42] transition-colors">
+                    {item.title}
+                  </h3>
+                </div>
+              </motion.a>
+            ))}
+
+            {/* View All card */}
+            <a
+              href="/itineraries"
+              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-4 hover:bg-[#B78A42] hover:border-[#B78A42] transition-all duration-500"
+            >
+              <div className="w-14 h-14 rounded-full border-2 border-white/20 flex items-center justify-center group-hover:border-white/60 transition-colors">
+                <ArrowRight className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-center px-4">
+                <span className="text-white font-bold text-sm block">View All</span>
+                <span className="text-white/40 text-xs">Itineraries</span>
+              </div>
+            </a>
+          </div>
         </motion.div>
       </div>
+
+      {/* Hide scrollbar CSS */}
+      <style jsx global>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 }
