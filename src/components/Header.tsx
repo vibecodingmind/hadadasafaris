@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navItems = [
@@ -223,10 +223,28 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
               ))}
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
                 <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
                   BOOK NOW
                 </Button>
+                <div className="flex gap-3">
+                  <a
+                    href="tel:+255123456789"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FAFAF7] border border-[#B78A42]/15 rounded-full text-[#333333] text-xs font-semibold tracking-wider hover:bg-[#B78A42]/5 transition-colors"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#B78A42]" />
+                    CALL US
+                  </a>
+                  <a
+                    href="https://wa.me/255123456789"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#25D366]/10 border border-[#25D366]/20 rounded-full text-[#25D366] text-xs font-semibold tracking-wider hover:bg-[#25D366]/15 transition-colors"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    WHATSAPP
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>

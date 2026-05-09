@@ -3,6 +3,42 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useEffect, useRef, useState } from 'react';
+
+function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHasStarted(true), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    const interval = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(interval);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+    return () => clearInterval(interval);
+  }, [hasStarted, target]);
+
+  return (
+    <div ref={ref} className="text-xl md:text-2xl font-bold text-[#D5BC92]">
+      {count}{suffix}
+    </div>
+  );
+}
 
 export default function HeroSection() {
   return (
@@ -71,7 +107,7 @@ export default function HeroSection() {
           </Button>
         </motion.div>
 
-        {/* Stats - frosted glass strip */}
+        {/* Stats - frosted glass strip with animated counters */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,13 +115,13 @@ export default function HeroSection() {
           className="mt-16 inline-flex flex-wrap items-center justify-center gap-6 md:gap-10 bg-white/12 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-5 shadow-lg shadow-black/5"
         >
           {[
-            { number: '15+', label: 'Years Experience' },
-            { number: '55+', label: 'Happy Travelers' },
-            { number: '25+', label: 'Unique Routes' },
-            { number: '98%', label: 'Satisfaction Rate' },
+            { target: 15, suffix: '+', label: 'Years Experience' },
+            { target: 55, suffix: '+', label: 'Happy Travelers' },
+            { target: 25, suffix: '+', label: 'Unique Routes' },
+            { target: 98, suffix: '%', label: 'Satisfaction Rate' },
           ].map((stat, i) => (
             <div key={stat.label} className={`text-center ${i > 0 ? 'border-l border-white/15 pl-6 md:pl-10' : ''}`}>
-              <div className="text-xl md:text-2xl font-bold text-[#D5BC92]">{stat.number}</div>
+              <AnimatedCounter target={stat.target} suffix={stat.suffix} />
               <div className="text-[11px] text-white/55 tracking-wider mt-0.5">{stat.label}</div>
             </div>
           ))}
