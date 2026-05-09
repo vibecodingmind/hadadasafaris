@@ -1,8 +1,8 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Star, Quote, ExternalLink } from 'lucide-react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { Star, Quote, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const reviews = [
   {
@@ -45,9 +45,33 @@ const reviews = [
 export default function TripAdvisorSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const totalSlides = reviews.length;
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  }, [totalSlides]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [totalSlides]);
+
+  // Auto-play
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(nextSlide, 4000);
+    return () => clearInterval(interval);
+  }, [isPaused, nextSlide]);
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden" ref={ref}>
+    <section
+      className="py-24 bg-white relative overflow-hidden"
+      ref={ref}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {/* Decorative */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#B78A42]/20 to-transparent" />
 
@@ -82,54 +106,95 @@ export default function TripAdvisorSection() {
           </div>
         </motion.div>
 
-        {/* Reviews carousel/grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reviews.map((review, i) => (
-            <motion.div
-              key={review.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="group relative bg-[#F8F4EC] rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-[#B78A42]/20"
+        {/* Reviews Slider - Single Row */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="relative"
+        >
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-6 z-20 w-11 h-11 rounded-full bg-[#333333] hover:bg-[#B78A42] text-white flex items-center justify-center shadow-lg transition-all duration-300 group"
+            aria-label="Previous review"
+          >
+            <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-6 z-20 w-11 h-11 rounded-full bg-[#333333] hover:bg-[#B78A42] text-white flex items-center justify-center shadow-lg transition-all duration-300 group"
+            aria-label="Next review"
+          >
+            <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+          </button>
+
+          {/* Slider Container */}
+          <div className="overflow-hidden mx-8 md:mx-14">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-              {/* Quote icon */}
-              <Quote className="w-8 h-8 text-[#B78A42]/20 mb-4" />
+              {reviews.map((review) => (
+                <div key={review.title} className="w-full flex-shrink-0 px-3">
+                  <div className="group relative bg-[#F8F4EC] rounded-2xl p-8 md:p-10 hover:shadow-xl transition-all duration-300 border border-transparent hover:border-[#B78A42]/20 max-w-3xl mx-auto">
+                    <div className="flex flex-col md:flex-row md:items-start gap-6">
+                      {/* Left: Quote & Stars */}
+                      <div className="flex flex-col items-center md:items-start gap-3 md:min-w-[140px]">
+                        <Quote className="w-10 h-10 text-[#B78A42]/30" />
+                        <div className="flex gap-0.5">
+                          {Array.from({ length: review.rating }).map((_, idx) => (
+                            <Star key={idx} className="w-4 h-4 fill-[#B78A42] text-[#B78A42]" />
+                          ))}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="w-9 h-9 rounded-full bg-[#B78A42]/20 flex items-center justify-center">
+                            <span className="text-sm font-bold text-[#B78A42]">
+                              {review.name.charAt(0)}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-sm font-semibold text-[#333333]">{review.name}</span>
+                            <span className="text-xs text-[#333333]/40 ml-1.5">{review.date}</span>
+                          </div>
+                        </div>
+                      </div>
 
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-3">
-                {Array.from({ length: review.rating }).map((_, idx) => (
-                  <Star key={idx} className="w-4 h-4 fill-[#B78A42] text-[#B78A42]" />
-                ))}
-              </div>
-
-              {/* Title */}
-              <h4 className="font-bold text-[#333333] mb-2 group-hover:text-[#B78A42] transition-colors">
-                {review.title}
-              </h4>
-
-              {/* Review text */}
-              <p className="text-sm text-[#333333]/60 leading-relaxed mb-4">
-                {review.text}
-              </p>
-
-              {/* Reviewer */}
-              <div className="flex items-center justify-between pt-4 border-t border-[#333333]/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#B78A42]/20 flex items-center justify-center">
-                    <span className="text-xs font-bold text-[#B78A42]">
-                      {review.name.charAt(0)}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-sm font-semibold text-[#333333]">{review.name}</span>
-                    <span className="text-xs text-[#333333]/40 ml-2">{review.date}</span>
+                      {/* Right: Review content */}
+                      <div className="flex-1">
+                        <h4 className="text-lg font-bold text-[#333333] mb-3 group-hover:text-[#B78A42] transition-colors">
+                          {review.title}
+                        </h4>
+                        <p className="text-[#333333]/60 leading-relaxed text-[15px]">
+                          {review.text}
+                        </p>
+                        <div className="mt-4 flex items-center gap-2">
+                          <span className="text-[10px] text-[#333333]/30 tracking-wider uppercase">Reviewed on TripAdvisor</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <span className="text-[10px] text-[#333333]/30 tracking-wider uppercase">TripAdvisor</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots indicator */}
+          <div className="flex items-center justify-center gap-2 mt-8">
+            {reviews.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`transition-all duration-300 rounded-full ${
+                  currentSlide === idx
+                    ? 'w-8 h-2.5 bg-[#B78A42]'
+                    : 'w-2.5 h-2.5 bg-[#333333]/20 hover:bg-[#333333]/40'
+                }`}
+                aria-label={`Go to review ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </motion.div>
 
         {/* CTA to TripAdvisor */}
         <motion.div
