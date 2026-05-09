@@ -30,7 +30,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Hadada Safaris" }],
   icons: {
-    icon: "/images/hadada-logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/images/favicon.png", type: "image/png", sizes: "64x64" },
+    ],
   },
   openGraph: {
     title: "Hadada Safaris - Explore Tanzania's Wonders",
