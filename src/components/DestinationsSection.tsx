@@ -210,35 +210,29 @@ export default function DestinationsSection() {
                 className="group flex-shrink-0 w-[260px] md:w-[280px] relative overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-500"
               >
                 {/* Image */}
-                <div className="relative h-56 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img
                     src={dest.image}
                     alt={dest.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/70 via-[#333333]/10 to-transparent" />
+                  {/* Dark overlay */}
+                  <div className="absolute inset-0 bg-[#000000]/45" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-[#000000]/20 to-transparent" />
 
-                  {/* Tagline overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <span className="text-[#B78A42] text-[11px] font-semibold tracking-wider uppercase block mb-1">
+                  {/* Content overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <span className="text-[#B78A42] text-[11px] font-semibold tracking-wider uppercase block mb-1.5">
                       {dest.tagline}
                     </span>
-                    <h3 className="text-white font-bold text-base leading-tight">
+                    <h3 className="text-white font-bold text-base leading-tight mb-3">
                       {dest.name}
                     </h3>
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-white/70 group-hover:text-[#B78A42] transition-colors">
+                      Explore
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
                   </div>
-                </div>
-
-                {/* Bottom bar */}
-                <div className="px-4 py-3 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1 text-[11px] text-[#333333]/40 tracking-wider uppercase">
-                    <MapPin className="w-3 h-3" />
-                    Tanzania
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#B78A42] group-hover:text-[#333333] transition-colors">
-                    Explore
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
                 </div>
               </motion.a>
             ))}
