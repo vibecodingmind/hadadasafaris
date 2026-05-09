@@ -225,13 +225,9 @@ export default function DestinationsSection() {
                     <span className="text-[#B78A42] text-[11px] font-semibold tracking-wider uppercase block mb-1.5">
                       {dest.tagline}
                     </span>
-                    <h3 className="text-white font-bold text-base leading-tight mb-3">
+                    <h3 className="text-white font-bold text-base leading-tight">
                       {dest.name}
                     </h3>
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-white/70 group-hover:text-[#B78A42] transition-colors">
-                      Explore
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                    </span>
                   </div>
                 </div>
               </motion.a>
