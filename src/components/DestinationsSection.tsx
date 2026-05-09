@@ -225,7 +225,7 @@ export default function DestinationsSection() {
                     <span className="text-[#B78A42] text-[11px] font-semibold tracking-wider uppercase block mb-1.5">
                       {dest.tagline}
                     </span>
-                    <h3 className="text-white font-bold text-base leading-tight">
+                    <h3 className="text-white font-bold text-base leading-tight truncate">
                       {dest.name}
                     </h3>
                   </div>
