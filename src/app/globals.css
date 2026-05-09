@@ -127,22 +127,22 @@
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - light theme */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #333333;
+  background: #F5F3EE;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #B78A42;
-  border-radius: 4px;
+  background: #D5BC92;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #CBA870;
+  background: #B78A42;
 }
 
 /* Smooth scrolling */

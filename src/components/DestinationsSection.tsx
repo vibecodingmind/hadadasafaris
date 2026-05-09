@@ -126,7 +126,11 @@ export default function DestinationsSection() {
   }, []);
 
   return (
-    <section id="destinations" className="py-24 bg-white relative overflow-hidden" ref={ref}>
+    <section id="destinations" className="py-24 bg-[#FAFAF7] relative overflow-hidden" ref={ref}>
+      {/* Subtle background decoration */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#B78A42]/3 rounded-full blur-[150px]" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#D5BC92]/3 rounded-full blur-[130px]" />
+
       <div className="relative z-10">
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -134,11 +138,11 @@ export default function DestinationsSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10"
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
           >
             <div>
-              <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
-                <MapPin className="w-4 h-4" />
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+                <MapPin className="w-3.5 h-3.5" />
                 Destinations
               </span>
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
@@ -163,8 +167,8 @@ export default function DestinationsSection() {
                 disabled={!canScrollLeft}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollLeft
-                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
+                    ? 'bg-white shadow-md hover:shadow-lg text-[#333333] hover:text-[#B78A42]'
+                    : 'bg-white/50 text-[#333333]/20 cursor-not-allowed'
                 }`}
                 aria-label="Scroll left"
               >
@@ -175,8 +179,8 @@ export default function DestinationsSection() {
                 disabled={!canScrollRight}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollRight
-                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
+                    ? 'bg-white shadow-md hover:shadow-lg text-[#333333] hover:text-[#B78A42]'
+                    : 'bg-white/50 text-[#333333]/20 cursor-not-allowed'
                 }`}
                 aria-label="Scroll right"
               >
@@ -204,7 +208,7 @@ export default function DestinationsSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.04, duration: 0.5 }}
-                className="group flex-shrink-0 w-[260px] md:w-[280px] relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500"
+                className="group flex-shrink-0 w-[260px] md:w-[280px] relative overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 bg-white"
               >
                 {/* Image */}
                 <div className="relative h-64 overflow-hidden rounded-2xl">
@@ -213,33 +217,39 @@ export default function DestinationsSection() {
                     alt={dest.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/70 via-[#1a1a1a]/10 to-transparent" />
+                  {/* Soft gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
 
-                  {/* Content overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <span className="text-[#D5BC92] text-[10px] font-semibold tracking-wider uppercase block mb-1">
+                  {/* Glass tagline pill */}
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-xl border border-white/25 rounded-full text-[10px] font-semibold tracking-wider uppercase text-white">
                       {dest.tagline}
                     </span>
-                    <h3 className="text-white font-bold text-[15px] leading-tight truncate">
-                      {dest.name}
-                    </h3>
+                  </div>
+
+                  {/* Content overlay - glass card at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="bg-white/15 backdrop-blur-xl border border-white/20 rounded-xl px-4 py-3">
+                      <h3 className="text-white font-bold text-[14px] leading-tight truncate">
+                        {dest.name}
+                      </h3>
+                    </div>
                   </div>
                 </div>
               </motion.a>
             ))}
 
-            {/* View All card */}
+            {/* View All card - glassy */}
             <a
               href="/destinations"
-              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-gradient-to-br from-[#B78A42] to-[#8B6914] flex flex-col items-center justify-center gap-4 hover:shadow-xl transition-all duration-500"
+              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-white/60 backdrop-blur-sm border border-[#B78A42]/15 flex flex-col items-center justify-center gap-4 hover:shadow-xl hover:bg-white/80 transition-all duration-500"
             >
-              <div className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white/60 transition-colors">
-                <ArrowRight className="w-6 h-6 text-white" />
+              <div className="w-14 h-14 rounded-full border-2 border-[#B78A42]/30 flex items-center justify-center group-hover:border-[#B78A42] group-hover:bg-[#B78A42]/5 transition-all">
+                <ArrowRight className="w-6 h-6 text-[#B78A42]" />
               </div>
               <div className="text-center px-4">
-                <span className="text-white font-bold text-sm block">View All</span>
-                <span className="text-white/60 text-xs">Destinations</span>
+                <span className="text-[#333333] font-bold text-sm block">View All</span>
+                <span className="text-[#333333]/40 text-xs">Destinations</span>
               </div>
             </a>
           </div>

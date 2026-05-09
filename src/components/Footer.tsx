@@ -40,7 +40,7 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#333333] text-white relative overflow-hidden">
+    <footer className="bg-[#2A2A2A] text-white relative overflow-hidden">
       {/* Newsletter bar */}
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">

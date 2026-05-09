@@ -15,25 +15,25 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        {/* Hero - Dark immersive */}
+        {/* Hero - Immersive glass entry */}
         <HeroSection />
 
-        {/* Destinations - Warm cream, scrollable cards */}
+        {/* Destinations - Light cream, glass cards, scrollable */}
         <DestinationsSection />
 
-        {/* Memories - Dark cinematic full-bleed */}
+        {/* Memories - Clean white, editorial split */}
         <MemoriesSection />
 
-        {/* Safari Crafting - Light warm, editorial split (image left, content right) */}
+        {/* Safari Crafting - Warm cream, glass stats, editorial split */}
         <SafariCraftingSection />
 
-        {/* Itineraries - Dark, scrollable cards */}
+        {/* Itineraries - Clean white, glass cards, scrollable */}
         <ItinerariesSection />
 
-        {/* Value - White, 2-column statement + cards */}
+        {/* Value - Light cream, glass value cards */}
         <ValueSection />
 
-        {/* Reviews - Dark, scrollable cards - strong close */}
+        {/* Reviews - Clean white, glass review cards */}
         <TripAdvisorSection />
       </main>
       <Footer />

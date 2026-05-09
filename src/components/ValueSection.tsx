@@ -33,7 +33,10 @@ export default function ValueSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="relative overflow-hidden bg-white" ref={ref}>
+    <section className="relative overflow-hidden bg-[#FAFAF7]" ref={ref}>
+      {/* Subtle background decoration */}
+      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[#B78A42]/3 rounded-full blur-[150px]" />
+
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
           {/* Left column - Statement */}
@@ -43,7 +46,7 @@ export default function ValueSection() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-2 lg:sticky lg:top-32"
           >
-            <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
               Why Choose Us
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
@@ -64,14 +67,14 @@ export default function ValueSection() {
 
             {/* Stats accent */}
             <div className="mt-10 hidden lg:block">
-              <div className="w-16 h-1 bg-[#B78A42]/30 rounded-full mb-5" />
+              <div className="w-16 h-1 bg-[#B78A42]/20 rounded-full mb-5" />
               <div className="flex gap-8">
                 <div>
                   <div className="text-3xl font-bold text-[#333333]">15+</div>
                   <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Years</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-[#333333]">5K+</div>
+                  <div className="text-3xl font-bold text-[#333333]">55+</div>
                   <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Travelers</div>
                 </div>
               </div>
@@ -86,31 +89,31 @@ export default function ValueSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
-                className="group relative bg-[#F9F7F2] rounded-2xl p-7 hover:bg-[#333333] transition-all duration-500 overflow-hidden cursor-default"
+                className="group relative bg-white/70 backdrop-blur-sm border border-[#B78A42]/8 rounded-2xl p-7 hover:bg-white hover:border-[#B78A42]/20 hover:shadow-lg transition-all duration-500 overflow-hidden cursor-default"
               >
                 <div className="flex items-start gap-5">
                   {/* Icon */}
-                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-white shadow-sm group-hover:bg-[#B78A42] group-hover:shadow-lg flex items-center justify-center transition-all duration-500">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-[#B78A42]/8 group-hover:bg-[#B78A42] flex items-center justify-center transition-all duration-500">
                     <item.icon className="w-7 h-7 text-[#B78A42] group-hover:text-white transition-colors duration-500" />
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <span className="inline-block px-3 py-0.5 bg-[#B78A42]/8 group-hover:bg-[#B78A42]/15 text-[#B78A42] text-[10px] font-bold rounded-full tracking-wider mb-2 transition-colors duration-500">
+                    <span className="inline-block px-3 py-0.5 bg-[#B78A42]/8 text-[#B78A42] text-[10px] font-bold rounded-full tracking-wider mb-2">
                       {item.highlight}
                     </span>
 
-                    <h3 className="text-lg font-bold text-[#333333] group-hover:text-white mb-2 transition-colors duration-500">
+                    <h3 className="text-lg font-bold text-[#333333] mb-2">
                       {item.title}
                     </h3>
 
-                    <p className="text-sm text-[#333333]/55 group-hover:text-white/60 leading-relaxed transition-colors duration-500">
+                    <p className="text-sm text-[#333333]/50 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Bottom accent line */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#B78A42] to-[#D5BC92] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#B78A42] to-[#D5BC92] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </motion.div>
             ))}
           </div>

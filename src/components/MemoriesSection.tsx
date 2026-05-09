@@ -10,17 +10,20 @@ export default function MemoriesSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="about" className="relative overflow-hidden bg-[#F9F7F2]" ref={ref}>
+    <section id="about" className="relative overflow-hidden bg-white" ref={ref}>
+      {/* Subtle background accent */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[600px] h-[600px] bg-[#B78A42]/3 rounded-full blur-[150px]" />
+
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Glass card content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left - Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
-              <Heart className="w-4 h-4" />
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
+              <Heart className="w-3.5 h-3.5" />
               Memories That Last
             </span>
 
@@ -29,13 +32,13 @@ export default function MemoriesSection() {
               <span className="text-[#B78A42]">Forever?</span>
             </h2>
 
-            <p className="text-base text-[#333333]/60 leading-relaxed mb-8">
+            <p className="text-base text-[#333333]/55 leading-relaxed mb-8">
               At Hadada Safari, every journey is more than just a trip — it&apos;s a collection
               of moments that you&apos;ll cherish forever. From witnessing majestic wildlife up
               close to sharing laughter under the African sky, your adventure is waiting.
             </p>
 
-            {/* Feature pills */}
+            {/* Feature pills - glass style */}
             <div className="flex flex-wrap gap-3 mb-10">
               {[
                 { icon: Camera, label: 'Wildlife Encounters' },
@@ -44,7 +47,7 @@ export default function MemoriesSection() {
               ].map((item) => (
                 <span
                   key={item.label}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/70 backdrop-blur-sm border border-[#B78A42]/15 rounded-full text-sm text-[#333333] font-medium"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-full text-sm text-[#333333] font-medium hover:bg-[#B78A42]/5 hover:border-[#B78A42]/20 transition-all duration-300"
                 >
                   <item.icon className="w-4 h-4 text-[#B78A42]" />
                   {item.label}
@@ -65,7 +68,7 @@ export default function MemoriesSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-[#333333]/5">
               <img
                 src="/images/migration.png"
                 alt="Wildebeest Migration"
@@ -76,7 +79,7 @@ export default function MemoriesSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="absolute bottom-6 left-6 right-6 bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl p-5"
+                className="absolute bottom-6 left-6 right-6 bg-white/25 backdrop-blur-2xl border border-white/30 rounded-2xl p-5"
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -88,15 +91,16 @@ export default function MemoriesSection() {
                     <span className="text-white font-bold text-sm">4.9/5 Rating</span>
                     <span className="text-white/60 text-xs ml-2">500+ Reviews</span>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/25 flex items-center justify-center hover:bg-white/30 transition-colors">
                     <ArrowRight className="w-5 h-5 text-white" />
                   </div>
                 </div>
               </motion.div>
             </div>
 
-            {/* Subtle decorative ring */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-[#B78A42]/15 rounded-3xl" />
+            {/* Decorative accent */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-[#B78A42]/10 rounded-3xl" />
+            <div className="absolute -bottom-4 -left-4 w-28 h-28 bg-[#B78A42]/5 rounded-3xl -z-10" />
           </motion.div>
         </div>
       </div>

@@ -78,7 +78,7 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-xl shadow-md shadow-black/5'
+          ? 'bg-white/80 backdrop-blur-2xl shadow-sm shadow-[#333333]/5 border-b border-[#B78A42]/5'
           : 'bg-transparent'
       }`}
     >
@@ -123,7 +123,7 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 min-w-[260px] bg-white/95 backdrop-blur-xl border border-[#B78A42]/10 rounded-xl shadow-xl overflow-hidden"
+                      className="absolute top-full left-0 min-w-[260px] bg-white/90 backdrop-blur-2xl border border-[#B78A42]/10 rounded-xl shadow-xl overflow-hidden"
                     >
                       <div className="py-2">
                         {item.children.map((child) => (
@@ -167,7 +167,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-[#B78A42]/10 overflow-hidden"
+            className="lg:hidden bg-white/90 backdrop-blur-2xl border-t border-[#B78A42]/8 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
               {navItems.map((item) => (

@@ -84,7 +84,10 @@ export default function TripAdvisorSection() {
   }, []);
 
   return (
-    <section className="py-24 bg-[#F9F7F2] relative overflow-hidden" ref={ref}>
+    <section className="py-24 bg-white relative overflow-hidden" ref={ref}>
+      {/* Subtle background accent */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#B78A42]/3 rounded-full blur-[150px]" />
+
       <div className="relative z-10">
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -92,11 +95,11 @@ export default function TripAdvisorSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10"
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
           >
             <div>
-              <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
-                <Star className="w-4 h-4 fill-[#B78A42]" />
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+                <Star className="w-3.5 h-3.5 fill-[#B78A42]" />
                 Testimonials
               </span>
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
@@ -114,8 +117,8 @@ export default function TripAdvisorSection() {
                 disabled={!canScrollLeft}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollLeft
-                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
+                    ? 'bg-[#FAFAF7] shadow-md hover:shadow-lg text-[#333333] hover:text-[#B78A42]'
+                    : 'bg-[#FAFAF7]/50 text-[#333333]/20 cursor-not-allowed'
                 }`}
                 aria-label="Scroll left"
               >
@@ -126,8 +129,8 @@ export default function TripAdvisorSection() {
                 disabled={!canScrollRight}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollRight
-                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
+                    ? 'bg-[#FAFAF7] shadow-md hover:shadow-lg text-[#333333] hover:text-[#B78A42]'
+                    : 'bg-[#FAFAF7]/50 text-[#333333]/20 cursor-not-allowed'
                 }`}
                 aria-label="Scroll right"
               >
@@ -154,7 +157,7 @@ export default function TripAdvisorSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
-                className="group flex-shrink-0 w-[300px] md:w-[330px] bg-white/60 backdrop-blur-sm rounded-2xl p-6 hover:bg-white transition-all duration-300 border border-[#B78A42]/8 hover:border-[#B78A42]/20 shadow-sm hover:shadow-md"
+                className="group flex-shrink-0 w-[300px] md:w-[330px] bg-white/70 backdrop-blur-sm rounded-2xl p-6 hover:bg-white transition-all duration-300 border border-[#B78A42]/8 hover:border-[#B78A42]/20 shadow-sm hover:shadow-lg"
               >
                 {/* Quote icon */}
                 <Quote className="w-6 h-6 text-[#B78A42]/20 mb-3" />
@@ -172,7 +175,7 @@ export default function TripAdvisorSection() {
                 </h4>
 
                 {/* Review text */}
-                <p className="text-[13px] text-[#333333]/50 leading-relaxed mb-5 line-clamp-4">
+                <p className="text-[13px] text-[#333333]/45 leading-relaxed mb-5 line-clamp-4">
                   {review.text}
                 </p>
 
@@ -204,7 +207,7 @@ export default function TripAdvisorSection() {
             href="https://www.tripadvisor.com/Attraction_Review-g297913-d31720175-Reviews-Hadada_Safaris-Arusha_Arusha_Region.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#333333] hover:bg-[#2A2A2A] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg group"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 group"
           >
             See All Reviews
             <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

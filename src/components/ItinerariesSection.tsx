@@ -84,7 +84,10 @@ export default function ItinerariesSection() {
   }, []);
 
   return (
-    <section id="itineraries" className="py-24 bg-[#F9F7F2] relative overflow-hidden" ref={ref}>
+    <section id="itineraries" className="py-24 bg-white relative overflow-hidden" ref={ref}>
+      {/* Subtle background decoration */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#B78A42]/2 rounded-full blur-[150px]" />
+
       <div className="relative z-10">
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -92,11 +95,11 @@ export default function ItinerariesSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10"
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
           >
             <div>
-              <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
-                <Calendar className="w-4 h-4" />
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+                <Calendar className="w-3.5 h-3.5" />
                 Itineraries
               </span>
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
@@ -121,8 +124,8 @@ export default function ItinerariesSection() {
                 disabled={!canScrollLeft}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollLeft
-                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
+                    ? 'bg-[#FAFAF7] shadow-md hover:shadow-lg text-[#333333] hover:text-[#B78A42]'
+                    : 'bg-[#FAFAF7]/50 text-[#333333]/20 cursor-not-allowed'
                 }`}
                 aria-label="Scroll left"
               >
@@ -133,8 +136,8 @@ export default function ItinerariesSection() {
                 disabled={!canScrollRight}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollRight
-                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
+                    ? 'bg-[#FAFAF7] shadow-md hover:shadow-lg text-[#333333] hover:text-[#B78A42]'
+                    : 'bg-[#FAFAF7]/50 text-[#333333]/20 cursor-not-allowed'
                 }`}
                 aria-label="Scroll right"
               >
@@ -162,29 +165,29 @@ export default function ItinerariesSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
-                className="group flex-shrink-0 w-[300px] md:w-[330px] relative overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-500"
+                className="group flex-shrink-0 w-[300px] md:w-[330px] relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-sm border border-[#B78A42]/8 hover:border-[#B78A42]/20 shadow-sm hover:shadow-xl transition-all duration-500"
               >
                 {/* Image */}
-                <div className="relative h-52 overflow-hidden">
+                <div className="relative h-52 overflow-hidden rounded-t-2xl">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/40 via-transparent to-transparent" />
 
-                  {/* Tag */}
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/20 backdrop-blur-md border border-white/25 text-white text-[10px] font-bold rounded-full tracking-wider uppercase">
+                  {/* Tag - glass pill */}
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/25 backdrop-blur-xl border border-white/25 text-white text-[10px] font-bold rounded-full tracking-wider uppercase">
                     {item.tag}
                   </span>
 
-                  {/* Duration & group size on image */}
+                  {/* Duration & group size - glass pills */}
                   <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
-                    <span className="flex items-center gap-1 text-white/90 text-xs bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                    <span className="flex items-center gap-1 text-white/90 text-xs bg-white/15 backdrop-blur-xl border border-white/20 px-2.5 py-1 rounded-full">
                       <Clock className="w-3 h-3 text-[#D5BC92]" />
                       {item.duration}
                     </span>
-                    <span className="flex items-center gap-1 text-white/90 text-xs bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                    <span className="flex items-center gap-1 text-white/90 text-xs bg-white/15 backdrop-blur-xl border border-white/20 px-2.5 py-1 rounded-full">
                       <Users className="w-3 h-3 text-[#D5BC92]" />
                       {item.groupSize}
                     </span>
@@ -200,17 +203,17 @@ export default function ItinerariesSection() {
               </motion.a>
             ))}
 
-            {/* View All card */}
+            {/* View All card - glassy */}
             <a
               href="/itineraries"
-              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-gradient-to-br from-[#B78A42] to-[#8B6914] flex flex-col items-center justify-center gap-4 hover:shadow-xl transition-all duration-500"
+              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-white/60 backdrop-blur-sm border border-[#B78A42]/15 flex flex-col items-center justify-center gap-4 hover:shadow-xl hover:bg-white/80 transition-all duration-500"
             >
-              <div className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white/60 transition-colors">
-                <ArrowRight className="w-6 h-6 text-white" />
+              <div className="w-14 h-14 rounded-full border-2 border-[#B78A42]/30 flex items-center justify-center group-hover:border-[#B78A42] group-hover:bg-[#B78A42]/5 transition-all">
+                <ArrowRight className="w-6 h-6 text-[#B78A42]" />
               </div>
               <div className="text-center px-4">
-                <span className="text-white font-bold text-sm block">View All</span>
-                <span className="text-white/60 text-xs">Itineraries</span>
+                <span className="text-[#333333] font-bold text-sm block">View All</span>
+                <span className="text-[#333333]/40 text-xs">Itineraries</span>
               </div>
             </a>
           </div>
