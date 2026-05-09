@@ -55,7 +55,9 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 96);
+      // Only show sticky header after scrolling past the hero section (100vh)
+      const heroHeight = window.innerHeight;
+      setIsScrolled(window.scrollY > heroHeight - 60);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
