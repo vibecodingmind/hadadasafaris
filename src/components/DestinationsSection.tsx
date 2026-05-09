@@ -56,10 +56,10 @@ export default function DestinationsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="destinations" className="py-24 bg-[#FDF6E3] relative overflow-hidden" ref={ref}>
+    <section id="destinations" className="py-24 bg-[#F8F4EC] relative overflow-hidden" ref={ref}>
       {/* Decorative background */}
-      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#C8A45C]/5 -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-[#1B4332]/5 translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#B78A42]/5 -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-[#333333]/5 translate-y-1/2 -translate-x-1/2" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
         {/* Section header */}
@@ -69,14 +69,14 @@ export default function DestinationsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 text-[#C8A45C] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+          <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
             <MapPin className="w-4 h-4" />
             Destinations
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#1B4332] mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-6">
             Discover Tanzania&apos;s Top Destinations
           </h2>
-          <p className="text-lg text-[#588157]/80 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-[#333333]/60 max-w-3xl mx-auto leading-relaxed">
             Tanzania offers amazing cultural experiences, beautiful landscapes, pristine beaches,
             and wildlife encounters that are second to none. From the breathtaking wildebeest
             migration to the idyllic shores of Zanzibar, every corner tells a story.
@@ -101,9 +101,9 @@ export default function DestinationsSection() {
                   alt={dest.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1B4332]/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#C8A45C]/90 text-[#1B4332] text-xs font-bold rounded-full tracking-wider">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#B78A42]/90 text-white text-xs font-bold rounded-full tracking-wider">
                     <MapPin className="w-3 h-3" />
                     TANZANIA
                   </span>
@@ -112,15 +112,15 @@ export default function DestinationsSection() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-lg font-bold text-[#1B4332] mb-2 group-hover:text-[#C8A45C] transition-colors">
+                <h3 className="text-lg font-bold text-[#333333] mb-2 group-hover:text-[#B78A42] transition-colors">
                   {dest.name}
                 </h3>
-                <p className="text-sm text-[#588157]/70 leading-relaxed mb-4 line-clamp-3">
+                <p className="text-sm text-[#333333]/50 leading-relaxed mb-4 line-clamp-3">
                   {dest.description}
                 </p>
                 <a
                   href="#"
-                  className="inline-flex items-center text-sm font-semibold text-[#C8A45C] hover:text-[#1B4332] transition-colors group/link"
+                  className="inline-flex items-center text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors group/link"
                 >
                   Explore More
                   <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />

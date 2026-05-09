@@ -40,9 +40,9 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0D1F17] text-white relative overflow-hidden">
+    <footer className="bg-[#2A2A2A] text-white relative overflow-hidden">
       {/* Newsletter bar */}
-      <div className="bg-[#1B4332] border-t border-[#C8A45C]/10">
+      <div className="bg-[#333333] border-t border-[#B78A42]/10">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
@@ -53,9 +53,9 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 md:w-72 px-5 py-3 bg-white/10 border border-white/20 rounded-full text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#C8A45C]"
+                className="flex-1 md:w-72 px-5 py-3 bg-white/10 border border-white/20 rounded-full text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-[#B78A42]"
               />
-              <Button className="bg-[#C8A45C] hover:bg-[#B8943F] text-[#1B4332] font-bold text-xs tracking-wider px-6 rounded-full group shrink-0">
+              <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 rounded-full group shrink-0">
                 SUBSCRIBE
                 <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -83,11 +83,11 @@ export default function Footer() {
               breathtaking landscapes, vibrant cultures, and magnificent wildlife since 2009.
             </p>
             <div className="flex flex-col gap-2 text-sm">
-              <a href="mailto:info@hadadasafaris.com" className="flex items-center gap-2 text-white/50 hover:text-[#C8A45C] transition-colors">
+              <a href="mailto:info@hadadasafaris.com" className="flex items-center gap-2 text-white/50 hover:text-[#B78A42] transition-colors">
                 <Mail className="w-4 h-4" />
                 info@hadadasafaris.com
               </a>
-              <a href="tel:+255123456789" className="flex items-center gap-2 text-white/50 hover:text-[#C8A45C] transition-colors">
+              <a href="tel:+255123456789" className="flex items-center gap-2 text-white/50 hover:text-[#B78A42] transition-colors">
                 <Phone className="w-4 h-4" />
                 +255 123 456 789
               </a>
@@ -101,7 +101,7 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h4 className="text-sm font-bold tracking-wider text-[#C8A45C] mb-4">
+              <h4 className="text-sm font-bold tracking-wider text-[#B78A42] mb-4">
                 {title}
               </h4>
               <ul className="space-y-2.5">

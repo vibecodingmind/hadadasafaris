@@ -15,13 +15,13 @@ export default function HeroSection() {
           className="w-full h-full object-cover"
         />
         {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332]/80 via-[#1B4332]/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1B4332]/70 via-transparent to-[#1B4332]/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#333333]/70 via-[#333333]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-[#333333]/20" />
       </div>
 
       {/* Animated decorative elements */}
-      <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-[#C8A45C]/10 blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full bg-[#C8A45C]/5 blur-3xl" />
+      <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-[#B78A42]/10 blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full bg-[#B78A42]/5 blur-3xl" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 py-20 w-full">
@@ -31,8 +31,8 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#C8A45C]/20 border border-[#C8A45C]/30 rounded-full text-[#C8A45C] text-xs font-semibold tracking-[0.2em] uppercase mb-6">
-              <span className="w-2 h-2 bg-[#C8A45C] rounded-full animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#B78A42]/20 border border-[#B78A42]/30 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-6">
+              <span className="w-2 h-2 bg-[#B78A42] rounded-full animate-pulse" />
               Tanzania Awaits
             </span>
           </motion.div>
@@ -44,7 +44,7 @@ export default function HeroSection() {
             className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6"
           >
             Welcome to{' '}
-            <span className="text-[#C8A45C]">Hadada Safaris</span>
+            <span className="text-[#B78A42]">Hadada Safaris</span>
             <br />
             <span className="text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
               Explore Tanzania&apos;s Wonders
@@ -68,7 +68,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-wrap gap-4"
           >
-            <Button className="bg-[#C8A45C] hover:bg-[#B8943F] text-[#1B4332] font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#C8A45C]/20 group">
+            <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/20 group">
               INQUIRE NOW
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -92,7 +92,7 @@ export default function HeroSection() {
               { number: '98%', label: 'Satisfaction Rate' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-[#C8A45C]">{stat.number}</div>
+                <div className="text-2xl md:text-3xl font-bold text-[#B78A42]">{stat.number}</div>
                 <div className="text-xs text-white/60 tracking-wider mt-1">{stat.label}</div>
               </div>
             ))}
@@ -113,7 +113,7 @@ export default function HeroSection() {
           transition={{ duration: 1.5, repeat: Infinity }}
           className="w-5 h-8 rounded-full border-2 border-white/30 flex justify-center pt-1"
         >
-          <div className="w-1 h-2 bg-[#C8A45C] rounded-full" />
+          <div className="w-1 h-2 bg-[#B78A42] rounded-full" />
         </motion.div>
       </motion.div>
     </section>

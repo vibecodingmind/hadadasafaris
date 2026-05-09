@@ -41,13 +41,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-safari-gold: #C8A45C;
-  --color-safari-dark-green: #1B4332;
-  --color-safari-olive: #588157;
-  --color-safari-cream: #FDF6E3;
-  --color-safari-brown: #6B4226;
-  --color-safari-warm: #D4A373;
-  --color-safari-deep: #2D1810;
+  --color-brand-dark: #333333;
+  --color-brand-gold: #B78A42;
+  --color-brand-gold-light: #CBA870;
+  --color-brand-cream: #F8F4EC;
+  --color-brand-charcoal: #2A2A2A;
+  --color-brand-warm: #D5BC92;
 }
 
 :root {
@@ -134,16 +133,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #1B4332;
+  background: #333333;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C8A45C;
+  background: #B78A42;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4A373;
+  background: #CBA870;
 }
 
 /* Smooth scrolling */
@@ -151,8 +150,8 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Safari-themed selection */
+/* Brand-themed selection */
 ::selection {
-  background-color: #C8A45C;
-  color: #1B4332;
+  background-color: #B78A42;
+  color: #333333;
 }

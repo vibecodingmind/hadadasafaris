@@ -57,7 +57,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 80);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -77,32 +77,32 @@ export default function Header() {
   return (
     <>
       {/* Top bar */}
-      <div className="bg-[#1B4332] text-white/80 text-xs py-2 hidden md:block">
+      <div className="bg-[#333333] text-white/80 text-xs py-2 hidden md:block">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <a href="tel:+255123456789" className="flex items-center gap-1.5 hover:text-[#C8A45C] transition-colors">
+            <a href="tel:+255123456789" className="flex items-center gap-1.5 hover:text-[#B78A42] transition-colors">
               <Phone className="w-3 h-3" />
               <span>+255 123 456 789</span>
             </a>
-            <a href="mailto:info@hadadasafaris.com" className="flex items-center gap-1.5 hover:text-[#C8A45C] transition-colors">
+            <a href="mailto:info@hadadasafaris.com" className="flex items-center gap-1.5 hover:text-[#B78A42] transition-colors">
               <Mail className="w-3 h-3" />
               <span>info@hadadasafaris.com</span>
             </a>
           </div>
           <div className="flex items-center gap-4">
             <span>Follow us:</span>
-            <a href="#" className="hover:text-[#C8A45C] transition-colors">Instagram</a>
-            <a href="#" className="hover:text-[#C8A45C] transition-colors">Facebook</a>
-            <a href="#" className="hover:text-[#C8A45C] transition-colors">WhatsApp</a>
+            <a href="#" className="hover:text-[#B78A42] transition-colors">Instagram</a>
+            <a href="#" className="hover:text-[#B78A42] transition-colors">Facebook</a>
+            <a href="#" className="hover:text-[#B78A42] transition-colors">WhatsApp</a>
           </div>
         </div>
       </div>
 
-      {/* Main navigation */}
+      {/* Main navigation - transparent on homepage, solid on scroll */}
       <header
         className={`sticky top-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-[#1B4332]/95 backdrop-blur-md shadow-lg shadow-black/10'
+            ? 'bg-[#333333]/95 backdrop-blur-md shadow-lg shadow-black/20'
             : 'bg-transparent'
         }`}
       >
@@ -130,11 +130,7 @@ export default function Header() {
                 >
                   <a
                     href={item.href}
-                    className={`px-3 py-2 text-[13px] font-semibold tracking-wider flex items-center gap-1 transition-all duration-300 rounded-md ${
-                      isScrolled
-                        ? 'text-white/90 hover:text-[#C8A45C]'
-                        : 'text-white/90 hover:text-[#C8A45C]'
-                    }`}
+                    className="px-3 py-2 text-[13px] font-semibold tracking-wider flex items-center gap-1 transition-all duration-300 rounded-md text-white/90 hover:text-[#B78A42]"
                   >
                     {item.label}
                     {item.children && <ChevronDown className="w-3 h-3" />}
@@ -148,14 +144,14 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 min-w-[260px] bg-[#1B4332] border border-[#C8A45C]/20 rounded-lg shadow-2xl shadow-black/30 overflow-hidden"
+                        className="absolute top-full left-0 min-w-[260px] bg-[#333333] border border-[#B78A42]/20 rounded-lg shadow-2xl shadow-black/30 overflow-hidden"
                       >
                         <div className="py-2">
                           {item.children.map((child) => (
                             <a
                               key={child}
                               href="#"
-                              className="block px-5 py-2.5 text-sm text-white/80 hover:text-[#C8A45C] hover:bg-white/5 transition-all duration-200 tracking-wide"
+                              className="block px-5 py-2.5 text-sm text-white/80 hover:text-[#B78A42] hover:bg-white/5 transition-all duration-200 tracking-wide"
                             >
                               {child}
                             </a>
@@ -166,7 +162,7 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
               ))}
-              <Button className="ml-4 bg-[#C8A45C] hover:bg-[#B8943F] text-[#1B4332] font-bold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#C8A45C]/20">
+              <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
                 BOOK NOW
               </Button>
             </nav>
@@ -190,7 +186,7 @@ export default function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden bg-[#1B4332] border-t border-[#C8A45C]/20 overflow-hidden"
+              className="lg:hidden bg-[#333333] border-t border-[#B78A42]/20 overflow-hidden"
             >
               <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
                 {navItems.map((item) => (
@@ -198,7 +194,7 @@ export default function Header() {
                     <div className="flex items-center justify-between">
                       <a
                         href={item.href}
-                        className="flex-1 py-3 text-sm font-semibold tracking-wider text-white/90 hover:text-[#C8A45C] transition-colors"
+                        className="flex-1 py-3 text-sm font-semibold tracking-wider text-white/90 hover:text-[#B78A42] transition-colors"
                         onClick={() => !item.children && setMobileMenuOpen(false)}
                       >
                         {item.label}
@@ -208,7 +204,7 @@ export default function Header() {
                           onClick={() =>
                             setMobileDropdown(mobileDropdown === item.label ? null : item.label)
                           }
-                          className="p-2 text-white/60 hover:text-[#C8A45C]"
+                          className="p-2 text-white/60 hover:text-[#B78A42]"
                         >
                           <ChevronDown
                             className={`w-4 h-4 transition-transform duration-300 ${
@@ -232,7 +228,7 @@ export default function Header() {
                               <a
                                 key={child}
                                 href="#"
-                                className="block py-2 text-sm text-white/60 hover:text-[#C8A45C] transition-colors tracking-wide"
+                                className="block py-2 text-sm text-white/60 hover:text-[#B78A42] transition-colors tracking-wide"
                                 onClick={() => setMobileMenuOpen(false)}
                               >
                                 {child}
@@ -245,7 +241,7 @@ export default function Header() {
                   </div>
                 ))}
                 <div className="pt-4">
-                  <Button className="w-full bg-[#C8A45C] hover:bg-[#B8943F] text-[#1B4332] font-bold text-sm tracking-wider py-3 rounded-full">
+                  <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
                     BOOK NOW
                   </Button>
                 </div>
