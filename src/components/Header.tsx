@@ -55,7 +55,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
+      setIsScrolled(window.scrollY > 96);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -82,10 +82,10 @@ export default function Header() {
     >
       {/* Main navigation */}
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between py-5">
           {/* Logo */}
           <a href="#home" className="flex items-center group z-10">
-            <div className="relative h-14 w-auto">
+            <div className="relative h-16 w-auto">
               <img
                 src="/images/hadada-logo.png"
                 alt="Hadada Safaris Logo"
@@ -105,7 +105,7 @@ export default function Header() {
               >
                 <a
                   href={item.href}
-                  className="px-3 py-2 text-[13px] font-semibold tracking-wider flex items-center gap-1 transition-all duration-300 rounded-md text-white hover:text-[#B78A42]"
+                  className="px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md text-white hover:text-[#B78A42]"
                 >
                   {item.label}
                   {item.children && <ChevronDown className="w-3 h-3" />}
@@ -137,7 +137,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
             ))}
-            <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
+            <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
               BOOK NOW
             </Button>
           </nav>
