@@ -78,7 +78,7 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#333333]/95 backdrop-blur-md shadow-lg shadow-black/20'
+          ? 'bg-white/90 backdrop-blur-xl shadow-md shadow-black/5'
           : 'bg-transparent'
       }`}
     >
@@ -107,7 +107,9 @@ export default function Header() {
               >
                 <a
                   href={item.href}
-                  className="px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md text-white hover:text-[#B78A42]"
+                  className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
+                    isScrolled ? 'text-[#333333]' : 'text-white'
+                  }`}
                 >
                   {item.label}
                   {item.children && <ChevronDown className="w-3 h-3" />}
@@ -121,14 +123,14 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 min-w-[260px] bg-[#333333] border border-[#B78A42]/20 rounded-lg shadow-2xl shadow-black/30 overflow-hidden"
+                      className="absolute top-full left-0 min-w-[260px] bg-white/95 backdrop-blur-xl border border-[#B78A42]/10 rounded-xl shadow-xl overflow-hidden"
                     >
                       <div className="py-2">
                         {item.children.map((child) => (
                           <a
                             key={child}
                             href="#"
-                            className="block px-5 py-2.5 text-sm text-white/80 hover:text-[#B78A42] hover:bg-white/5 transition-all duration-200 tracking-wide"
+                            className="block px-5 py-2.5 text-sm text-[#333333]/70 hover:text-[#B78A42] hover:bg-[#B78A42]/5 transition-all duration-200 tracking-wide"
                           >
                             {child}
                           </a>
@@ -146,7 +148,9 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden text-white p-2 z-10"
+            className={`lg:hidden p-2 z-10 transition-colors duration-300 ${
+              isScrolled ? 'text-[#333333]' : 'text-white'
+            }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -163,15 +167,15 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-[#333333] border-t border-[#B78A42]/20 overflow-hidden"
+            className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-[#B78A42]/10 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
               {navItems.map((item) => (
-                <div key={item.label} className="border-b border-white/10 last:border-0">
+                <div key={item.label} className="border-b border-[#333333]/6 last:border-0">
                   <div className="flex items-center justify-between">
                     <a
                       href={item.href}
-                      className="flex-1 py-3 text-sm font-semibold tracking-wider text-white/90 hover:text-[#B78A42] transition-colors"
+                      className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80 hover:text-[#B78A42] transition-colors"
                       onClick={() => !item.children && setMobileMenuOpen(false)}
                     >
                       {item.label}
@@ -181,7 +185,7 @@ export default function Header() {
                         onClick={() =>
                           setMobileDropdown(mobileDropdown === item.label ? null : item.label)
                         }
-                        className="p-2 text-white/60 hover:text-[#B78A42]"
+                        className="p-2 text-[#333333]/40 hover:text-[#B78A42]"
                       >
                         <ChevronDown
                           className={`w-4 h-4 transition-transform duration-300 ${
@@ -205,7 +209,7 @@ export default function Header() {
                             <a
                               key={child}
                               href="#"
-                              className="block py-2 text-sm text-white/60 hover:text-[#B78A42] transition-colors tracking-wide"
+                              className="block py-2 text-sm text-[#333333]/50 hover:text-[#B78A42] transition-colors tracking-wide"
                               onClick={() => setMobileMenuOpen(false)}
                             >
                               {child}

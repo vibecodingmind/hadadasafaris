@@ -84,11 +84,7 @@ export default function TripAdvisorSection() {
   }, []);
 
   return (
-    <section className="py-24 bg-[#2A2A2A] relative overflow-hidden" ref={ref}>
-      {/* Decorative */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/30 to-transparent" />
-      <div className="absolute top-1/4 right-0 w-80 h-80 rounded-full bg-[#B78A42]/5 blur-3xl" />
-
+    <section className="py-24 bg-[#F9F7F2] relative overflow-hidden" ref={ref}>
       <div className="relative z-10">
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -103,10 +99,10 @@ export default function TripAdvisorSection() {
                 <Star className="w-4 h-4 fill-[#B78A42]" />
                 Testimonials
               </span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
+              <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
                 What Our <span className="text-[#B78A42]">Travelers</span> Say
               </h2>
-              <p className="text-base text-white/45 max-w-xl leading-relaxed">
+              <p className="text-base text-[#333333]/50 max-w-xl leading-relaxed">
                 Real experiences from travelers who discovered the magic of Tanzania with us
               </p>
             </div>
@@ -118,8 +114,8 @@ export default function TripAdvisorSection() {
                 disabled={!canScrollLeft}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollLeft
-                    ? 'bg-white/15 hover:bg-[#B78A42] text-white'
-                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
+                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
                 }`}
                 aria-label="Scroll left"
               >
@@ -130,8 +126,8 @@ export default function TripAdvisorSection() {
                 disabled={!canScrollRight}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollRight
-                    ? 'bg-white/15 hover:bg-[#B78A42] text-white'
-                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
+                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
                 }`}
                 aria-label="Scroll right"
               >
@@ -141,7 +137,7 @@ export default function TripAdvisorSection() {
           </motion.div>
         </div>
 
-        {/* Scrollable reviews - single row */}
+        {/* Scrollable reviews - glass cards */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -158,10 +154,10 @@ export default function TripAdvisorSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
-                className="group flex-shrink-0 w-[300px] md:w-[330px] bg-[#333333] rounded-2xl p-6 hover:bg-[#3A3A3A] transition-all duration-300 border border-white/5 hover:border-[#B78A42]/20"
+                className="group flex-shrink-0 w-[300px] md:w-[330px] bg-white/60 backdrop-blur-sm rounded-2xl p-6 hover:bg-white transition-all duration-300 border border-[#B78A42]/8 hover:border-[#B78A42]/20 shadow-sm hover:shadow-md"
               >
                 {/* Quote icon */}
-                <Quote className="w-7 h-7 text-[#B78A42]/25 mb-4" />
+                <Quote className="w-6 h-6 text-[#B78A42]/20 mb-3" />
 
                 {/* Stars */}
                 <div className="flex gap-0.5 mb-3">
@@ -171,25 +167,25 @@ export default function TripAdvisorSection() {
                 </div>
 
                 {/* Title */}
-                <h4 className="font-bold text-white text-sm leading-snug mb-2 group-hover:text-[#B78A42] transition-colors">
+                <h4 className="font-bold text-[#333333] text-sm leading-snug mb-2 group-hover:text-[#B78A42] transition-colors">
                   {review.title}
                 </h4>
 
                 {/* Review text */}
-                <p className="text-[13px] text-white/50 leading-relaxed mb-5 line-clamp-4">
+                <p className="text-[13px] text-[#333333]/50 leading-relaxed mb-5 line-clamp-4">
                   {review.text}
                 </p>
 
                 {/* Reviewer info */}
-                <div className="flex items-center gap-2.5 pt-4 border-t border-white/8">
-                  <div className="w-8 h-8 rounded-full bg-[#B78A42]/20 flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-2.5 pt-4 border-t border-[#333333]/6">
+                  <div className="w-8 h-8 rounded-full bg-[#B78A42]/10 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-[#B78A42]">
                       {review.name.charAt(0)}
                     </span>
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs font-semibold text-white/80 block">{review.name}</span>
-                    <span className="text-[11px] text-white/30">{review.date}</span>
+                    <span className="text-xs font-semibold text-[#333333] block">{review.name}</span>
+                    <span className="text-[11px] text-[#333333]/30">{review.date}</span>
                   </div>
                 </div>
               </motion.div>
@@ -208,7 +204,7 @@ export default function TripAdvisorSection() {
             href="https://www.tripadvisor.com/Attraction_Review-g297913-d31720175-Reviews-Hadada_Safaris-Arusha_Arusha_Region.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 group"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#333333] hover:bg-[#2A2A2A] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg group"
           >
             See All Reviews
             <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

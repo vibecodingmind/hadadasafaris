@@ -34,11 +34,6 @@ export default function ValueSection() {
 
   return (
     <section className="relative overflow-hidden bg-white" ref={ref}>
-      {/* Subtle top border */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/20 to-transparent" />
-      {/* Top transition from dark itineraries */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#333333]/6 to-transparent" />
-
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
           {/* Left column - Statement */}
@@ -67,41 +62,40 @@ export default function ValueSection() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            {/* Decorative accent */}
+            {/* Stats accent */}
             <div className="mt-10 hidden lg:block">
-              <div className="w-20 h-1 bg-[#B78A42] rounded-full mb-4" />
+              <div className="w-16 h-1 bg-[#B78A42]/30 rounded-full mb-5" />
               <div className="flex gap-8">
                 <div>
                   <div className="text-3xl font-bold text-[#333333]">15+</div>
-                  <div className="text-[11px] text-[#333333]/40 tracking-wider uppercase">Years</div>
+                  <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Years</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-[#333333]">5K+</div>
-                  <div className="text-[11px] text-[#333333]/40 tracking-wider uppercase">Travelers</div>
+                  <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Travelers</div>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Right column - Value cards stacked */}
-          <div className="lg:col-span-3 space-y-5">
+          {/* Right column - Glass value cards */}
+          <div className="lg:col-span-3 space-y-4">
             {values.map((item, i) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
-                className="group relative bg-[#F8F4EC] rounded-2xl p-7 hover:bg-[#333333] transition-all duration-500 overflow-hidden cursor-default"
+                className="group relative bg-[#F9F7F2] rounded-2xl p-7 hover:bg-[#333333] transition-all duration-500 overflow-hidden cursor-default"
               >
                 <div className="flex items-start gap-5">
                   {/* Icon */}
-                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-[#333333] group-hover:bg-[#B78A42] flex items-center justify-center transition-colors duration-500">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-white shadow-sm group-hover:bg-[#B78A42] group-hover:shadow-lg flex items-center justify-center transition-all duration-500">
                     <item.icon className="w-7 h-7 text-[#B78A42] group-hover:text-white transition-colors duration-500" />
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    {/* Highlight badge */}
-                    <span className="inline-block px-3 py-0.5 bg-[#B78A42]/10 group-hover:bg-[#B78A42]/20 text-[#B78A42] text-[10px] font-bold rounded-full tracking-wider mb-2 transition-colors duration-500">
+                    <span className="inline-block px-3 py-0.5 bg-[#B78A42]/8 group-hover:bg-[#B78A42]/15 text-[#B78A42] text-[10px] font-bold rounded-full tracking-wider mb-2 transition-colors duration-500">
                       {item.highlight}
                     </span>
 
@@ -115,7 +109,7 @@ export default function ValueSection() {
                   </div>
                 </div>
 
-                {/* Hover accent line */}
+                {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#B78A42] to-[#D5BC92] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </motion.div>
             ))}

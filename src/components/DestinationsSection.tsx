@@ -126,12 +126,7 @@ export default function DestinationsSection() {
   }, []);
 
   return (
-    <section id="destinations" className="py-24 bg-[#F8F4EC] relative overflow-hidden" ref={ref}>
-      {/* Top transition from dark hero */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#333333]/8 to-transparent" />
-      {/* Decorative */}
-      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#B78A42]/5 -translate-y-1/2 translate-x-1/2" />
-
+    <section id="destinations" className="py-24 bg-white relative overflow-hidden" ref={ref}>
       <div className="relative z-10">
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -149,7 +144,7 @@ export default function DestinationsSection() {
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
                 Discover Tanzania&apos;s Top Destinations
               </h2>
-              <p className="text-base text-[#333333]/55 max-w-xl leading-relaxed">
+              <p className="text-base text-[#333333]/50 max-w-xl leading-relaxed">
                 From the breathtaking peak of Kilimanjaro to the idyllic shores of Zanzibar, every corner tells a story.
               </p>
             </div>
@@ -169,7 +164,7 @@ export default function DestinationsSection() {
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollLeft
                     ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/10 text-[#333333]/30 cursor-not-allowed'
+                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
                 }`}
                 aria-label="Scroll left"
               >
@@ -181,7 +176,7 @@ export default function DestinationsSection() {
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollRight
                     ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
-                    : 'bg-[#333333]/10 text-[#333333]/30 cursor-not-allowed'
+                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
                 }`}
                 aria-label="Scroll right"
               >
@@ -191,7 +186,7 @@ export default function DestinationsSection() {
           </motion.div>
         </div>
 
-        {/* Scrollable destination cards - single row */}
+        {/* Scrollable destination cards */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -208,26 +203,25 @@ export default function DestinationsSection() {
                 href={`/destinations#${dest.slug}`}
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
-                className="group flex-shrink-0 w-[260px] md:w-[280px] relative overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-500"
+                transition={{ delay: 0.1 + i * 0.04, duration: 0.5 }}
+                className="group flex-shrink-0 w-[260px] md:w-[280px] relative overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500"
               >
                 {/* Image */}
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-64 overflow-hidden rounded-2xl">
                   <img
                     src={dest.image}
                     alt={dest.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  {/* Dark overlay */}
-                  <div className="absolute inset-0 bg-[#000000]/45" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-[#000000]/20 to-transparent" />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/70 via-[#1a1a1a]/10 to-transparent" />
 
                   {/* Content overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <span className="text-[#B78A42] text-[11px] font-semibold tracking-wider uppercase block mb-1.5">
+                    <span className="text-[#D5BC92] text-[10px] font-semibold tracking-wider uppercase block mb-1">
                       {dest.tagline}
                     </span>
-                    <h3 className="text-white font-bold text-base leading-tight truncate">
+                    <h3 className="text-white font-bold text-[15px] leading-tight truncate">
                       {dest.name}
                     </h3>
                   </div>
@@ -235,17 +229,17 @@ export default function DestinationsSection() {
               </motion.a>
             ))}
 
-            {/* View All card at end */}
+            {/* View All card */}
             <a
               href="/destinations"
-              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-[#333333] flex flex-col items-center justify-center gap-4 hover:bg-[#B78A42] transition-all duration-500"
+              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-gradient-to-br from-[#B78A42] to-[#8B6914] flex flex-col items-center justify-center gap-4 hover:shadow-xl transition-all duration-500"
             >
               <div className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white/60 transition-colors">
                 <ArrowRight className="w-6 h-6 text-white" />
               </div>
               <div className="text-center px-4">
                 <span className="text-white font-bold text-sm block">View All</span>
-                <span className="text-white/50 text-xs">Destinations</span>
+                <span className="text-white/60 text-xs">Destinations</span>
               </div>
             </a>
           </div>

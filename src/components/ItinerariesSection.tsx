@@ -84,12 +84,7 @@ export default function ItinerariesSection() {
   }, []);
 
   return (
-    <section id="itineraries" className="py-24 bg-[#333333] relative overflow-hidden" ref={ref}>
-      {/* Decorative */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/30 to-transparent" />
-      {/* Top transition from light crafting section */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#FAFAF7]/8 to-transparent" />
-
+    <section id="itineraries" className="py-24 bg-[#F9F7F2] relative overflow-hidden" ref={ref}>
       <div className="relative z-10">
         {/* Section header */}
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -104,10 +99,10 @@ export default function ItinerariesSection() {
                 <Calendar className="w-4 h-4" />
                 Itineraries
               </span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
+              <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
                 Curated Safari <span className="text-[#B78A42]">Experiences</span>
               </h2>
-              <p className="text-base text-white/50 max-w-xl leading-relaxed">
+              <p className="text-base text-[#333333]/50 max-w-xl leading-relaxed">
                 Choose from our handpicked itineraries or let us customize one just for you
               </p>
             </div>
@@ -116,7 +111,7 @@ export default function ItinerariesSection() {
             <div className="flex items-center gap-3 flex-shrink-0">
               <a
                 href="/itineraries"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-white transition-colors mr-2"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors mr-2"
               >
                 View All Itineraries
                 <ArrowRight className="w-4 h-4" />
@@ -126,8 +121,8 @@ export default function ItinerariesSection() {
                 disabled={!canScrollLeft}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollLeft
-                    ? 'bg-white/15 hover:bg-[#B78A42] text-white'
-                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
+                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
                 }`}
                 aria-label="Scroll left"
               >
@@ -138,8 +133,8 @@ export default function ItinerariesSection() {
                 disabled={!canScrollRight}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   canScrollRight
-                    ? 'bg-white/15 hover:bg-[#B78A42] text-white'
-                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                    ? 'bg-[#333333] hover:bg-[#B78A42] text-white'
+                    : 'bg-[#333333]/8 text-[#333333]/25 cursor-not-allowed'
                 }`}
                 aria-label="Scroll right"
               >
@@ -149,7 +144,7 @@ export default function ItinerariesSection() {
           </motion.div>
         </div>
 
-        {/* Scrollable itinerary cards - single row */}
+        {/* Scrollable itinerary cards */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -167,7 +162,7 @@ export default function ItinerariesSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
-                className="group flex-shrink-0 w-[300px] md:w-[330px] relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 hover:border-[#B78A42]/30 transition-all duration-500"
+                className="group flex-shrink-0 w-[300px] md:w-[330px] relative overflow-hidden rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-500"
               >
                 {/* Image */}
                 <div className="relative h-52 overflow-hidden">
@@ -176,22 +171,21 @@ export default function ItinerariesSection() {
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-[#000000]/40" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/70 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/60 via-transparent to-transparent" />
 
                   {/* Tag */}
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-[#B78A42] text-white text-[10px] font-bold rounded-full tracking-wider uppercase">
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/20 backdrop-blur-md border border-white/25 text-white text-[10px] font-bold rounded-full tracking-wider uppercase">
                     {item.tag}
                   </span>
 
                   {/* Duration & group size on image */}
                   <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
-                    <span className="flex items-center gap-1 text-white/80 text-xs">
-                      <Clock className="w-3.5 h-3.5 text-[#B78A42]" />
+                    <span className="flex items-center gap-1 text-white/90 text-xs bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                      <Clock className="w-3 h-3 text-[#D5BC92]" />
                       {item.duration}
                     </span>
-                    <span className="flex items-center gap-1 text-white/80 text-xs">
-                      <Users className="w-3.5 h-3.5 text-[#B78A42]" />
+                    <span className="flex items-center gap-1 text-white/90 text-xs bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                      <Users className="w-3 h-3 text-[#D5BC92]" />
                       {item.groupSize}
                     </span>
                   </div>
@@ -199,7 +193,7 @@ export default function ItinerariesSection() {
 
                 {/* Content */}
                 <div className="p-5">
-                  <h3 className="text-base font-bold text-white leading-snug truncate group-hover:text-[#B78A42] transition-colors">
+                  <h3 className="text-base font-bold text-[#333333] leading-snug truncate group-hover:text-[#B78A42] transition-colors">
                     {item.title}
                   </h3>
                 </div>
@@ -209,14 +203,14 @@ export default function ItinerariesSection() {
             {/* View All card */}
             <a
               href="/itineraries"
-              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-4 hover:bg-[#B78A42] hover:border-[#B78A42] transition-all duration-500"
+              className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-gradient-to-br from-[#B78A42] to-[#8B6914] flex flex-col items-center justify-center gap-4 hover:shadow-xl transition-all duration-500"
             >
-              <div className="w-14 h-14 rounded-full border-2 border-white/20 flex items-center justify-center group-hover:border-white/60 transition-colors">
+              <div className="w-14 h-14 rounded-full border-2 border-white/30 flex items-center justify-center group-hover:border-white/60 transition-colors">
                 <ArrowRight className="w-6 h-6 text-white" />
               </div>
               <div className="text-center px-4">
                 <span className="text-white font-bold text-sm block">View All</span>
-                <span className="text-white/40 text-xs">Itineraries</span>
+                <span className="text-white/60 text-xs">Itineraries</span>
               </div>
             </a>
           </div>

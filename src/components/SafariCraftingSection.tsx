@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Compass, ArrowRight, Sparkles, Shield, Heart } from 'lucide-react';
+import { Compass, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function SafariCraftingSection() {
@@ -10,44 +10,45 @@ export default function SafariCraftingSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="relative overflow-hidden bg-[#FAFAF7]" ref={ref}>
-      {/* Top transition from dark memories */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#333333]/10 to-transparent z-10" />
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-        {/* Left - Image */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="relative min-h-[400px] lg:min-h-0 order-2 lg:order-1"
-        >
-          <img
-            src="/images/ngorongoro-lunch.png"
-            alt="Lunch setup with a view of the Ngorongoro Crater"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAFAF7]/10 to-transparent" />
-
-          {/* Floating label */}
+    <section className="relative overflow-hidden bg-white" ref={ref}>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left - Image with glass accent */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="absolute bottom-8 right-8 bg-[#333333]/90 backdrop-blur-sm rounded-lg px-5 py-3"
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="relative order-2 lg:order-1"
           >
-            <span className="text-white/50 text-[10px] tracking-wider uppercase block">Lunch with a view of</span>
-            <span className="text-[#B78A42] font-bold text-sm">Ngorongoro Crater</span>
-          </motion.div>
-        </motion.div>
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/ngorongoro-lunch.png"
+                alt="Lunch setup with a view of the Ngorongoro Crater"
+                className="w-full h-[550px] object-cover"
+              />
+              {/* Glass overlay label */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="absolute top-6 right-6 bg-white/20 backdrop-blur-xl border border-white/30 rounded-xl px-5 py-3"
+              >
+                <span className="text-white/60 text-[10px] tracking-wider uppercase block">With a view of</span>
+                <span className="text-white font-bold text-sm">Ngorongoro Crater</span>
+              </motion.div>
+            </div>
 
-        {/* Right - Content */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-[#FAFAF7] flex items-center order-1 lg:order-2"
-        >
-          <div className="px-8 md:px-16 py-16 lg:py-0">
+            {/* Decorative accent */}
+            <div className="absolute -bottom-4 -left-4 w-28 h-28 border-2 border-[#B78A42]/12 rounded-3xl" />
+          </motion.div>
+
+          {/* Right - Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-1 lg:order-2"
+          >
             <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
               <Compass className="w-4 h-4" />
               Expert Craftsmanship
@@ -67,19 +68,18 @@ export default function SafariCraftingSection() {
             <p className="text-sm text-[#333333]/45 leading-relaxed mb-8">
               Every detail of your safari is thoughtfully planned — from the luxury lodges
               you&apos;ll stay in, to the hidden gems only our experienced guides know about.
-              We believe in creating journeys that go beyond expectations.
             </p>
 
-            {/* Stats row */}
-            <div className="flex gap-8 mb-10">
+            {/* Stats row - glass style */}
+            <div className="flex gap-4 mb-10">
               {[
                 { number: '15+', label: 'Years' },
-                { number: '5000+', label: 'Travelers' },
+                { number: '5K+', label: 'Travelers' },
                 { number: '98%', label: 'Satisfaction' },
               ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-2xl font-bold text-[#B78A42]">{stat.number}</div>
-                  <div className="text-[11px] text-[#333333]/40 tracking-wider uppercase">{stat.label}</div>
+                <div key={stat.label} className="flex-1 text-center bg-[#F9F7F2] rounded-xl py-4 px-3">
+                  <div className="text-xl font-bold text-[#B78A42]">{stat.number}</div>
+                  <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -89,12 +89,12 @@ export default function SafariCraftingSection() {
                 VIEW ITINERARIES
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button variant="outline" className="border-[#B78A42] text-[#B78A42] hover:bg-[#B78A42]/10 font-semibold text-xs tracking-wider px-7 py-5 rounded-full">
+              <Button variant="outline" className="border-[#B78A42] text-[#B78A42] hover:bg-[#B78A42]/8 font-semibold text-xs tracking-wider px-7 py-5 rounded-full">
                 CUSTOM TRIP
               </Button>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
