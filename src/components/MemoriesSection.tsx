@@ -74,28 +74,7 @@ export default function MemoriesSection() {
                 alt="Wildebeest Migration"
                 className="w-full h-[500px] object-cover"
               />
-              {/* Glass overlay card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                className="absolute bottom-6 left-6 right-6 bg-white/25 backdrop-blur-2xl border border-white/30 rounded-2xl p-5"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="flex gap-0.5 mb-1.5">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} className="w-4 h-4 fill-[#B78A42] text-[#B78A42]" />
-                      ))}
-                    </div>
-                    <span className="text-white font-bold text-sm">4.9/5 Rating</span>
-                    <span className="text-white/60 text-xs ml-2">500+ Reviews</span>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/25 flex items-center justify-center hover:bg-white/30 transition-colors">
-                    <ArrowRight className="w-5 h-5 text-white" />
-                  </div>
-                </div>
-              </motion.div>
+
             </div>
 
             {/* Decorative accent */}

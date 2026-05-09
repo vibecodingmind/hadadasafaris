@@ -65,20 +65,7 @@ export default function ValueSection() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            {/* Stats accent */}
-            <div className="mt-10 hidden lg:block">
-              <div className="w-16 h-1 bg-[#B78A42]/20 rounded-full mb-5" />
-              <div className="flex gap-8">
-                <div>
-                  <div className="text-3xl font-bold text-[#333333]">15+</div>
-                  <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Years</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-[#333333]">55+</div>
-                  <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Travelers</div>
-                </div>
-              </div>
-            </div>
+
           </motion.div>
 
           {/* Right column - Glass value cards */}

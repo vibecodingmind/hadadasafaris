@@ -112,13 +112,7 @@ export default function ItinerariesSection() {
 
             {/* Navigation arrows + View All */}
             <div className="flex items-center gap-3 flex-shrink-0">
-              <a
-                href="/itineraries"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors mr-2"
-              >
-                View All Itineraries
-                <ArrowRight className="w-4 h-4" />
-              </a>
+
               <button
                 onClick={() => scroll('left')}
                 disabled={!canScrollLeft}

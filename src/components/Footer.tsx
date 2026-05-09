@@ -1,7 +1,6 @@
 'use client';
 
-import { MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { MapPin, Phone, Mail } from 'lucide-react';
 
 const footerLinks = {
   'Explore': [
@@ -41,29 +40,6 @@ const footerLinks = {
 export default function Footer() {
   return (
     <footer className="bg-[#2A2A2A] text-white relative overflow-hidden">
-      {/* Newsletter bar */}
-      <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold mb-1">Stay Updated</h3>
-              <p className="text-white/40 text-sm">Subscribe to our newsletter for safari tips and exclusive offers</p>
-            </div>
-            <div className="flex gap-3 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 md:w-72 px-5 py-3 bg-white/8 border border-white/10 rounded-full text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#B78A42] transition-colors"
-              />
-              <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 rounded-full group shrink-0">
-                SUBSCRIBE
-                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">

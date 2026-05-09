@@ -14,7 +14,8 @@ export default function HeroSection() {
           alt="African Safari Sunset"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#333333]/40 via-[#333333]/25 to-[#333333]/50" />
+        <div className="absolute inset-0 bg-[#1a1a1a]/60 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/30 via-transparent to-[#1a1a1a]/50" />
       </div>
 
       {/* Soft golden glow orbs */}
@@ -40,15 +41,14 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-white"
         >
-          Explore Tanzania&apos;s{' '}
-          <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">Wonders</span>
+          Explore Tanzania&apos;s <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">Wonders</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-white/85 leading-relaxed mb-12 max-w-2xl mx-auto"
+          className="text-xl md:text-2xl text-white/90 leading-relaxed mb-12 max-w-2xl mx-auto"
         >
           At Hadada Safari, we specialize in creating exceptional safari experiences
           that connect you to Tanzania&apos;s breathtaking landscapes, vibrant cultures,

@@ -29,16 +29,7 @@ export default function SafariCraftingSection() {
                 alt="Lunch setup with a view of the Ngorongoro Crater"
                 className="w-full h-[550px] object-cover"
               />
-              {/* Glass overlay label */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                className="absolute top-6 right-6 bg-white/25 backdrop-blur-2xl border border-white/30 rounded-xl px-5 py-3"
-              >
-                <span className="text-white/70 text-[10px] tracking-wider uppercase block">With a view of</span>
-                <span className="text-white font-bold text-sm">Ngorongoro Crater</span>
-              </motion.div>
+
             </div>
 
             {/* Decorative accent */}
@@ -72,21 +63,6 @@ export default function SafariCraftingSection() {
               Every detail of your safari is thoughtfully planned — from the luxury lodges
               you&apos;ll stay in, to the hidden gems only our experienced guides know about.
             </p>
-
-            {/* Stats row - glass cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-              {[
-                { number: '15+', label: 'Years Experience' },
-                { number: '55+', label: 'Happy Travelers' },
-                { number: '25+', label: 'Unique Routes' },
-                { number: '98%', label: 'Satisfaction Rate' },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center bg-white/70 backdrop-blur-sm border border-[#B78A42]/8 rounded-xl py-4 px-3 hover:bg-white hover:border-[#B78A42]/15 transition-all duration-300">
-                  <div className="text-xl font-bold text-[#B78A42]">{stat.number}</div>
-                  <div className="text-[9px] text-[#333333]/40 tracking-wider uppercase mt-1 leading-tight">{stat.label}</div>
-                </div>
-              ))}
-            </div>
 
             <div className="flex flex-wrap gap-3">
               <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-7 py-5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 group">
