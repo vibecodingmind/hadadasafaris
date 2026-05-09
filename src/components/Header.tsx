@@ -110,24 +110,12 @@ export default function Header() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <a href="#home" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 overflow-hidden rounded-full border-2 border-[#C8A45C] group-hover:border-[#D4A373] transition-colors">
+              <div className="relative h-14 w-auto overflow-hidden">
                 <img
                   src="/images/hadada-logo.png"
                   alt="Hadada Safaris Logo"
-                  className="w-full h-full object-cover"
+                  className="h-full w-auto object-contain"
                 />
-              </div>
-              <div className="flex flex-col">
-                <span className={`text-xl font-bold tracking-wider transition-colors duration-300 ${
-                  isScrolled ? 'text-white' : 'text-white'
-                }`}>
-                  HADADA
-                </span>
-                <span className={`text-[10px] tracking-[0.3em] font-medium transition-colors duration-300 ${
-                  isScrolled ? 'text-[#C8A45C]' : 'text-[#C8A45C]'
-                }`}>
-                  SAFARIS
-                </span>
               </div>
             </a>
 

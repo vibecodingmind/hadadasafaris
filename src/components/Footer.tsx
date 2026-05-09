@@ -69,18 +69,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full border-2 border-[#C8A45C] overflow-hidden">
+            <div className="mb-6">
+              <div className="h-16 w-auto">
                 <img
                   src="/images/hadada-logo.png"
                   alt="Hadada Safaris Logo"
-                  className="w-full h-full object-cover"
+                  className="h-full w-auto object-contain"
                 />
-              </div>
-              <div>
-                <span className="text-xl font-bold tracking-wider text-white">HADADA</span>
-                <br />
-                <span className="text-[10px] tracking-[0.3em] font-medium text-[#C8A45C]">SAFARIS</span>
               </div>
             </div>
             <p className="text-white/50 text-sm leading-relaxed mb-6 max-w-sm">

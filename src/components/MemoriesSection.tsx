@@ -14,7 +14,7 @@ export default function MemoriesSection() {
       {/* Decorative elements */}
       <div className="absolute top-10 right-10 w-80 h-80 rounded-full bg-[#C8A45C]/5 blur-3xl" />
       <div className="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-[#C8A45C]/5 blur-3xl" />
-      <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
+      <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(200,164,92,0.3) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
