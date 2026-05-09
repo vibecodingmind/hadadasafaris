@@ -1,0 +1,24 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "external": {},
+    "html": "<html lang=\"en\"><head><title>tripadvisor.com</title><style>#cmsg{animation: A 1.5s;}@keyframes A{0%{opacity:0;}99%{opacity:0;}100%{opacity:1;}}</style><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body style=\"margin:0\"><script data-cfasync=\"false\">var dd={'rt':'i','cid':'AHrlqAAAAAMAHKW7rnirIusAIiL9MQ==','hsh':'2F05D671381DB06BEE4CC52C7A6FD3','b':1738966,'s':46694,'e':'b7d009d5e2326c3a81643b8e12910b7d99b3eff32b7b7bf7de1b5e1b6d960c1cd901a31a6e2f24b7dde5991a27982635','qp':'','host':'geo.captcha-delivery.com','cookie':'BRajqshFUgpxRl5VngUCInDp6vPuRsONNmYvebxAG2aitXLUJGqIQouA8Yylhos2M2dTCVT3Ulyr79jMVZj2OZ9EhIbJg19hj0uw0KmK1MdoicbvHVHXDQbJ~Z4uoWvC'}</script><script data-cfasync=\"false\" src=\"https://ct.captcha-delivery.com/i.js\"></script><iframe src=\"https://geo.captcha-delivery.com/interstitial/?initialCid=AHrlqAAAAAMAHKW7rnirIusAIiL9MQ%3D%3D&amp;hash=2F05D671381DB06BEE4CC52C7A6FD3&amp;cid=BRajqshFUgpxRl5VngUCInDp6vPuRsONNmYvebxAG2aitXLUJGqIQouA8Yylhos2M2dTCVT3Ulyr79jMVZj2OZ9EhIbJg19hj0uw0KmK1MdoicbvHVHXDQbJ~Z4uoWvC&amp;referer=https%3A%2F%2Fwww.tripadvisor.com%2FAttraction_Review-g297913-d31720175-Reviews-Hadada_Safaris-Arusha_Arusha_Region.html&amp;s=46694&amp;e=b7d009d5e2326c3a81643b8e12910b7d99b3eff32b7b7bf7de1b5e1b6d960c1cd901a31a6e2f24b7dde5991a27982635&amp;b=1738966&amp;dm=cd\" sandbox=\"allow-scripts allow-same-origin allow-forms\" allow=\"accelerometer; gyroscope; magnetometer\" title=\"DataDome Device Check\" width=\"100%\" height=\"100%\" style=\"height:100vh;\" frameborder=\"0\" border=\"0\" scrolling=\"yes\"></iframe></body></html>",
+    "metadata": {
+      "lang": "en",
+      "viewport": "width=device-width, initial-scale=1.0"
+    },
+    "title": "tripadvisor.com",
+    "url": "https://www.tripadvisor.com/Attraction_Review-g297913-d31720175-Reviews-Hadada_Safaris-Arusha_Arusha_Region.html",
+    "usage": {
+      "tokens": 713
+    },
+    "warning": "Target URL returned error 403: Forbidden"
+  },
+  "meta": {
+    "usage": {
+      "tokens": 713
+    }
+  },
+  "status": 20000
+}

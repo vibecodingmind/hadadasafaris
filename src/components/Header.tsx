@@ -75,9 +75,15 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   return (
-    <>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? 'bg-[#333333]/95 backdrop-blur-md shadow-lg shadow-black/20'
+          : 'bg-transparent'
+      }`}
+    >
       {/* Top bar */}
-      <div className="bg-[#333333] text-white/80 text-xs py-2 hidden md:block">
+      <div className={`text-white/80 text-xs py-2 hidden md:block transition-all duration-500 ${isScrolled ? 'hidden' : ''}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-6">
             <a href="tel:+255123456789" className="flex items-center gap-1.5 hover:text-[#B78A42] transition-colors">
@@ -98,60 +104,131 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main navigation - transparent on homepage, solid on scroll */}
-      <header
-        className={`sticky top-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? 'bg-[#333333]/95 backdrop-blur-md shadow-lg shadow-black/20'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="#home" className="flex items-center gap-3 group">
-              <div className="relative h-14 w-auto overflow-hidden">
-                <img
-                  src="/images/hadada-logo.png"
-                  alt="Hadada Safaris Logo"
-                  className="h-full w-auto object-contain"
-                />
-              </div>
-            </a>
+      {/* Main navigation */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <a href="#home" className="flex items-center group z-10">
+            <div className="relative h-14 w-auto">
+              <img
+                src="/images/hadada-logo.png"
+                alt="Hadada Safaris Logo"
+                className="h-full w-auto object-contain"
+              />
+            </div>
+          </a>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="relative"
-                  onMouseEnter={() => item.children && setOpenDropdown(item.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navItems.map((item) => (
+              <div
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => item.children && setOpenDropdown(item.label)}
+                onMouseLeave={() => setOpenDropdown(null)}
+              >
+                <a
+                  href={item.href}
+                  className="px-3 py-2 text-[13px] font-semibold tracking-wider flex items-center gap-1 transition-all duration-300 rounded-md text-white hover:text-[#B78A42]"
                 >
-                  <a
-                    href={item.href}
-                    className="px-3 py-2 text-[13px] font-semibold tracking-wider flex items-center gap-1 transition-all duration-300 rounded-md text-white/90 hover:text-[#B78A42]"
-                  >
-                    {item.label}
-                    {item.children && <ChevronDown className="w-3 h-3" />}
-                  </a>
+                  {item.label}
+                  {item.children && <ChevronDown className="w-3 h-3" />}
+                </a>
 
-                  {/* Dropdown */}
-                  <AnimatePresence>
-                    {item.children && openDropdown === item.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 min-w-[260px] bg-[#333333] border border-[#B78A42]/20 rounded-lg shadow-2xl shadow-black/30 overflow-hidden"
+                {/* Dropdown */}
+                <AnimatePresence>
+                  {item.children && openDropdown === item.label && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 min-w-[260px] bg-[#333333] border border-[#B78A42]/20 rounded-lg shadow-2xl shadow-black/30 overflow-hidden"
+                    >
+                      <div className="py-2">
+                        {item.children.map((child) => (
+                          <a
+                            key={child}
+                            href="#"
+                            className="block px-5 py-2.5 text-sm text-white/80 hover:text-[#B78A42] hover:bg-white/5 transition-all duration-200 tracking-wide"
+                          >
+                            {child}
+                          </a>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+            <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
+              BOOK NOW
+            </Button>
+          </nav>
+
+          {/* Mobile menu button */}
+          <button
+            className="lg:hidden text-white p-2 z-10"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-[#333333] border-t border-[#B78A42]/20 overflow-hidden"
+          >
+            <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
+              {navItems.map((item) => (
+                <div key={item.label} className="border-b border-white/10 last:border-0">
+                  <div className="flex items-center justify-between">
+                    <a
+                      href={item.href}
+                      className="flex-1 py-3 text-sm font-semibold tracking-wider text-white/90 hover:text-[#B78A42] transition-colors"
+                      onClick={() => !item.children && setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                    {item.children && (
+                      <button
+                        onClick={() =>
+                          setMobileDropdown(mobileDropdown === item.label ? null : item.label)
+                        }
+                        className="p-2 text-white/60 hover:text-[#B78A42]"
                       >
-                        <div className="py-2">
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            mobileDropdown === item.label ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+                    )}
+                  </div>
+                  <AnimatePresence>
+                    {item.children && mobileDropdown === item.label && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-3 pl-4">
                           {item.children.map((child) => (
                             <a
                               key={child}
                               href="#"
-                              className="block px-5 py-2.5 text-sm text-white/80 hover:text-[#B78A42] hover:bg-white/5 transition-all duration-200 tracking-wide"
+                              className="block py-2 text-sm text-white/60 hover:text-[#B78A42] transition-colors tracking-wide"
+                              onClick={() => setMobileMenuOpen(false)}
                             >
                               {child}
                             </a>
@@ -162,94 +239,15 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
               ))}
-              <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
-                BOOK NOW
-              </Button>
-            </nav>
-
-            {/* Mobile menu button */}
-            <button
-              className="lg:hidden text-white p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden bg-[#333333] border-t border-[#B78A42]/20 overflow-hidden"
-            >
-              <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
-                {navItems.map((item) => (
-                  <div key={item.label} className="border-b border-white/10 last:border-0">
-                    <div className="flex items-center justify-between">
-                      <a
-                        href={item.href}
-                        className="flex-1 py-3 text-sm font-semibold tracking-wider text-white/90 hover:text-[#B78A42] transition-colors"
-                        onClick={() => !item.children && setMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </a>
-                      {item.children && (
-                        <button
-                          onClick={() =>
-                            setMobileDropdown(mobileDropdown === item.label ? null : item.label)
-                          }
-                          className="p-2 text-white/60 hover:text-[#B78A42]"
-                        >
-                          <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-300 ${
-                              mobileDropdown === item.label ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </button>
-                      )}
-                    </div>
-                    <AnimatePresence>
-                      {item.children && mobileDropdown === item.label && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pb-3 pl-4">
-                            {item.children.map((child) => (
-                              <a
-                                key={child}
-                                href="#"
-                                className="block py-2 text-sm text-white/60 hover:text-[#B78A42] transition-colors tracking-wide"
-                                onClick={() => setMobileMenuOpen(false)}
-                              >
-                                {child}
-                              </a>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-                <div className="pt-4">
-                  <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
-                    BOOK NOW
-                  </Button>
-                </div>
+              <div className="pt-4">
+                <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
+                  BOOK NOW
+                </Button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-    </>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

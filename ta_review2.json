@@ -1,0 +1,24 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "external": {},
+    "html": "<html lang=\"en\"><head><title>tripadvisor.com</title><style>#cmsg{animation: A 1.5s;}@keyframes A{0%{opacity:0;}99%{opacity:0;}100%{opacity:1;}}</style><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body style=\"margin:0\"><script data-cfasync=\"false\">var dd={'rt':'i','cid':'AHrlqAAAAAMAcbK6qRnYThwAImA0Ew==','hsh':'2F05D671381DB06BEE4CC52C7A6FD3','b':1738966,'s':46694,'e':'0e6fb6c4c6c2a81092e5dd600032da8b52687ab16b609220f2ed80c48da8402945e6cd267424631c64c0e0d04c6dc1f6','qp':'','host':'geo.captcha-delivery.com','cookie':'w2k6AyZ1Xf48i~gRWNBmeIwkUBQX2_~RBmzzckTuHmFESpX5qp~JigrQUHu0YYkhM_s~hgrGkmI2f57XnLAwLWUsjbIZM66ZYdi3rAvlzPhBXaiN4bpwXOX4GGX8tdXE'}</script><script data-cfasync=\"false\" src=\"https://ct.captcha-delivery.com/i.js\"></script><iframe src=\"https://geo.captcha-delivery.com/interstitial/?initialCid=AHrlqAAAAAMAcbK6qRnYThwAImA0Ew%3D%3D&amp;hash=2F05D671381DB06BEE4CC52C7A6FD3&amp;cid=w2k6AyZ1Xf48i~gRWNBmeIwkUBQX2_~RBmzzckTuHmFESpX5qp~JigrQUHu0YYkhM_s~hgrGkmI2f57XnLAwLWUsjbIZM66ZYdi3rAvlzPhBXaiN4bpwXOX4GGX8tdXE&amp;referer=https%3A%2F%2Fwww.tripadvisor.com%2FShowUserReviews-g297913-d31720175-r984836544-Hadada_Safaris-Arusha_Arusha_Region.html&amp;s=46694&amp;e=0e6fb6c4c6c2a81092e5dd600032da8b52687ab16b609220f2ed80c48da8402945e6cd267424631c64c0e0d04c6dc1f6&amp;b=1738966&amp;dm=cd\" sandbox=\"allow-scripts allow-same-origin allow-forms\" allow=\"accelerometer; gyroscope; magnetometer\" title=\"DataDome Device Check\" width=\"100%\" height=\"100%\" style=\"height:100vh;\" frameborder=\"0\" border=\"0\" scrolling=\"yes\"></iframe></body></html>",
+    "metadata": {
+      "lang": "en",
+      "viewport": "width=device-width, initial-scale=1.0"
+    },
+    "title": "tripadvisor.com",
+    "url": "https://www.tripadvisor.com/ShowUserReviews-g297913-d31720175-r984836544-Hadada_Safaris-Arusha_Arusha_Region.html",
+    "usage": {
+      "tokens": 702
+    },
+    "warning": "Target URL returned error 403: Forbidden"
+  },
+  "meta": {
+    "usage": {
+      "tokens": 702
+    }
+  },
+  "status": 20000
+}
