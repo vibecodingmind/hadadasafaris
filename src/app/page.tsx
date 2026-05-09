@@ -10,7 +10,6 @@ import ValueSection from '@/components/ValueSection';
 import ItinerariesSection from '@/components/ItinerariesSection';
 import KilimanjaroSection from '@/components/KilimanjaroSection';
 import BalloonSection from '@/components/BalloonSection';
-import InquirySection from '@/components/InquirySection';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -27,7 +26,6 @@ export default function Home() {
         <KilimanjaroSection />
         <BalloonSection />
         <ValueSection />
-        <InquirySection />
       </main>
       <Footer />
     </div>
