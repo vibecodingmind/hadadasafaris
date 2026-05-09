@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, Mail } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navItems = [
-  { label: 'HOME', href: '#home' },
   { label: 'ABOUT', href: '#about' },
   { label: 'DESTINATIONS', href: '#destinations' },
   {
@@ -45,7 +44,6 @@ const navItems = [
       'Nimali Africa',
     ],
   },
-  { label: 'BLOG', href: '#blog' },
   { label: 'CONTACT', href: '#contact' },
 ];
 
@@ -82,28 +80,6 @@ export default function Header() {
           : 'bg-transparent'
       }`}
     >
-      {/* Top bar */}
-      <div className={`text-white/80 text-xs py-2 hidden md:block transition-all duration-500 ${isScrolled ? 'hidden' : ''}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <a href="tel:+255123456789" className="flex items-center gap-1.5 hover:text-[#B78A42] transition-colors">
-              <Phone className="w-3 h-3" />
-              <span>+255 123 456 789</span>
-            </a>
-            <a href="mailto:info@hadadasafaris.com" className="flex items-center gap-1.5 hover:text-[#B78A42] transition-colors">
-              <Mail className="w-3 h-3" />
-              <span>info@hadadasafaris.com</span>
-            </a>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Follow us:</span>
-            <a href="#" className="hover:text-[#B78A42] transition-colors">Instagram</a>
-            <a href="#" className="hover:text-[#B78A42] transition-colors">Facebook</a>
-            <a href="#" className="hover:text-[#B78A42] transition-colors">WhatsApp</a>
-          </div>
-        </div>
-      </div>
-
       {/* Main navigation */}
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-20">
