@@ -91,7 +91,9 @@ export default function Header() {
               <img
                 src="/images/hadada-logo.png"
                 alt="Hadada Safaris Logo"
-                className="h-full w-auto object-contain"
+                className={`h-full w-auto object-contain transition-all duration-500 ${
+                  isScrolled ? 'brightness-0 sepia-[.8] saturate-[.6] hue-rotate-[5deg]' : ''
+                }`}
               />
             </div>
           </a>
