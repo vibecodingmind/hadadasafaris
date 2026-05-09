@@ -11,6 +11,8 @@ export default function MemoriesSection() {
 
   return (
     <section id="about" className="relative overflow-hidden" ref={ref}>
+      {/* Top transition from cream destinations */}
+      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#F8F4EC] to-transparent z-10" />
       {/* Full-width cinematic image */}
       <div className="relative h-[70vh] min-h-[500px]">
         <img

@@ -2,109 +2,124 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { BadgeDollarSign, Settings, Headphones } from 'lucide-react';
+import { BadgeDollarSign, Settings, Headphones, ArrowRight } from 'lucide-react';
 
 const values = [
   {
     icon: BadgeDollarSign,
     title: 'Great Value Deals',
     description:
-      'We put in extra work to ensure our clients get full value of the price paid & the best deals through their stay. Remember price is what you pay, value is what you get. Our team negotiates exclusive rates with premium lodges and camps, passing those savings directly to you without compromising on quality or experience.',
+      'We put in extra effort to ensure you get full value and the best deals through your stay. Our team negotiates exclusive rates with premium lodges and camps, passing savings directly to you without compromising on quality.',
     highlight: 'Best Price Guarantee',
   },
   {
     icon: Settings,
     title: '100% Safari Customization',
     description:
-      'Tell us about your trip requirement & we\'ll work together to tailor your trip to meet your exact requirement so you have a trip of your dreams. Whether you want to focus on photography, family-friendly activities, or exclusive luxury experiences, we design every detail around your preferences and budget.',
+      'Tell us about your dream trip and we\'ll tailor every detail to meet your exact requirements. Whether you want photography-focused, family-friendly, or exclusive luxury experiences, we design it around you.',
     highlight: 'Tailored For You',
   },
   {
     icon: Headphones,
     title: 'Constant Support',
     description:
-      'We provide assistance in information & insights from the planning phase of your tour and overall through your stay in the country. Our dedicated support team is available 24/7 to ensure your journey is seamless, safe, and stress-free from the moment you land until your departure.',
+      'We provide assistance from the planning phase through your entire stay. Our dedicated team is available 24/7 to ensure your journey is seamless, safe, and stress-free from landing to departure.',
     highlight: '24/7 Assistance',
   },
 ];
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.15,
-      duration: 0.6,
-      ease: 'easeOut',
-    },
-  }),
-};
 
 export default function ValueSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="py-24 bg-[#F8F4EC] relative overflow-hidden" ref={ref}>
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-[#333333]/3 -translate-y-1/2" />
+    <section className="relative overflow-hidden bg-white" ref={ref}>
+      {/* Subtle top border */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/20 to-transparent" />
+      {/* Top transition from dark itineraries */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#333333]/6 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            Why Choose Us
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-6">
-            The Hadada <span className="text-[#B78A42]">Difference</span>
-          </h2>
-          <p className="text-lg text-[#333333]/50 max-w-2xl mx-auto">
-            We go above and beyond to make your Tanzanian safari an experience of a lifetime
-          </p>
-        </motion.div>
-
-        {/* Value cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {values.map((item, i) => (
-            <motion.div
-              key={item.title}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isInView ? 'visible' : 'hidden'}
-              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
+          {/* Left column - Statement */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-2 lg:sticky lg:top-32"
+          >
+            <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+              Why Choose Us
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
+              The Hadada{' '}
+              <span className="text-[#B78A42]">Difference</span>
+            </h2>
+            <p className="text-base text-[#333333]/55 leading-relaxed mb-8">
+              We go above and beyond to make your Tanzanian safari an experience of a lifetime.
+              Every journey is backed by our promise of value, customization, and unwavering support.
+            </p>
+            <a
+              href="/about"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors group"
             >
-              {/* Top accent line */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#B78A42] to-[#333333] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              Learn More About Us
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
 
-              {/* Icon */}
-              <div className="w-16 h-16 rounded-2xl bg-[#333333] flex items-center justify-center mb-6 group-hover:bg-[#B78A42] transition-colors duration-300">
-                <item.icon className="w-8 h-8 text-[#B78A42] group-hover:text-white transition-colors duration-300" />
+            {/* Decorative accent */}
+            <div className="mt-10 hidden lg:block">
+              <div className="w-20 h-1 bg-[#B78A42] rounded-full mb-4" />
+              <div className="flex gap-8">
+                <div>
+                  <div className="text-3xl font-bold text-[#333333]">15+</div>
+                  <div className="text-[11px] text-[#333333]/40 tracking-wider uppercase">Years</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-[#333333]">5K+</div>
+                  <div className="text-[11px] text-[#333333]/40 tracking-wider uppercase">Travelers</div>
+                </div>
               </div>
+            </div>
+          </motion.div>
 
-              {/* Highlight badge */}
-              <span className="inline-block px-3 py-1 bg-[#B78A42]/10 text-[#B78A42] text-xs font-bold rounded-full tracking-wider mb-4">
-                {item.highlight}
-              </span>
+          {/* Right column - Value cards stacked */}
+          <div className="lg:col-span-3 space-y-5">
+            {values.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, x: 30 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
+                className="group relative bg-[#F8F4EC] rounded-2xl p-7 hover:bg-[#333333] transition-all duration-500 overflow-hidden cursor-default"
+              >
+                <div className="flex items-start gap-5">
+                  {/* Icon */}
+                  <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-[#333333] group-hover:bg-[#B78A42] flex items-center justify-center transition-colors duration-500">
+                    <item.icon className="w-7 h-7 text-[#B78A42] group-hover:text-white transition-colors duration-500" />
+                  </div>
 
-              <h3 className="text-xl font-bold text-[#333333] mb-4 group-hover:text-[#B78A42] transition-colors">
-                {item.title}
-              </h3>
+                  <div className="flex-1 min-w-0">
+                    {/* Highlight badge */}
+                    <span className="inline-block px-3 py-0.5 bg-[#B78A42]/10 group-hover:bg-[#B78A42]/20 text-[#B78A42] text-[10px] font-bold rounded-full tracking-wider mb-2 transition-colors duration-500">
+                      {item.highlight}
+                    </span>
 
-              <p className="text-sm text-[#333333]/50 leading-relaxed">
-                {item.description}
-              </p>
+                    <h3 className="text-lg font-bold text-[#333333] group-hover:text-white mb-2 transition-colors duration-500">
+                      {item.title}
+                    </h3>
 
-              {/* Background decorative */}
-              <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-[#333333]/5 group-hover:bg-[#B78A42]/5 transition-colors duration-500" />
-            </motion.div>
-          ))}
+                    <p className="text-sm text-[#333333]/55 group-hover:text-white/60 leading-relaxed transition-colors duration-500">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Hover accent line */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#B78A42] to-[#D5BC92] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -87,6 +87,8 @@ export default function ItinerariesSection() {
     <section id="itineraries" className="py-24 bg-[#333333] relative overflow-hidden" ref={ref}>
       {/* Decorative */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B78A42]/30 to-transparent" />
+      {/* Top transition from light crafting section */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#FAFAF7]/8 to-transparent" />
 
       <div className="relative z-10">
         {/* Section header */}

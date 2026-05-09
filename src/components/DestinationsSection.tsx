@@ -127,6 +127,8 @@ export default function DestinationsSection() {
 
   return (
     <section id="destinations" className="py-24 bg-[#F8F4EC] relative overflow-hidden" ref={ref}>
+      {/* Top transition from dark hero */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#333333]/8 to-transparent" />
       {/* Decorative */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#B78A42]/5 -translate-y-1/2 translate-x-1/2" />
 

@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Compass, ArrowRight } from 'lucide-react';
+import { Compass, ArrowRight, Sparkles, Shield, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function SafariCraftingSection() {
@@ -10,15 +10,42 @@ export default function SafariCraftingSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="relative overflow-hidden" ref={ref}>
-      {/* Two-column editorial layout */}
+    <section className="relative overflow-hidden bg-[#FAFAF7]" ref={ref}>
+      {/* Top transition from dark memories */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#333333]/10 to-transparent z-10" />
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-        {/* Left - Content */}
+        {/* Left - Image */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="bg-white flex items-center"
+          className="relative min-h-[400px] lg:min-h-0 order-2 lg:order-1"
+        >
+          <img
+            src="/images/ngorongoro-lunch.png"
+            alt="Lunch setup with a view of the Ngorongoro Crater"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAFAF7]/10 to-transparent" />
+
+          {/* Floating label */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="absolute bottom-8 right-8 bg-[#333333]/90 backdrop-blur-sm rounded-lg px-5 py-3"
+          >
+            <span className="text-white/50 text-[10px] tracking-wider uppercase block">Lunch with a view of</span>
+            <span className="text-[#B78A42] font-bold text-sm">Ngorongoro Crater</span>
+          </motion.div>
+        </motion.div>
+
+        {/* Right - Content */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="bg-[#FAFAF7] flex items-center order-1 lg:order-2"
         >
           <div className="px-8 md:px-16 py-16 lg:py-0">
             <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
@@ -67,32 +94,6 @@ export default function SafariCraftingSection() {
               </Button>
             </div>
           </div>
-        </motion.div>
-
-        {/* Right - Image */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative min-h-[400px] lg:min-h-0"
-        >
-          <img
-            src="/images/ngorongoro-lunch.png"
-            alt="Lunch setup with a view of the Ngorongoro Crater"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/10 lg:to-white/5" />
-
-          {/* Floating label */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="absolute bottom-8 left-8 bg-[#333333]/90 backdrop-blur-sm rounded-lg px-5 py-3"
-          >
-            <span className="text-white/50 text-[10px] tracking-wider uppercase block">Lunch with a view of</span>
-            <span className="text-[#B78A42] font-bold text-sm">Ngorongoro Crater</span>
-          </motion.div>
         </motion.div>
       </div>
     </section>
