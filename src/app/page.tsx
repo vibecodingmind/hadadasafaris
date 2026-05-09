@@ -7,7 +7,6 @@ import MemoriesSection from '@/components/MemoriesSection';
 import SafariCraftingSection from '@/components/SafariCraftingSection';
 import ValueSection from '@/components/ValueSection';
 import ItinerariesSection from '@/components/ItinerariesSection';
-import KilimanjaroSection from '@/components/KilimanjaroSection';
 import BalloonSection from '@/components/BalloonSection';
 import TripAdvisorSection from '@/components/TripAdvisorSection';
 import Footer from '@/components/Footer';
@@ -22,7 +21,6 @@ export default function Home() {
         <MemoriesSection />
         <SafariCraftingSection />
         <ItinerariesSection />
-        <KilimanjaroSection />
         <BalloonSection />
         <ValueSection />
         <TripAdvisorSection />
