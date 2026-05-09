@@ -3,13 +3,13 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import DestinationsSection from '@/components/DestinationsSection';
-import TripAdvisorSection from '@/components/TripAdvisorSection';
 import MemoriesSection from '@/components/MemoriesSection';
 import SafariCraftingSection from '@/components/SafariCraftingSection';
 import ValueSection from '@/components/ValueSection';
 import ItinerariesSection from '@/components/ItinerariesSection';
 import KilimanjaroSection from '@/components/KilimanjaroSection';
 import BalloonSection from '@/components/BalloonSection';
+import TripAdvisorSection from '@/components/TripAdvisorSection';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -19,13 +19,13 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <DestinationsSection />
-        <TripAdvisorSection />
         <MemoriesSection />
         <SafariCraftingSection />
         <ItinerariesSection />
         <KilimanjaroSection />
         <BalloonSection />
         <ValueSection />
+        <TripAdvisorSection />
       </main>
       <Footer />
     </div>
