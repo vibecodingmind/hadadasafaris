@@ -42,6 +42,7 @@ const footerLinks: { title: string; links: { label: string; href: string }[] }[]
       { label: 'About Us', href: '/about' },
       { label: 'Camp & Lodges', href: '/camps-lodges' },
       { label: 'Domestic Flights', href: '/domestic-flights' },
+      { label: 'Book a Safari', href: '/booking' },
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },

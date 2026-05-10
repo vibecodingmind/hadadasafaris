@@ -206,7 +206,7 @@ export default function Header() {
               </div>
             ))}
             <LanguageSwitcher isScrolled={isScrolled} />
-            <Link href="/contact">
+            <Link href="/booking">
               <Button className="ml-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
                 BOOK NOW
               </Button>
@@ -299,7 +299,7 @@ export default function Header() {
                 <div className="flex items-center justify-center">
                   <LanguageSwitcher isScrolled={true} />
                 </div>
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/booking" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
                     BOOK NOW
                   </Button>

@@ -1,47 +1,23 @@
-# Hadada Safaris Website - Work Log
-
 ---
-Task ID: 1
+Task ID: 1-7
 Agent: Main Agent
-Task: Build Hadada Safaris company website
+Task: Redesign Contact Page, Create Booking Page, Fix Slideshow Bug, Connect Pages, Fix Language Switcher
 
 Work Log:
-- Initialized Next.js 16 project with fullstack-dev skill
-- Generated 11 AI-generated safari-themed images for the website
-- Built all homepage components with responsive design and framer-motion animations
-- Updated layout.tsx with Hadada Safaris metadata
-- Created custom globals.css with safari-themed color palette
+- Completely redesigned /contact page with hero section, glassmorphism contact method cards, embedded OpenStreetMap iframe, office hours card, social links with gradient hover effects, interactive interest tags (toggleable), form with better UX, and CTA section linking to /booking
+- Created new /booking page with 4-step booking wizard (Trip Details → Preferences → Your Details → Review), featuring selectable destination chips, trip type icon grid, accommodation style selector, budget range selector, step progress indicator with animated transitions, form validation per step, review summary, and success state with WhatsApp + Contact links
+- Fixed image switcher/slideshow bug in both /camps-lodges and /domestic-flights pages: replaced `isTransitioning` useState with `isTransitioningRef` useRef to prevent interval recreation on every transition (the root cause was `isTransitioning` being a dependency of `goTo` callback, which was a dependency of the interval useEffect)
+- Connected Contact ↔ Booking pages: Contact page has "BOOK A SAFARI" button in hero and "PROCEED TO BOOKING" in success state; Booking page has "Prefer to inquire?" link to Contact and "BACK TO CONTACT" in success state
+- Updated Header BOOK NOW button to link to /booking instead of /contact (both desktop and mobile)
+- Updated Footer Company section to include "Book a Safari" link
+- Updated CTABanner to link START PLANNING to /booking and VIEW ITINERARIES to /itineraries
+- Added /booking WhatsApp message to WhatsAppButton
+- Fixed LanguageSwitcher to not use next-intl hooks (useLocale, useRouter from next-intl) which caused SSR build failures; instead reads locale from cookie and navigates via window.location with locale prefix
 
 Stage Summary:
-- Complete single-page website for Hadada Safaris with all requested content
-- Professional design with brand colors (#333333, #B78A42)
-- All navigation dropdowns implemented per user specification
-
----
-Task ID: 2
-Agent: Main Agent
-Task: Design premium Mt. Kilimanjaro destination page template
-
-Work Log:
-- Read and analyzed all project files (Header, Footer, PageHero, Breadcrumb, CTABanner, destinations data, existing [slug] page, kilimanjaro page)
-- Enhanced Destination interface with Route, climateZones, elevation, area fields
-- Added Kilimanjaro-specific data: 6 climbing routes (Machame, Lemosho, Marangu, Umbwe, Rongai, Shira), 5 climate zones, elevation (5,895m), area (1,688 km²)
-- Completely redesigned [slug]/page.tsx with premium layout featuring:
-  - Quick Stats Strip (6 key metrics in glass strip)
-  - Overview section with rich description + sticky CTA sidebar
-  - Climate Zones section (Kilimanjaro-specific with 5 visual cards)
-  - Highlights grid (visual cards with hover effects)
-  - Climbing Routes section (Kilimanjaro-specific with expandable accordion cards, difficulty badges, success rates)
-  - Wildlife & Activities side-by-side layout
-  - Photo Gallery with improved lightbox (prev/next navigation, close button)
-  - FAQ Accordion with AnimatePresence transitions
-  - Other Destinations cards grid
-  - Immersive CTA Banner with decorative orbs
-- Build verified successfully (Next.js 16.1.3)
-- All destination routes return HTTP 200
-
-Stage Summary:
-- Premium Kilimanjaro destination page designed as template at /destinations/[slug]
-- Page works for all 16 destinations, with Kilimanjaro-specific sections (Climate Zones, Climbing Routes)
-- Data file enhanced with routes and climateZones for Kilimanjaro
-- Navigation from Header dropdown and destinations listing page confirmed working
+- Contact page: Fully redesigned with hero, contact methods grid, office hours, map, social links, form with interactive interests, CTA to booking
+- Booking page: New 4-step wizard at /booking with destinations, trip types, accommodation, budget, personal details, review, and success state
+- Slideshow fix: Used useRef instead of useState for transition flag to stabilize interval
+- Navigation: All CTAs updated, BOOK NOW → /booking, Contact ↔ Booking linked
+- Language switcher: Fixed build errors by removing next-intl hook dependencies
+- Build passes successfully

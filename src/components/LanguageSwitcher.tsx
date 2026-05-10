@@ -21,7 +21,8 @@ export default function LanguageSwitcher({ isScrolled }: { isScrolled: boolean }
   const [isOpen, setIsOpen] = useState(false);
   const [currentCode, setCurrentCode] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('hadada-lang') || 'en';
+      const cookieMatch = document.cookie.match(/NEXT_LOCALE=(\w+)/);
+      return cookieMatch ? cookieMatch[1] : 'en';
     }
     return 'en';
   });
@@ -30,11 +31,19 @@ export default function LanguageSwitcher({ isScrolled }: { isScrolled: boolean }
 
   const switchLocale = (code: string) => {
     setCurrentCode(code);
-    localStorage.setItem('hadada-lang', code);
     document.cookie = `NEXT_LOCALE=${code};path=/;max-age=${60 * 60 * 24 * 365}`;
     setIsOpen(false);
-    // Reload to apply next-intl locale change
-    window.location.reload();
+
+    // Construct new path with locale prefix
+    const currentPath = window.location.pathname;
+    // Remove existing locale prefix if present
+    const localeRegex = /^\/(en|ar|zh|nl|fr|de|it|pt|ru|es)(\/.*)?$/;
+    const match = currentPath.match(localeRegex);
+    let basePath = match ? (match[2] || '/') : currentPath;
+
+    // Build new URL with the selected locale
+    const newUrl = code === 'en' ? basePath : `/${code}${basePath === '/' ? '' : basePath}`;
+    window.location.href = newUrl || '/';
   };
 
   return (

@@ -62,17 +62,17 @@ const flightRoutes = [
 /* ─── Slideshow Component ─── */
 function Slideshow({ slides, index }: { slides: AirlineSlide[]; index: number }) {
   const [current, setCurrent] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const isTransitioningRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goTo = useCallback(
     (dir: 'next' | 'prev') => {
-      if (isTransitioning) return;
-      setIsTransitioning(true);
+      if (isTransitioningRef.current) return;
+      isTransitioningRef.current = true;
       setCurrent((prev) => (dir === 'next' ? (prev + 1) % slides.length : prev === 0 ? slides.length - 1 : prev - 1));
-      setTimeout(() => setIsTransitioning(false), 600);
+      setTimeout(() => { isTransitioningRef.current = false; }, 600);
     },
-    [slides.length, isTransitioning]
+    [slides.length]
   );
 
   useEffect(() => {
@@ -138,10 +138,10 @@ function Slideshow({ slides, index }: { slides: AirlineSlide[]; index: number })
             <button
               key={i}
               onClick={() => {
-                if (!isTransitioning) {
-                  setIsTransitioning(true);
+                if (!isTransitioningRef.current) {
+                  isTransitioningRef.current = true;
                   setCurrent(i);
-                  setTimeout(() => setIsTransitioning(false), 600);
+                  setTimeout(() => { isTransitioningRef.current = false; }, 600);
                 }
               }}
               className={`h-1.5 rounded-full transition-all duration-400 ${

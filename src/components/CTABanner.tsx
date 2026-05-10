@@ -4,6 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function CTABanner() {
   const ref = useRef(null);
@@ -47,13 +48,17 @@ export default function CTABanner() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group">
-              START PLANNING
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button className="bg-white/10 backdrop-blur-xl border border-white/25 text-white hover:bg-white/20 hover:border-white/40 font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300">
-              VIEW ITINERARIES
-            </Button>
+            <Link href="/booking">
+              <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group">
+                START PLANNING
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/itineraries">
+              <Button className="bg-white/10 backdrop-blur-xl border border-white/25 text-white hover:bg-white/20 hover:border-white/40 font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300">
+                VIEW ITINERARIES
+              </Button>
+            </Link>
           </div>
         </motion.div>
       </div>

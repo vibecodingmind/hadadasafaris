@@ -15,6 +15,7 @@ const pageMessages: Record<string, string> = {
   '/destinations/kilimanjaro': 'Hello! I\'m interested in climbing Mount Kilimanjaro. Which route do you recommend?',
   '/itineraries': 'Hello! I\'d like to explore your safari itineraries. Can you recommend one for me?',
   '/contact': 'Hello! I\'d like to get in touch about planning a safari.',
+  '/booking': 'Hello! I\'d like to book a safari. I\'ve filled in the booking form and would like to discuss my trip.',
 };
 
 export default function WhatsAppButton() {
