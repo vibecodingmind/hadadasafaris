@@ -98,7 +98,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-500 ${
         isScrolled
           ? 'bg-white/80 backdrop-blur-2xl shadow-sm shadow-[#333333]/5 border-b border-[#B78A42]/5'
           : 'bg-transparent'
@@ -154,7 +154,7 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.25, ease: 'easeOut' }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-[60]"
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-[1001]"
                     >
                       <div className={`bg-white/95 backdrop-blur-2xl shadow-2xl shadow-[#333333]/15 border border-[#B78A42]/10 rounded-2xl overflow-hidden ${
                         item.label === 'DESTINATIONS' ? 'w-[340px]' : item.label === 'MT. KILIMANJARO' ? 'w-[320px]' : 'w-[280px]'

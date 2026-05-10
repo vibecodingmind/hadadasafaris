@@ -117,7 +117,7 @@ export default function RouteMap({ mapData }: { mapData: RouteMapData }) {
         </MapContainer>
 
         {/* Map legend overlay */}
-        <div className="absolute bottom-3 left-3 z-[1000] bg-white/90 backdrop-blur-xl border border-[#B78A42]/10 rounded-xl px-3 py-2 shadow-lg">
+        <div className="absolute bottom-3 left-3 z-[800] bg-white/90 backdrop-blur-xl border border-[#B78A42]/10 rounded-xl px-3 py-2 shadow-lg">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-5 h-0.5 rounded" style={{ borderTop: '2px dashed #B78A42' }} />
             <span className="text-[9px] font-semibold text-[#333333]/60 uppercase tracking-wider">Trek Route</span>
