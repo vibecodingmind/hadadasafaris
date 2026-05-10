@@ -5,7 +5,6 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
-import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -14,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { destinations, getDestinationBySlug } from '@/data/destinations';
 import {
   MapPin,
-  Calendar,
   ChevronDown,
   ArrowRight,
   Star,
@@ -24,7 +22,6 @@ import {
   Mountain,
   Clock,
   TrendingUp,
-  Ruler,
   TreePine,
   Cloud,
   Sun,
@@ -105,15 +102,6 @@ export default function DestinationDetailPage() {
   const otherDestinations = destinations.filter(d => d.slug !== slug).slice(0, 3);
   const isKilimanjaro = slug === 'kilimanjaro';
 
-  const stats = [
-    { label: 'Region', value: destination.region, icon: MapPin },
-    { label: 'Best Time', value: destination.bestTime, icon: Calendar },
-    ...(destination.elevation ? [{ label: 'Elevation', value: destination.elevation, icon: Mountain }] : []),
-    ...(destination.area ? [{ label: 'Area', value: destination.area, icon: Ruler }] : []),
-    { label: 'Wildlife', value: `${destination.wildlife.length}+ Species`, icon: PawPrint },
-    { label: 'Activities', value: `${destination.activities.length} Options`, icon: Compass },
-  ];
-
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAF7]">
       <Header />
@@ -123,33 +111,7 @@ export default function DestinationDetailPage() {
         subtitle={destination.tagline}
         image={destination.heroImage}
       />
-      <Breadcrumb items={[
-        { label: 'Destinations', href: '/destinations' },
-        { label: destination.name },
-      ]} />
-
       <main className="flex-1">
-        {/* Quick Stats Strip */}
-        <section className="bg-white border-b border-[#B78A42]/5">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 divide-x divide-[#B78A42]/5">
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
-                  className="py-5 px-4 text-center group"
-                >
-                  <stat.icon className="w-4 h-4 text-[#B78A42] mx-auto mb-1.5 group-hover:scale-110 transition-transform" />
-                  <div className="text-xs font-bold text-[#333333] tracking-wide">{stat.value}</div>
-                  <div className="text-[10px] text-[#333333]/35 tracking-wider uppercase mt-0.5">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Overview */}
         <section className="py-20 lg:py-28 bg-white" ref={overviewRef}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -264,42 +226,6 @@ export default function DestinationDetailPage() {
             </div>
           </section>
         )}
-
-        {/* Highlights */}
-        <section className={`py-20 lg:py-28 ${isKilimanjaro ? 'bg-white' : 'bg-[#FAFAF7]'}`} ref={highlightsRef}>
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={highlightsInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-14"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-                <Star className="w-3.5 h-3.5" /> What Awaits You
-              </span>
-              <h2 className="text-3xl md:text-5xl font-bold text-[#333333]">
-                Why Visit <span className="text-[#B78A42]">{destination.name.split(' ').pop()}</span>
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {destination.highlights.map((h, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={highlightsInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.05 + i * 0.06, duration: 0.5 }}
-                  className="flex items-center gap-4 bg-white border border-[#B78A42]/5 rounded-xl p-4 hover:border-[#B78A42]/15 hover:shadow-md transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 bg-[#B78A42]/8 group-hover:bg-[#B78A42] rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300">
-                    <Star className="w-4 h-4 text-[#B78A42] group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <span className="text-sm font-medium text-[#333333]/70 group-hover:text-[#333333] transition-colors">{h}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Climbing Routes (Kilimanjaro-specific) */}
         {isKilimanjaro && destination.routes && (

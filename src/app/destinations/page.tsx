@@ -5,7 +5,6 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
-import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -26,7 +25,7 @@ export default function DestinationsPage() {
         subtitle="From the peak of Kilimanjaro to the shores of Zanzibar, discover the incredible diversity of Tanzania"
         image="/images/migration.png"
       />
-      <Breadcrumb items={[{ label: 'Destinations' }]} />
+
       <main className="flex-1">
         <section className="py-24 bg-[#FAFAF7]" ref={ref}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">

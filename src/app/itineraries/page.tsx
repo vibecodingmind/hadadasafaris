@@ -4,7 +4,6 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
-import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -30,7 +29,7 @@ export default function ItinerariesPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <PageHero title="Safari" highlight="Itineraries" subtitle="Handcrafted journeys designed to immerse you in the magic of Tanzania" image="/images/serengeti-elephants.png" />
-      <Breadcrumb items={[{ label: 'Itineraries' }]} />
+
       <main className="flex-1">
         <section className="py-24 bg-[#FAFAF7]" ref={ref}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">

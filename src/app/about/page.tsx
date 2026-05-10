@@ -4,7 +4,6 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
-import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -44,7 +43,7 @@ export default function AboutPage() {
         subtitle="Born from a love of Tanzania, we craft extraordinary journeys that connect travelers to the soul of Africa"
         image="/images/hero-safari.png"
       />
-      <Breadcrumb items={[{ label: 'About' }]} />
+
       <main className="flex-1">
         {/* Story Section */}
         <section className="py-24 bg-white" ref={ref1}>

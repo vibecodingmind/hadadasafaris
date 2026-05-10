@@ -4,7 +4,6 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
-import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -30,7 +29,7 @@ export default function KilimanjaroPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <PageHero title="Mt." highlight="Kilimanjaro" subtitle="Conquer Africa's highest peak — 5,895m of pure determination and breathtaking beauty" image="/images/kilimanjaro.png" />
-      <Breadcrumb items={[{ label: 'Mt. Kilimanjaro' }]} />
+
       <main className="flex-1">
         {/* Overview */}
         <section className="py-24 bg-white">
