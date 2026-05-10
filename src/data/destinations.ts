@@ -11,6 +11,7 @@ export interface Route {
   includes: string[];
   excludes: string[];
   tips: string[];
+  faq: { question: string; answer: string }[];
 }
 
 export interface Destination {
@@ -291,6 +292,13 @@ export const destinations: Destination[] = [
         includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
         excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
         tips: ['Train for endurance at least 3 months before your climb', 'Go pole pole (slowly) — this is the #1 factor for success', 'Drink 3-4 liters of water daily', 'Consider taking diamox after consulting your doctor', 'Pack layers for extreme temperature variation'],
+        faq: [
+          { question: 'Why is the Machame Route the most popular?', answer: 'The Machame Route offers the best balance of scenic variety, acclimatization, and summit success rate. Its climb-high-sleep-low profile on Day 3 (Lava Tower to Barranco) is one of the most effective acclimatization strategies on Kilimanjaro, which is why it consistently achieves a 95% success rate on the 7-day version.' },
+          { question: 'What is the Barranco Wall and is it dangerous?', answer: 'The Barranco Wall is a dramatic 257-meter rock scramble on Day 4 of the Machame Route. While it looks intimidating from camp, it is a non-technical scramble that does not require climbing equipment. Our guides will lead you at a safe pace, and most trekkers find it one of the most enjoyable and memorable parts of the climb.' },
+          { question: 'Should I choose the 6-day or 7-day Machame?', answer: 'We strongly recommend the 7-day version. The extra day at Karanga Camp provides crucial acclimatization that significantly increases your chances of reaching the summit. The 6-day version is possible for experienced trekkers but has a lower success rate due to less time to adapt to altitude.' },
+          { question: 'How crowded is the Machame Route?', answer: 'The Machame Route is the most popular trail, so you will encounter other groups, especially at camps. However, the route is wide enough that it never feels congested on the trail. Camps can be busy, but our team secures the best spots and ensures your comfort.' },
+          { question: 'What is the hardest part of the Machame Route?', answer: 'The summit night from Barafu Camp to Uhuru Peak is the most challenging section. You begin at midnight and trek for 6-7 hours in freezing conditions at high altitude. The terrain is steep scree and volcanic ash. However, our guides set a very slow pace and provide constant encouragement to help you reach the summit for sunrise.' },
+        ],
       },
       {
         name: 'Lemosho Route', slug: 'lemosho', duration: '7-8 Days', difficulty: 'Moderate', successRate: '96%',
@@ -310,6 +318,12 @@ export const destinations: Destination[] = [
         includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
         excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
         tips: ['The extra day on the Shira Plateau is the secret to the 96% success rate', 'Bring a good camera — this is the most photogenic route', 'Start training hikes at least 3 months in advance', 'Pack a -20°C sleeping bag for summit night', 'Stay hydrated throughout the trek'],
+        faq: [
+          { question: 'Why does the Lemosho Route have the highest success rate?', answer: 'The Lemosho Route achieves a 96% success rate primarily because of the extra day spent traversing the Shira Plateau. This provides more time for your body to adapt to the altitude before the climb-high-sleep-low acclimatization day at Lava Tower. The gradual, extended approach gives your body the best possible preparation for summit night.' },
+          { question: 'How is Lemosho different from the Machame Route?', answer: 'The first 2-3 days of the Lemosho Route are completely different from Machame. You start from the western side at Lemosho Glades and traverse the pristine Shira Plateau with very few other trekkers. The routes merge at Lava Tower on Day 4. Lemosho has lower traffic in the early days, more gradual acclimatization, and the highest success rate, but it is one day longer and typically costs more due to the additional day on the mountain.' },
+          { question: 'Is the Lemosho Route suitable for beginners?', answer: 'Yes, the Lemosho Route is actually one of the best choices for first-time Kilimanjaro climbers. The extra acclimatization day and gradual ascent profile make it very forgiving. No technical climbing skills are required — just good physical fitness and determination.' },
+          { question: 'What is the Shira Plateau like?', answer: 'The Shira Plateau is a vast, open moorland at around 3,500-3,800m on the western side of Kilimanjaro. It offers some of the most dramatic views on the mountain, with Kibo Peak rising ahead and giant lobelias dotting the landscape. Sunsets here are particularly spectacular, and the sense of space and solitude is unmatched on Kilimanjaro.' },
+        ],
       },
       {
         name: 'Marangu Route', slug: 'marangu', duration: '5-6 Days', difficulty: 'Easy-Moderate', successRate: '85%',
@@ -327,6 +341,12 @@ export const destinations: Destination[] = [
         includes: ['Professional mountain guide and assistant guides', 'Porter team', 'All meals on the mountain', 'Hut accommodation with beds and mattresses', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
         excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees', 'Sleeping bag (available for rent)'],
         tips: ['Choose the 6-day option over 5 days — the acclimatization day makes a huge difference', 'Bring a warm sleeping bag as the huts can be cold', 'The same path up and down means less scenic variety', 'Book early — hut spaces are limited and fill up fast', 'The gradual slope makes it deceptively easy — respect the altitude'],
+        faq: [
+          { question: 'What are the huts like on the Marangu Route?', answer: 'The Marangu Route has communal A-frame huts with bunk beds and mattresses at Mandara, Horombo, and Kibo camps. Each hut sleeps 4-8 people. The huts provide better shelter from the elements than tents and have communal dining areas. However, they can be noisy and cold, and you still need to bring your own sleeping bag.' },
+          { question: 'Why is the Marangu success rate lower?', answer: 'The 5-day Marangu itinerary has a success rate of around 70-80% because it does not include enough acclimatization time. The 6-day version with an extra rest day at Horombo Huts brings the success rate up to about 85%. We always recommend the 6-day option for this reason.' },
+          { question: 'Is Marangu the easiest route?', answer: 'Marangu has the most gradual slope and is the shortest, which makes it the least physically demanding in terms of terrain. However, "easy" is relative on Kilimanjaro — the shorter duration means less acclimatization, which actually makes summit night harder. The gradual slope can also lull climbers into going too fast, which increases altitude sickness risk.' },
+          { question: 'Can I get a private room in the huts?', answer: 'The huts are shared accommodation and private rooms are not available. You will be in a bunk room with other trekkers. If you prefer privacy, we recommend choosing a camping route like Machame or Lemosho where you have your own private tent.' },
+        ],
       },
       {
         name: 'Umbwe Route', slug: 'umbwe', duration: '6-7 Days', difficulty: 'Challenging', successRate: '88%',
@@ -345,6 +365,12 @@ export const destinations: Destination[] = [
         includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
         excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
         tips: ['Only attempt this route if you have prior high-altitude trekking experience', 'The acclimatization day at Barranco is essential — do not skip it', 'Trekking poles are highly recommended for the steep sections', 'Train specifically for steep ascents and descents', 'Be prepared for solitude — you may not see other groups for days'],
+        faq: [
+          { question: 'Who should attempt the Umbwe Route?', answer: 'The Umbwe Route is recommended only for experienced trekkers who have previous high-altitude experience (above 4,000m). You should be confident in your fitness, comfortable with steep and challenging terrain, and familiar with how your body responds to altitude. If you are a first-time Kilimanjaro climber, we recommend Machame or Lemosho instead.' },
+          { question: 'How steep is the Umbwe Route?', answer: 'The Umbwe Route is the steepest trail on Kilimanjaro. The first two days involve sustained steep ascent through dense forest and moorland, with some sections requiring hands for balance. The grade is significantly steeper than any other route, which is why it gains altitude so quickly and has a lower success rate than the gradual routes.' },
+          { question: 'Why does Umbwe have a lower success rate?', answer: 'The rapid altitude gain of the Umbwe Route means your body has less time to acclimatize. Even with the acclimatization day at Barranco, the first two days push you to nearly 4,000m very quickly. This makes altitude sickness more likely compared to routes with more gradual profiles. The 88% success rate reflects this challenge.' },
+          { question: 'Is it true the Umbwe Route has the fewest people?', answer: 'Yes, the Umbwe Route is the least traveled of all the Kilimanjaro routes. On the first two days, you may not see any other groups at all. This solitude is one of the route\'s main appeals for experienced trekkers who want a wilder, more remote experience. It joins the Machame Route at Barranco Camp.' },
+        ],
       },
       {
         name: 'Rongai Route', slug: 'rongai', duration: '6-7 Days', difficulty: 'Moderate', successRate: '90%',
@@ -362,6 +388,12 @@ export const destinations: Destination[] = [
         includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
         excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
         tips: ['The drier conditions make this a great choice during the short rainy season', 'Bring binoculars for wildlife spotting in the forest zone', 'The descent via Marangu means you will see a different side of the mountain', 'The Mawenzi Tarn camp is one of the most scenic on Kilimanjaro', 'Start hydrating early — the dry air means you lose water faster'],
+        faq: [
+          { question: 'What makes the Rongai Route different?', answer: 'The Rongai Route is the only trail that approaches Kilimanjaro from the north, near the Kenyan border. This means it receives significantly less rainfall than the southern routes, offers a drier and more comfortable trekking experience, and passes through beautiful forest where you may spot colobus monkeys, buffalo, and even elephant.' },
+          { question: 'Can I see wildlife on the Rongai Route?', answer: 'Yes, the northern forest zone has excellent wildlife viewing opportunities. Colobus monkeys are commonly seen, and you may encounter buffalo, elephant, and various antelope species on the lower slopes. The drier conditions also make it easier to spot animals near water sources.' },
+          { question: 'Why does Rongai descend via Marangu?', answer: 'The Rongai Route approaches from the north but descends via the Marangu trail on the south side. This is because the northern descent is not maintained for regular trekking traffic. The benefit is that you get to experience two completely different sides of the mountain — the remote northern approach and the more traveled southern slopes on the way down.' },
+          { question: 'Is Rongai a good choice during the rainy season?', answer: 'Yes, the Rongai Route is one of the best choices during the rainy season (April-May and November) because the northern side receives significantly less rainfall than the southern routes. While you will still experience some rain, the conditions are generally drier and more manageable than on routes like Machame or Lemosho.' },
+        ],
       },
       {
         name: 'Shira Route', slug: 'shira', duration: '7-8 Days', difficulty: 'Moderate-Hard', successRate: '91%',
@@ -380,6 +412,12 @@ export const destinations: Destination[] = [
         includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
         excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
         tips: ['The high starting elevation means altitude effects begin on day one', 'Take it very slow on the first day despite the short hiking distance', 'The Shira Plateau sunset is one of the best on the mountain — have your camera ready', 'Consider arriving a day early in Moshi to pre-acclimatize', 'The vehicle approach means you miss the rainforest zone — consider a pre-climb nature walk'],
+        faq: [
+          { question: 'Why does the Shira Route start so high?', answer: 'The Shira Route begins with a drive to Shira Gate at 3,500m on the western side of the mountain. Instead of hiking up from the base, you are driven through the rainforest and lower zones to start trekking already at high altitude. This saves time but means altitude effects begin immediately, making the first day deceptively challenging despite the short hiking distance.' },
+          { question: 'How does the Shira Route compare to Lemosho?', answer: 'Both routes start from the west and share much of the same trail. The key difference is that Lemosho begins at a lower elevation (2,100m) and includes 1-2 days of hiking through pristine rainforest before reaching the Shira Plateau. The Shira Route skips this by driving to 3,500m. Lemosho has better acclimatization and a higher success rate, while Shira saves a day but requires more caution with altitude.' },
+          { question: 'What is the Shira Plateau like?', answer: 'The Shira Plateau is one of the most dramatic landscapes on Kilimanjaro — a vast, high-altitude moorland dotted with giant lobelias and framed by the volcanic cone of Kibo Peak. The sunsets from the plateau are legendary, with the western sky blazing orange behind the mountain silhouette. It is a surreal, otherworldly environment that feels like walking on another planet.' },
+          { question: 'Is the vehicle approach safe for altitude?', answer: 'Going from near sea level to 3,500m by vehicle in a few hours does increase the risk of altitude sickness on the first day. We mitigate this by keeping the first day very short and slow, ensuring you hydrate well, and having our guides monitor you closely. Arriving a day early in Moshi (1,400m) to pre-acclimatize is strongly recommended.' },
+        ],
       },
     ],
     climateZones: [

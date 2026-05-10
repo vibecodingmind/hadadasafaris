@@ -29,6 +29,9 @@ import {
   Flag,
   Info,
   Footprints,
+  HelpCircle,
+  DollarSign,
+  Phone,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -215,10 +218,14 @@ export default function RoutePage() {
   const itineraryRef = useRef(null);
   const includesRef = useRef(null);
   const tipsRef = useRef(null);
+  const faqRef = useRef(null);
+  const ratesRef = useRef(null);
 
   const itineraryInView = useInView(itineraryRef, { once: true, margin: '-80px' });
   const includesInView = useInView(includesRef, { once: true, margin: '-80px' });
   const tipsInView = useInView(tipsRef, { once: true, margin: '-80px' });
+  const faqInView = useInView(faqRef, { once: true, margin: '-80px' });
+  const ratesInView = useInView(ratesRef, { once: true, margin: '-80px' });
 
   const [openDay, setOpenDay] = useState<number | null>(null);
 
@@ -544,6 +551,101 @@ export default function RoutePage() {
                     </div>
                   </motion.div>
                 </div>
+
+                {/* FAQ */}
+                {route.faq && route.faq.length > 0 && (
+                  <div ref={faqRef}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={faqInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-8 h-8 bg-[#B78A42]/10 rounded-lg flex items-center justify-center">
+                          <HelpCircle className="w-4 h-4 text-[#B78A42]" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-[#333333]">Frequently Asked Questions</h2>
+                      </div>
+
+                      <div className="space-y-3">
+                        {route.faq.map((item, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={faqInView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ delay: 0.05 + i * 0.04, duration: 0.35 }}
+                            className="bg-[#FAFAF7] border border-[#B78A42]/8 rounded-xl overflow-hidden hover:border-[#B78A42]/15 transition-all duration-300"
+                          >
+                            <button
+                              onClick={() => setOpenDay(openDay === 100 + i ? null : 100 + i)}
+                              className="w-full flex items-center justify-between px-5 py-4 text-left group"
+                            >
+                              <span className="text-sm font-semibold text-[#333333] group-hover:text-[#B78A42] transition-colors pr-4">{item.question}</span>
+                              <ChevronDown className={`w-4 h-4 text-[#B78A42]/50 flex-shrink-0 transition-transform duration-300 ${openDay === 100 + i ? 'rotate-180' : ''}`} />
+                            </button>
+                            <AnimatePresence>
+                              {openDay === 100 + i && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.25 }}
+                                >
+                                  <div className="px-5 pb-4">
+                                    <div className="w-full h-px bg-[#B78A42]/10 mb-3" />
+                                    <p className="text-sm text-[#333333]/50 leading-relaxed">{item.answer}</p>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+
+                {/* Rates */}
+                <div ref={ratesRef}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={ratesInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-8 h-8 bg-[#B78A42]/10 rounded-lg flex items-center justify-center">
+                        <DollarSign className="w-4 h-4 text-[#B78A42]" />
+                      </div>
+                      <h2 className="text-2xl font-bold text-[#333333]">Rates</h2>
+                    </div>
+
+                    <div className="bg-[#FAFAF7] border border-[#B78A42]/8 rounded-2xl p-8 text-center">
+                      <div className="w-14 h-14 bg-[#B78A42]/8 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <Phone className="w-6 h-6 text-[#B78A42]" />
+                      </div>
+                      <h3 className="text-xl font-bold text-[#333333] mb-3">Request a Quote</h3>
+                      <p className="text-sm text-[#333333]/50 leading-relaxed max-w-md mx-auto mb-6">
+                        Our {route.name} pricing is customized based on your group size, preferred dates, and accommodation preferences. Contact us for a personalized quote and let our team plan your perfect Kilimanjaro adventure.
+                      </p>
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                        <Link href="/contact">
+                          <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 group">
+                            REQUEST A QUOTE <ArrowRight className="w-3.5 h-3.5 ml-2 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                        <a
+                          href="https://wa.me/255123456789"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-6 py-3 bg-[#25D366]/10 border border-[#25D366]/15 rounded-full text-[#25D366] text-xs font-semibold tracking-wider hover:bg-[#25D366]/15 transition-all duration-300"
+                        >
+                          <Send className="w-3.5 h-3.5" /> WHATSAPP US
+                        </a>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+
               </div>
 
               {/* ─── RIGHT: Sidebar Booking Form (1/3) ─── */}
