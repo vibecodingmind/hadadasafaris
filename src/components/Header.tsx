@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, MessageSquare, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 interface NavChild {
   label: string;
@@ -204,8 +205,9 @@ export default function Header() {
                 </AnimatePresence>
               </div>
             ))}
+            <LanguageSwitcher isScrolled={isScrolled} />
             <Link href="/contact">
-              <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
+              <Button className="ml-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
                 BOOK NOW
               </Button>
             </Link>
@@ -294,6 +296,9 @@ export default function Header() {
                 </div>
               ))}
               <div className="pt-4 space-y-3">
+                <div className="flex items-center justify-center">
+                  <LanguageSwitcher isScrolled={true} />
+                </div>
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
                     BOOK NOW
