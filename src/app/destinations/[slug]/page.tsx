@@ -280,6 +280,9 @@ export default function DestinationDetailPage() {
         />
       )}
       <main className="flex-1">
+        {/* Spacer for Kilimanjaro (no PageHero) */}
+        {isKilimanjaro && <div className="pt-24 lg:pt-28 bg-white" />}
+
         {/* Overview */}
         <section className="py-20 lg:py-28 bg-white" ref={overviewRef}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">

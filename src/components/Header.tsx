@@ -175,9 +175,9 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.25, ease: 'easeOut' }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-[60]"
                     >
-                      <div className={`bg-white shadow-2xl shadow-[#333333]/10 border border-[#B78A42]/8 overflow-hidden ${
+                      <div className={`bg-white/95 backdrop-blur-2xl shadow-2xl shadow-[#333333]/15 border border-[#B78A42]/10 rounded-2xl overflow-hidden ${
                         item.label === 'DESTINATIONS' ? 'w-[340px]' : item.label === 'MT. KILIMANJARO' ? 'w-[320px]' : 'w-[280px]'
                       }`}>
                         {/* Top accent line */}
@@ -194,6 +194,7 @@ export default function Header() {
                             <Link
                               key={child.label}
                               href={child.href}
+                              onClick={() => setOpenDropdown(null)}
                               className="group/item flex items-center gap-3 px-3 py-2.5 hover:bg-[#B78A42]/5 transition-all duration-200"
                             >
                               <div className="w-1 h-1 bg-[#B78A42]/30 group-hover/item:bg-[#B78A42] rounded-full transition-all duration-200 flex-shrink-0" />
