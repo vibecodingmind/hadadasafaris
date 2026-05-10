@@ -261,8 +261,11 @@ export default function DestinationDetailPage() {
                 animate={overviewInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
               >
+                <span className="inline-block text-[#B78A42] text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+                  {destination.tagline}
+                </span>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
-                  Discover <span className="text-[#B78A42]">{destination.name}</span>
+                  {destination.name}
                 </h2>
                 <p className="text-base text-[#333333]/60 leading-relaxed">
                   {destination.longDescription}
