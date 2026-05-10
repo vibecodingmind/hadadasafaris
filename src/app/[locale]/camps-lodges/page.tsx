@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -173,14 +173,17 @@ const lodges: Lodge[] = [
   },
 ];
 
-/* ─── Slideshow Component ─── */
+/* ─── Slideshow Component (CSS Crossfade — robust, no stale closures) ─── */
 function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
   const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const isTransitioningRef = useRef(false);
+  const currentRef = useRef(0);
+  const transitioningRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const touchStartRef = useRef<number | null>(null);
   const len = slides.length;
+
+  // Keep ref in sync
+  useEffect(() => { currentRef.current = current; }, [current]);
 
   const clearAuto = useCallback(() => {
     if (intervalRef.current) {
@@ -192,11 +195,10 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
   const startAuto = useCallback(() => {
     clearAuto();
     intervalRef.current = setInterval(() => {
-      if (isTransitioningRef.current) return;
-      isTransitioningRef.current = true;
-      setDirection(1);
-      setCurrent((prev) => (prev + 1) % len);
-      setTimeout(() => { isTransitioningRef.current = false; }, 650);
+      if (transitioningRef.current) return;
+      transitioningRef.current = true;
+      setCurrent((c) => (c + 1) % len);
+      setTimeout(() => { transitioningRef.current = false; }, 750);
     }, 5000);
   }, [clearAuto, len]);
 
@@ -205,30 +207,35 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
     return clearAuto;
   }, [startAuto, clearAuto]);
 
+  // Reset to first slide when lodge index changes
+  useEffect(() => {
+    setCurrent(0);
+    currentRef.current = 0;
+    transitioningRef.current = false;
+    startAuto();
+  }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const goTo = useCallback(
     (dir: 'next' | 'prev') => {
-      if (isTransitioningRef.current) return;
-      isTransitioningRef.current = true;
-      const newDir = dir === 'next' ? 1 : -1;
-      setDirection(newDir);
-      setCurrent((prev) =>
-        dir === 'next' ? (prev + 1) % len : prev === 0 ? len - 1 : prev - 1
-      );
-      // Reset auto-advance timer after manual navigation
+      if (transitioningRef.current) return;
+      transitioningRef.current = true;
+      setCurrent((c) => dir === 'next' ? (c + 1) % len : c === 0 ? len - 1 : c - 1);
       startAuto();
-      setTimeout(() => { isTransitioningRef.current = false; }, 650);
+      setTimeout(() => { transitioningRef.current = false; }, 750);
     },
-    [startAuto, len]
+    [len, startAuto]
   );
 
-  const goToSlide = useCallback((i: number) => {
-    if (isTransitioningRef.current) return;
-    isTransitioningRef.current = true;
-    setDirection(i > current ? 1 : -1);
-    setCurrent(i);
-    startAuto();
-    setTimeout(() => { isTransitioningRef.current = false; }, 650);
-  }, [current, startAuto]);
+  const goToSlide = useCallback(
+    (i: number) => {
+      if (transitioningRef.current || i === currentRef.current) return;
+      transitioningRef.current = true;
+      setCurrent(i);
+      startAuto();
+      setTimeout(() => { transitioningRef.current = false; }, 750);
+    },
+    [startAuto]
+  );
 
   // Touch / swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -244,12 +251,6 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
     touchStartRef.current = null;
   };
 
-  const variants = {
-    enter: (dir: number) => ({ opacity: 0, x: dir * 60, scale: 0.97 }),
-    center: { opacity: 1, x: 0, scale: 1 },
-    exit: (dir: number) => ({ opacity: 0, x: -dir * 60, scale: 0.97 }),
-  };
-
   return (
     <div
       className="relative rounded-2xl overflow-hidden shadow-xl shadow-[#333333]/8 group"
@@ -258,22 +259,21 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="relative w-full aspect-[16/10] md:aspect-[16/9] overflow-hidden">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.img
-            key={current}
-            custom={direction}
-            src={slides[current].src}
-            alt={slides[current].alt}
-            className="absolute inset-0 w-full h-full object-cover"
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+      <div className="relative w-full aspect-[16/10] md:aspect-[16/9] overflow-hidden bg-[#1a1a1a]">
+        {/* Render ALL images, only the current one is visible */}
+        {slides.map((slide, i) => (
+          <img
+            key={`${index}-${i}`}
+            src={slide.src}
+            alt={slide.alt}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out"
+            style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 2 : 1 }}
+            draggable={false}
+            loading={i === 0 ? 'eager' : 'lazy'}
           />
-        </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/20 via-transparent to-transparent pointer-events-none" />
+        ))}
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/20 via-transparent to-transparent pointer-events-none z-10" />
       </div>
 
       {/* Navigation arrows */}
@@ -281,34 +281,43 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
         <>
           <button
             onClick={() => goTo('prev')}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white opacity-70 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white/25"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-black/25 backdrop-blur-md border border-white/15 text-white opacity-80 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-black/40 active:scale-95"
             aria-label="Previous image"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => goTo('next')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white opacity-70 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white/25"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-black/25 backdrop-blur-md border border-white/15 text-white opacity-80 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-black/40 active:scale-95"
             aria-label="Next image"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-5 h-5" />
           </button>
         </>
       )}
 
       {/* Dots indicator */}
       {slides.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
           {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => goToSlide(i)}
-              className={`h-1.5 rounded-full transition-all duration-400 ${
-                i === current ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                i === current ? 'w-7 bg-white shadow-lg shadow-white/20' : 'w-1.5 bg-white/40 hover:bg-white/60'
               }`}
               aria-label={`Go to image ${i + 1}`}
             />
           ))}
+        </div>
+      )}
+
+      {/* Slide counter */}
+      {slides.length > 1 && (
+        <div className="absolute top-3 right-3 z-20 px-2.5 py-1 bg-black/25 backdrop-blur-md border border-white/10 rounded-full">
+          <span className="text-[11px] font-semibold text-white/80 tracking-wide">
+            {current + 1} / {len}
+          </span>
         </div>
       )}
     </div>
@@ -354,7 +363,7 @@ function LodgeSection({ lodge, index }: { lodge: Lodge; index: number }) {
   return (
     <section ref={ref} className={`py-20 lg:py-28 ${isEven ? 'bg-white' : 'bg-[#FAFAF7]'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: isEven ? -30 : 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
