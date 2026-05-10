@@ -21,7 +21,6 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'ABOUT', href: '/about' },
   { label: 'DESTINATIONS', href: '/destinations' },
   {
     label: 'ITINERARIES',
@@ -50,14 +49,11 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: 'OUR SUPPLIERS',
+    label: 'SUPPLIERS',
     href: '/suppliers',
     children: [
       { label: 'Camp & Lodges', href: '/suppliers' },
       { label: 'Domestic Flights', href: '/suppliers' },
-      { label: 'Balloon Safaris', href: '/suppliers' },
-      { label: 'Entara Camps and Lodges', href: '/suppliers' },
-      { label: 'Nimali Africa', href: '/suppliers' },
     ],
   },
   { label: 'CONTACT', href: '/contact' },
@@ -157,7 +153,7 @@ export default function Header() {
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-[1001]"
                     >
                       <div className={`bg-white/95 backdrop-blur-2xl shadow-2xl shadow-[#333333]/15 border border-[#B78A42]/10 rounded-2xl overflow-hidden ${
-                        item.label === 'DESTINATIONS' ? 'w-[340px]' : item.label === 'MT. KILIMANJARO' ? 'w-[320px]' : 'w-[280px]'
+                        item.label === 'DESTINATIONS' ? 'w-[340px]' : item.label === 'MT. KILIMANJARO' ? 'w-[320px]' : item.label === 'SUPPLIERS' ? 'w-[240px]' : 'w-[280px]'
                       }`}>
                         {/* Top accent line */}
                         <div className="h-[2px] bg-gradient-to-r from-transparent via-[#B78A42] to-transparent" />

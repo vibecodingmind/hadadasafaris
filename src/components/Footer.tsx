@@ -1,39 +1,53 @@
+import Link from 'next/link';
 import { MapPin, Phone, Mail } from 'lucide-react';
 
-const footerLinks = {
-  'Explore': [
-    'Serengeti National Park',
-    'Ngorongoro Crater',
-    'Zanzibar Island',
-    'Mount Kilimanjaro',
-    'Tarangire National Park',
-    'Lake Manyara',
-  ],
-  'Itineraries': [
-    'Amazing Departure 2024/27',
-    'Migration Safari Program',
-    'Luxury Honeymoon Package',
-    'Luxury Summer Zanzibar',
-    'Dry Season Private Safari',
-    'Immersive Culture Trips',
-  ],
-  'Kilimanjaro Routes': [
-    'Machame Route',
-    'Lemosho Route',
-    'Marangu Route',
-    'Umbwe Route',
-    'Rongai Route',
-    'Shira Route',
-  ],
-  'Company': [
-    'About Us',
-    'Our Team',
-    'Blog',
-    'Careers',
-    'Partners',
-    'Contact',
-  ],
-};
+const footerLinks: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: 'Explore',
+    links: [
+      { label: 'Serengeti National Park', href: '/destinations/serengeti' },
+      { label: 'Ngorongoro Crater', href: '/destinations/ngorongoro' },
+      { label: 'Zanzibar Island', href: '/destinations/zanzibar' },
+      { label: 'Mount Kilimanjaro', href: '/destinations/kilimanjaro' },
+      { label: 'Tarangire National Park', href: '/destinations/tarangire' },
+      { label: 'Lake Manyara', href: '/destinations/lake-manyara' },
+      { label: 'Balloon Safari', href: '/destinations/balloon-safari' },
+    ],
+  },
+  {
+    title: 'Itineraries',
+    links: [
+      { label: 'Amazing Departure 2024/27', href: '/itineraries' },
+      { label: 'Migration Safari Program', href: '/itineraries' },
+      { label: 'Luxury Honeymoon Package', href: '/itineraries' },
+      { label: 'Luxury Summer Zanzibar', href: '/itineraries' },
+      { label: 'Dry Season Private Safari', href: '/itineraries' },
+      { label: 'Immersive Culture Trips', href: '/itineraries' },
+    ],
+  },
+  {
+    title: 'Kilimanjaro Routes',
+    links: [
+      { label: 'Machame Route', href: '/kilimanjaro/machame' },
+      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho' },
+      { label: 'Marangu Route', href: '/kilimanjaro/marangu' },
+      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe' },
+      { label: 'Rongai Route', href: '/kilimanjaro/rongai' },
+      { label: 'Shira Route', href: '/kilimanjaro/shira' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About Us', href: '/about' },
+      { label: 'Our Team', href: '/about' },
+      { label: 'Blog', href: '/about' },
+      { label: 'Careers', href: '/about' },
+      { label: 'Partners', href: '/suppliers' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+];
 
 export default function Footer() {
   return (
@@ -73,20 +87,20 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
+          {footerLinks.map((section) => (
+            <div key={section.title}>
               <h4 className="text-xs font-bold tracking-wider text-[#B78A42] mb-4 uppercase">
-                {title}
+                {section.title}
               </h4>
               <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
                       className="text-sm text-white/35 hover:text-white transition-colors duration-200"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

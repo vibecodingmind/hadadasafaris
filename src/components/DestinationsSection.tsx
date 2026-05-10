@@ -89,6 +89,12 @@ const destinations = [
     image: '/images/lake-victoria.png',
     tagline: "Africa's Largest Lake",
   },
+  {
+    name: 'Balloon Safari',
+    slug: 'balloon-safari',
+    image: '/images/balloon-safari.png',
+    tagline: 'Above the Wild',
+  },
 ];
 
 export default function DestinationsSection() {

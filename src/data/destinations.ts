@@ -617,6 +617,33 @@ export const destinations: Destination[] = [
       { name: 'Papyrus Swamps', elevation: '1,133m', description: 'Marshy wetlands harboring sitatunga antelope and over 300 bird species.', icon: 'Sun' },
     ],
   },
+  {
+    name: 'Balloon Safari',
+    slug: 'balloon-safari',
+    tagline: 'Above the Wild',
+    image: '/images/balloon-safari.png',
+    heroImage: '/images/balloon-safari.png',
+    description: 'Float silently above the Serengeti at dawn in a hot air balloon, witnessing the Great Migration, vast herds, and predator-prey interactions from an unforgettable aerial perspective.',
+    longDescription: 'A hot air balloon safari over the Serengeti is widely regarded as one of the most extraordinary wildlife experiences on Earth. As dawn breaks over the endless plains, you rise gently into the sky aboard a spacious wicker basket, carried by the morning thermals across one of the world\'s greatest natural spectacles. Below you, the Serengeti reveals its full grandeur: herds of wildebeest stretching to the horizon in columns tens of thousands strong, prides of lion stalking through golden grass, elephant families lumbering toward waterholes, and the winding rivers where crocodiles wait at crossing points. The silence of flight is broken only by the occasional roar of the burner, allowing you to observe wildlife completely undisturbed. Your pilot skillfully navigates at varying altitudes, sometimes skimming just above the treetops for intimate views, other times rising to take in the vast scale of the ecosystem stretching endlessly in every direction. The flight typically lasts approximately one hour, covering a distance that would take days to traverse by vehicle. Upon landing, you are greeted with a champagne toast before settling into a lavish bush breakfast served on folding linen tables set beneath an acacia tree on the open plain. This is more than a safari activity; it is a once-in-a-lifetime moment of pure wonder, combining adventure, luxury, and the raw beauty of the African wilderness in a way that nothing else can.',
+    region: 'Serengeti & Tarangire',
+    bestTime: 'June — October (Dry Season)',
+    highlights: ['Dawn flight over the Serengeti', 'Aerial view of the Great Migration', 'Champagne bush breakfast', 'Silent, undisturbed wildlife viewing', 'Spectacular sunrise photography', 'Unforgettable once-in-a-lifetime experience'],
+    wildlife: ['Wildebeest', 'Zebra', 'Lion', 'Elephant', 'Giraffe', 'Hippo', 'Cheetah', 'Leopard', 'Buffalo', 'Hyena'],
+    activities: ['Hot air balloon flight', 'Champagne bush breakfast', 'Sunrise photography', 'Post-flight game drive', 'Sundowner experiences', 'Photography safari'],
+    accordion: [
+      { question: 'How long is the balloon flight?', answer: 'The balloon flight lasts approximately one hour, depending on wind conditions. The entire experience, including the pre-dawn departure, safety briefing, flight, landing celebration, and champagne breakfast, takes about 4-5 hours from start to finish. You will be back at your camp by mid-morning, in time for a relaxed lunch or an afternoon game drive.' },
+      { question: 'Is the balloon safari safe?', answer: 'Yes, balloon safaris have an excellent safety record. All flights are operated by licensed, experienced pilots who follow strict safety protocols. Balloons are maintained to international aviation standards and carry comprehensive insurance. A thorough safety briefing is given before each flight. Weather conditions are assessed each morning, and flights only proceed when conditions are safe.' },
+      { question: 'What time does the balloon launch?', answer: 'Balloon flights launch at dawn, typically around 6:00 AM, depending on the season. You will be collected from your lodge or camp before first light, around 5:00 AM, and driven to the launch site where you can watch the balloon being inflated in the pre-dawn glow. The early start ensures you experience the most beautiful light and active wildlife behavior.' },
+      { question: 'Where do balloon safaris operate?', answer: 'Balloon safaris operate in the central Serengeti (Seronera area) year-round, and seasonally in the southern Serengeti (Ndutu) during the calving season from January to March, and the western Serengeti during the Grumeti River crossing from June to July. Some operators also offer flights over Tarangire National Park. We will match your flight location to where the best wildlife action is at the time of your visit.' },
+    ],
+    gallery: ['/images/balloon-safari.png', '/images/serengeti-elephants.png', '/images/migration.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Pre-Dawn Launch', elevation: '1,500 - 1,800m', description: 'Watch the balloon inflate under starlit skies as the savannah awakens around you.', icon: 'Cloud' },
+      { name: 'Low-Level Flight', elevation: '30 - 100m above ground', description: 'Skim above treetops and riverbanks for intimate, eye-level wildlife encounters.', icon: 'Wheat' },
+      { name: 'High Altitude Panorama', elevation: '300 - 600m above ground', description: 'Rise above the plains to witness the vast scale of herds and migration columns.', icon: 'Sun' },
+      { name: 'Bush Breakfast Landing', elevation: '1,500m', description: 'Touch down on the open plain for a champagne toast and lavish breakfast under acacias.', icon: 'TreePine' },
+    ],
+  },
 ];
 
 export function getDestinationBySlug(slug: string): Destination | undefined {
