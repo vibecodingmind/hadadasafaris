@@ -11,7 +11,8 @@ import CookieConsent from '@/components/CookieConsent';
 import { Button } from '@/components/ui/button';
 import { getRouteBySlug } from '@/data/destinations';
 import { getRouteMapData } from '@/data/routeMaps';
-import RouteMap from '@/components/RouteMap';
+import dynamic from 'next/dynamic';
+const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 import {
   Mountain,
   Clock,
@@ -262,6 +263,9 @@ export default function RoutePage() {
     ? destination.gallery
     : ['/images/kilimanjaro.png', '/images/hero-safari.png', '/images/migration.png'];
 
+  // Route map data
+  const routeMapData = getRouteMapData(routeSlug);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAF7]">
       <Header />
@@ -302,16 +306,13 @@ export default function RoutePage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="relative rounded-2xl overflow-hidden shadow-lg shadow-[#333333]/8 h-[320px] md:h-[380px]"
               >
-                {(() => {
-                  const mapData = getRouteMapData(routeSlug);
-                  return mapData ? (
-                    <RouteMap mapData={mapData} />
-                  ) : (
-                    <div className="w-full h-full bg-[#e8e4de] flex items-center justify-center">
-                      <span className="text-xs text-[#333333]/40 font-semibold tracking-wider uppercase">Map Unavailable</span>
-                    </div>
-                  );
-                })()}
+                {routeMapData ? (
+                  <RouteMap mapData={routeMapData} />
+                ) : (
+                  <div className="w-full h-full bg-[#e8e4de] flex items-center justify-center">
+                    <span className="text-xs text-[#333333]/40 font-semibold tracking-wider uppercase">Map Unavailable</span>
+                  </div>
+                )}
               </motion.div>
 
               {/* Right — Photo Slideshow */}
