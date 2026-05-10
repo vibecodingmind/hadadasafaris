@@ -1,50 +1,63 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const navItems = [
-  { label: 'ABOUT', href: '#about' },
-  { label: 'DESTINATIONS', href: '#destinations' },
+interface NavChild {
+  label: string;
+  href: string;
+}
+
+interface NavItem {
+  label: string;
+  href: string;
+  children?: NavChild[];
+}
+
+const navItems: NavItem[] = [
+  { label: 'ABOUT', href: '/about' },
+  { label: 'DESTINATIONS', href: '/destinations' },
   {
     label: 'ITINERARIES',
-    href: '#itineraries',
+    href: '/itineraries',
     children: [
-      'Amazing Departure in 2024/27',
-      'Migration Safari Program',
-      'Luxury Honeymoon Package',
-      'Luxury Summer Zanzibar',
-      'Dry Season Private Safari',
-      'Immersive Culture Trips',
-      'Custom and Traditional Trip',
+      { label: 'Amazing Departure in 2024/27', href: '/itineraries' },
+      { label: 'Migration Safari Program', href: '/itineraries' },
+      { label: 'Luxury Honeymoon Package', href: '/itineraries' },
+      { label: 'Luxury Summer Zanzibar', href: '/itineraries' },
+      { label: 'Dry Season Private Safari', href: '/itineraries' },
+      { label: 'Immersive Culture Trips', href: '/itineraries' },
+      { label: 'Custom and Traditional Trip', href: '/itineraries' },
     ],
   },
   {
     label: 'MT. KILIMANJARO',
-    href: '#kilimanjaro',
+    href: '/kilimanjaro',
     children: [
-      'Machame Route',
-      'Lemosho Route',
-      'Marangu Route',
-      'Umbwe Route',
-      'Rongai Route',
-      'Shira Route',
+      { label: 'Machame Route', href: '/kilimanjaro' },
+      { label: 'Lemosho Route', href: '/kilimanjaro' },
+      { label: 'Marangu Route', href: '/kilimanjaro' },
+      { label: 'Umbwe Route', href: '/kilimanjaro' },
+      { label: 'Rongai Route', href: '/kilimanjaro' },
+      { label: 'Shira Route', href: '/kilimanjaro' },
     ],
   },
   {
     label: 'OUR SUPPLIERS',
-    href: '#suppliers',
+    href: '/suppliers',
     children: [
-      'Camp & Lodges',
-      'Domestic Flights',
-      'Balloon Safaris',
-      'Entara Camps and Lodges',
-      'Nimali Africa',
+      { label: 'Camp & Lodges', href: '/suppliers' },
+      { label: 'Domestic Flights', href: '/suppliers' },
+      { label: 'Balloon Safaris', href: '/suppliers' },
+      { label: 'Entara Camps and Lodges', href: '/suppliers' },
+      { label: 'Nimali Africa', href: '/suppliers' },
     ],
   },
-  { label: 'CONTACT', href: '#contact' },
+  { label: 'CONTACT', href: '/contact' },
 ];
 
 export default function Header() {
@@ -52,16 +65,22 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
+  const isHome = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      // Only show sticky header after scrolling past the hero section (100vh)
-      const heroHeight = window.innerHeight;
-      setIsScrolled(window.scrollY > heroHeight - 60);
+      if (isHome) {
+        const heroHeight = window.innerHeight;
+        setIsScrolled(window.scrollY > heroHeight - 60);
+      } else {
+        setIsScrolled(true);
+      }
     };
+    setIsScrolled(!isHome);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -82,11 +101,9 @@ export default function Header() {
           : 'bg-transparent'
       }`}
     >
-      {/* Main navigation */}
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between py-5">
-          {/* Logo */}
-          <a href="#home" className="flex items-center group z-10">
+          <Link href="/" className="flex items-center group z-10">
             <div className="relative h-16 w-auto">
               <img
                 src="/images/hadada-logo.png"
@@ -96,9 +113,8 @@ export default function Header() {
                 }`}
               />
             </div>
-          </a>
+          </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <div
@@ -107,17 +123,16 @@ export default function Header() {
                 onMouseEnter={() => item.children && setOpenDropdown(item.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <a
+                <Link
                   href={item.href}
                   className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
                     isScrolled ? 'text-[#333333]' : 'text-white'
-                  }`}
+                  } ${pathname === item.href ? 'text-[#B78A42]' : ''}`}
                 >
                   {item.label}
                   {item.children && <ChevronDown className="w-3 h-3" />}
-                </a>
+                </Link>
 
-                {/* Dropdown */}
                 <AnimatePresence>
                   {item.children && openDropdown === item.label && (
                     <motion.div
@@ -129,13 +144,13 @@ export default function Header() {
                     >
                       <div className="py-2">
                         {item.children.map((child) => (
-                          <a
-                            key={child}
-                            href="#"
+                          <Link
+                            key={child.label}
+                            href={child.href}
                             className="block px-5 py-2.5 text-sm text-[#333333]/70 hover:text-[#B78A42] hover:bg-[#B78A42]/5 transition-all duration-200 tracking-wide"
                           >
-                            {child}
-                          </a>
+                            {child.label}
+                          </Link>
                         ))}
                       </div>
                     </motion.div>
@@ -143,12 +158,13 @@ export default function Header() {
                 </AnimatePresence>
               </div>
             ))}
-            <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
-              BOOK NOW
-            </Button>
+            <Link href="/contact">
+              <Button className="ml-4 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
+                BOOK NOW
+              </Button>
+            </Link>
           </nav>
 
-          {/* Mobile menu button */}
           <button
             className={`lg:hidden p-2 z-10 transition-colors duration-300 ${
               isScrolled ? 'text-[#333333]' : 'text-white'
@@ -161,7 +177,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -175,13 +190,13 @@ export default function Header() {
               {navItems.map((item) => (
                 <div key={item.label} className="border-b border-[#333333]/6 last:border-0">
                   <div className="flex items-center justify-between">
-                    <a
+                    <Link
                       href={item.href}
                       className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80 hover:text-[#B78A42] transition-colors"
                       onClick={() => !item.children && setMobileMenuOpen(false)}
                     >
                       {item.label}
-                    </a>
+                    </Link>
                     {item.children && (
                       <button
                         onClick={() =>
@@ -208,14 +223,14 @@ export default function Header() {
                       >
                         <div className="pb-3 pl-4">
                           {item.children.map((child) => (
-                            <a
-                              key={child}
-                              href="#"
+                            <Link
+                              key={child.label}
+                              href={child.href}
                               className="block py-2 text-sm text-[#333333]/50 hover:text-[#B78A42] transition-colors tracking-wide"
                               onClick={() => setMobileMenuOpen(false)}
                             >
-                              {child}
-                            </a>
+                              {child.label}
+                            </Link>
                           ))}
                         </div>
                       </motion.div>
@@ -224,9 +239,11 @@ export default function Header() {
                 </div>
               ))}
               <div className="pt-4 space-y-3">
-                <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
-                  BOOK NOW
-                </Button>
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
+                    BOOK NOW
+                  </Button>
+                </Link>
                 <div className="flex gap-3">
                   <a
                     href="tel:+255123456789"

@@ -158,6 +158,7 @@ export default function DestinationsSection() {
               <a
                 href="/destinations"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors mr-2"
+                onClick={(e) => { e.preventDefault(); window.location.href = '/destinations'; }}
               >
                 View All Destinations
                 <ArrowRight className="w-4 h-4" />
