@@ -1,3 +1,13 @@
+export interface Route {
+  name: string;
+  slug: string;
+  duration: string;
+  difficulty: string;
+  successRate: string;
+  description: string;
+  highlights: string[];
+}
+
 export interface Destination {
   name: string;
   slug: string;
@@ -8,11 +18,15 @@ export interface Destination {
   longDescription: string;
   region: string;
   bestTime: string;
+  elevation?: string;
+  area?: string;
   highlights: string[];
   wildlife: string[];
   activities: string[];
   accordion: { question: string; answer: string }[];
   gallery: string[];
+  routes?: Route[];
+  climateZones?: { name: string; elevation: string; description: string; icon: string }[];
 }
 
 export const destinations: Destination[] = [
@@ -194,6 +208,8 @@ export const destinations: Destination[] = [
     longDescription: 'Mount Kilimanjaro is Africa\'s crowning glory \u2014 a colossal, snow-capped volcano rising 5,895 meters above the Tanzanian plains, visible for miles in every direction. As the highest free-standing mountain in the world, Kilimanjaro is a bucket-list destination for trekkers and adventurers from every corner of the globe. What makes Kilimanjaro extraordinary is the journey itself: as you ascend, you pass through five distinct climate zones, each with its own unique flora and fauna. You begin in lush tropical rainforest, home to blue monkeys and colobus monkeys, then progress through heath and moorland with giant lobelias and groundsels, across alpine desert with its stark, lunar beauty, and finally into the arctic zone of ice and snow near the summit. No technical climbing skills are required \u2014 the challenge is altitude and endurance. With proper preparation, a good guide, and a sensible pace, the summit is attainable for anyone with reasonable fitness. Our climbs are led by experienced, certified mountain guides, supported by a full team of porters and cooks who ensure your safety, comfort, and nutrition throughout the trek. Standing on Uhuru Peak at sunrise, with the clouds far below and the curvature of the Earth visible on the horizon, is one of life\'s most profound and unforgettable moments.',
     region: 'Northern Tanzania',
     bestTime: 'January \u2014 March & June \u2014 October',
+    elevation: '5,895m',
+    area: '1,688 km\u00B2',
     highlights: ['Five climate zones', 'No technical climbing required', 'Uhuru Peak at 5,895m', 'Glacier views', 'Sunrise from the Roof of Africa', 'Multiple route options'],
     wildlife: ['Colobus Monkey', 'Blue Monkey', 'Elephant (lower slopes)', 'Buffalo (lower slopes)', 'Bushbuck', 'Duiker', 'Honey Badger', 'Augur Buzzard', 'Malachite Sunbird', 'Alpine Chough'],
     activities: ['Summit trek', 'Day hikes on lower slopes', 'Cultural visits', 'Coffee plantation tours', 'Acclimatization walks', 'Photography'],
@@ -204,6 +220,21 @@ export const destinations: Destination[] = [
       { question: 'How should I prepare for altitude?', answer: 'The best preparation is choosing a longer route with good acclimatization days. We recommend taking diamox (consult your doctor), staying well hydrated, eating well, and ascending slowly. Our guides are trained to monitor for altitude sickness and will make decisions to keep you safe.' },
     ],
     gallery: ['/images/kilimanjaro.png', '/images/hero-safari.png', '/images/migration.png', '/images/ngorongoro-crater.png'],
+    routes: [
+      { name: 'Machame Route', slug: 'machame', duration: '6-7 Days', difficulty: 'Moderate', successRate: '95%', description: 'Known as the "Whiskey Route," Machame is the most popular path to Uhuru Peak. It offers stunning scenic variety, excellent acclimatization with its climb-high-sleep-low profile, and a high summit success rate. You\'ll traverse through rainforest, moorland, alpine desert, and arctic zones.', highlights: ['Great acclimatization profile', 'Stunning scenic variety', 'Lava Tower ascent', 'Barranco Wall climb', 'High success rate'] },
+      { name: 'Lemosho Route', slug: 'lemosho', duration: '7-8 Days', difficulty: 'Moderate', successRate: '96%', description: 'The Lemosho Route is considered the most beautiful trail on Kilimanjaro. Starting from the west, it offers pristine wilderness, fewer crowds in the early days, and excellent acclimatization. It joins the Machame route at Lava Tower and approaches the summit via Barafu Camp.', highlights: ['Most scenic route', 'Low traffic on early days', 'Excellent acclimatization', 'Shira Plateau traverse', 'Highest success rate'] },
+      { name: 'Marangu Route', slug: 'marangu', duration: '5-6 Days', difficulty: 'Easy-Moderate', successRate: '85%', description: 'The "Coca-Cola Route" is the oldest and most established path. It\'s the only route with sleeping huts instead of tents, making it popular for budget-conscious climbers. However, its shorter duration means less acclimatization time.', highlights: ['Only route with huts', 'Shortest and cheapest', 'Gradual slope', 'Well-established path', 'Good for first-timers'] },
+      { name: 'Umbwe Route', slug: 'umbwe', duration: '6-7 Days', difficulty: 'Challenging', successRate: '88%', description: 'The most direct and steepest route to the summit. Umbwe is for experienced trekkers seeking a challenge. The rapid ascent means acclimatization can be difficult, but the solitude and wild beauty are unmatched.', highlights: ['Shortest approach', 'Most challenging', 'Very few climbers', 'Dramatic scenery', 'Wild and untouched'] },
+      { name: 'Rongai Route', slug: 'rongai', duration: '6-7 Days', difficulty: 'Moderate', successRate: '90%', description: 'The only route approaching from the north, Rongai offers a drier, less traveled experience. It retains a wilderness feel and passes through beautiful forest with chances to spot wildlife. The descent is via the Marangu route.', highlights: ['Drier weather', 'Less crowded', 'Wilderness experience', 'Good wildlife viewing', 'Unique northern approach'] },
+      { name: 'Shira Route', slug: 'shira', duration: '7-8 Days', difficulty: 'Moderate-Hard', successRate: '91%', description: 'Starting at a high elevation on the Shira Plateau, this route is for those who want dramatic views from day one. The drive to the trailhead is an adventure itself. It joins the Machame route and offers excellent acclimatization.', highlights: ['High starting elevation', 'Dramatic plateau views', 'Good acclimatization', 'Less crowded', 'Scenic vehicle approach'] },
+    ],
+    climateZones: [
+      { name: 'Cultivation Zone', elevation: '800 - 1,800m', description: 'Lush farmland and villages at the mountain base, with coffee and banana plantations.', icon: 'Wheat' },
+      { name: 'Rainforest Zone', elevation: '1,800 - 2,800m', description: 'Dense tropical forest with colobus monkeys, blue monkeys, and vibrant birdlife.', icon: 'TreePine' },
+      { name: 'Moorland Zone', elevation: '2,800 - 4,000m', description: 'Heath and moorland with giant lobelias and groundsels under open skies.', icon: 'Cloud' },
+      { name: 'Alpine Desert', elevation: '4,000 - 5,000m', description: 'Stark, lunar landscape with extreme temperature swings and sparse vegetation.', icon: 'Sun' },
+      { name: 'Arctic Zone', elevation: '5,000 - 5,895m', description: 'Ice, snow, and glaciers near the summit. The Roof of Africa awaits.', icon: 'Snowflake' },
+    ],
   },
   {
     name: 'Arusha National Park',
