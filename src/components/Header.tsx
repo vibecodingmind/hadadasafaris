@@ -41,12 +41,12 @@ const navItems: NavItem[] = [
     href: '#',
     noClick: true,
     children: [
-      { label: 'Machame Route', href: '/kilimanjaro/machame', description: '6-7 Days · Moderate · 95%' },
-      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho', description: '7-8 Days · Moderate · 96%' },
-      { label: 'Marangu Route', href: '/kilimanjaro/marangu', description: '5-6 Days · Easy-Moderate · 85%' },
-      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe', description: '6-7 Days · Challenging · 88%' },
-      { label: 'Rongai Route', href: '/kilimanjaro/rongai', description: '6-7 Days · Moderate · 90%' },
-      { label: 'Shira Route', href: '/kilimanjaro/shira', description: '7-8 Days · Moderate-Hard · 91%' },
+      { label: 'Machame Route', href: '/kilimanjaro/machame' },
+      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho' },
+      { label: 'Marangu Route', href: '/kilimanjaro/marangu' },
+      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe' },
+      { label: 'Rongai Route', href: '/kilimanjaro/rongai' },
+      { label: 'Shira Route', href: '/kilimanjaro/shira' },
     ],
   },
   {
