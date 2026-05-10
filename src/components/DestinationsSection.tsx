@@ -158,7 +158,6 @@ export default function DestinationsSection() {
               <a
                 href="/destinations"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors mr-2"
-                onClick={(e) => { e.preventDefault(); window.location.href = '/destinations'; }}
               >
                 View All Destinations
                 <ArrowRight className="w-4 h-4" />
@@ -205,7 +204,7 @@ export default function DestinationsSection() {
             {destinations.map((dest, i) => (
               <motion.a
                 key={dest.name}
-                href={`/destinations#${dest.slug}`}
+                href={`/destinations/${dest.slug}`}
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.04, duration: 0.5 }}
