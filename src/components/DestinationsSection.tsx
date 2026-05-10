@@ -3,6 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 
 const destinations = [
   {
@@ -161,13 +162,13 @@ export default function DestinationsSection() {
 
             {/* Navigation arrows + View All */}
             <div className="flex items-center gap-3 flex-shrink-0">
-              <a
+              <Link
                 href="/destinations"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors mr-2"
               >
                 View All Destinations
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
               <button
                 onClick={() => scroll('left')}
                 disabled={!canScrollLeft}
@@ -208,9 +209,11 @@ export default function DestinationsSection() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {destinations.map((dest, i) => (
-              <motion.a
+              <Link
                 key={dest.name}
                 href={`/destinations/${dest.slug}`}
+              >
+              <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.04, duration: 0.5 }}
@@ -242,11 +245,12 @@ export default function DestinationsSection() {
                     </div>
                   </div>
                 </div>
-              </motion.a>
+              </motion.div>
+              </Link>
             ))}
 
             {/* View All card - glassy */}
-            <a
+            <Link
               href="/destinations"
               className="group flex-shrink-0 w-[200px] md:w-[220px] rounded-2xl bg-white/60 backdrop-blur-sm border border-[#B78A42]/15 flex flex-col items-center justify-center gap-4 hover:shadow-xl hover:bg-white/80 transition-all duration-500"
             >
@@ -257,7 +261,7 @@ export default function DestinationsSection() {
                 <span className="text-[#333333] font-bold text-sm block">View All</span>
                 <span className="text-[#333333]/40 text-xs">Destinations</span>
               </div>
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

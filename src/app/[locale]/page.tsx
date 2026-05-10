@@ -16,6 +16,7 @@ const SustainabilitySection = dynamic(() => import('@/components/SustainabilityS
 const TripAdvisorSection = dynamic(() => import('@/components/TripAdvisorSection'));
 const FAQSection = dynamic(() => import('@/components/FAQSection'));
 const PartnersStrip = dynamic(() => import('@/components/PartnersStrip'));
+const NewsletterSection = dynamic(() => import('@/components/NewsletterSection'));
 const CTABanner = dynamic(() => import('@/components/CTABanner'));
 const WhatsAppButton = dynamic(() => import('@/components/WhatsAppButton'));
 const ScrollToTop = dynamic(() => import('@/components/ScrollToTop'));
@@ -64,6 +65,9 @@ export default function Home() {
 
         {/* Partners Strip - Infinite scrolling logos */}
         <PartnersStrip />
+
+        {/* Newsletter - Glass signup section */}
+        <NewsletterSection />
 
         {/* CTA Banner - Dark immersive call-to-action */}
         <CTABanner />

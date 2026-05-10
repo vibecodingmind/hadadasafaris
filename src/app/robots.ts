@@ -10,5 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://hadadasafaris.com/sitemap.xml',
+    host: 'https://hadadasafaris.com',
   };
 }

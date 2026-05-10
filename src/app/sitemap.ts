@@ -1,42 +1,67 @@
 import type { MetadataRoute } from 'next';
 
+const locales = ['en', 'ar', 'zh', 'nl', 'fr', 'de', 'it', 'pt', 'ru', 'es'];
+const baseUrl = 'https://hadadasafaris.com';
+
+const staticPaths = [
+  '',
+  '/destinations',
+  '/itineraries',
+  '/camps-lodges',
+  '/domestic-flights',
+  '/contact',
+  '/about',
+  '/booking',
+  '/privacy',
+  '/terms',
+];
+
+const destinationSlugs = [
+  'serengeti', 'ngorongoro', 'zanzibar', 'kilimanjaro', 'tarangire',
+  'lake-manyara', 'selous', 'ruaha', 'katavi', 'gombe-stream',
+  'lake-victoria', 'mafia-island', 'pemba-island', 'stone-town',
+  'olduvai-gorge', 'balloon-safari',
+];
+
+const kilimanjaroRoutes = ['machame', 'lemosho', 'marangu', 'umbwe', 'rongai', 'shira'];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://hadadasafaris.com';
+  const entries: MetadataRoute.Sitemap = [];
 
-  const staticPages = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 1.0 },
-    { url: `${baseUrl}/destinations`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.9 },
-    { url: `${baseUrl}/itineraries`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${baseUrl}/camps-lodges`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${baseUrl}/domestic-flights`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.6 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.5 },
-    { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
-  ];
+  // Generate locale-prefixed entries for all static pages
+  for (const locale of locales) {
+    for (const path of staticPaths) {
+      const priority = path === '' ? 1.0 : path === '/destinations' ? 0.9 : path === '/itineraries' || path === '/camps-lodges' ? 0.8 : path === '/booking' || path === '/contact' ? 0.7 : 0.5;
+      const changeFreq = path === '' ? 'weekly' : path === '/privacy' || path === '/terms' ? 'yearly' : 'monthly';
 
-  const destinations = [
-    'serengeti', 'ngorongoro', 'zanzibar', 'kilimanjaro', 'tarangire',
-    'lake-manyara', 'selous', 'ruaha', 'katavi', 'gombe-stream',
-    'lake-victoria', 'mafia-island', 'pemba-island', 'stone-town',
-    'olduvai-gorge', 'balloon-safari',
-  ];
+      entries.push({
+        url: `${baseUrl}/${locale}${path}`,
+        lastModified: new Date(),
+        changeFrequency: changeFreq as MetadataRoute.Sitemap[0]['changeFrequency'],
+        priority,
+      });
+    }
 
-  const destinationPages = destinations.map((slug) => ({
-    url: `${baseUrl}/destinations/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }));
+    // Destination detail pages
+    for (const slug of destinationSlugs) {
+      entries.push({
+        url: `${baseUrl}/${locale}/destinations/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      });
+    }
 
-  const kilimanjaroRoutes = ['machame', 'lemosho', 'marangu', 'umbwe', 'rongai', 'shira'];
+    // Kilimanjaro route pages
+    for (const route of kilimanjaroRoutes) {
+      entries.push({
+        url: `${baseUrl}/${locale}/kilimanjaro/${route}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      });
+    }
+  }
 
-  const kilimanjaroPages = kilimanjaroRoutes.map((route) => ({
-    url: `${baseUrl}/kilimanjaro/${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  return [...staticPages, ...destinationPages, ...kilimanjaroPages];
+  return entries;
 }

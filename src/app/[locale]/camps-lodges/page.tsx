@@ -8,6 +8,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
 import CookieConsent from '@/components/CookieConsent';
 import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 
 /* ─── Lodge Data ─── */
 interface LodgeSlide {
@@ -175,50 +176,101 @@ const lodges: Lodge[] = [
 /* ─── Slideshow Component ─── */
 function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
   const isTransitioningRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartRef = useRef<number | null>(null);
+  const len = slides.length;
+
+  const clearAuto = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
+  const startAuto = useCallback(() => {
+    clearAuto();
+    intervalRef.current = setInterval(() => {
+      if (isTransitioningRef.current) return;
+      isTransitioningRef.current = true;
+      setDirection(1);
+      setCurrent((prev) => (prev + 1) % len);
+      setTimeout(() => { isTransitioningRef.current = false; }, 650);
+    }, 5000);
+  }, [clearAuto, len]);
+
+  useEffect(() => {
+    startAuto();
+    return clearAuto;
+  }, [startAuto, clearAuto]);
 
   const goTo = useCallback(
     (dir: 'next' | 'prev') => {
       if (isTransitioningRef.current) return;
       isTransitioningRef.current = true;
-      setCurrent((prev) => (dir === 'next' ? (prev + 1) % slides.length : prev === 0 ? slides.length - 1 : prev - 1));
-      setTimeout(() => { isTransitioningRef.current = false; }, 600);
+      const newDir = dir === 'next' ? 1 : -1;
+      setDirection(newDir);
+      setCurrent((prev) =>
+        dir === 'next' ? (prev + 1) % len : prev === 0 ? len - 1 : prev - 1
+      );
+      // Reset auto-advance timer after manual navigation
+      startAuto();
+      setTimeout(() => { isTransitioningRef.current = false; }, 650);
     },
-    [slides.length]
+    [startAuto, len]
   );
 
-  useEffect(() => {
-    intervalRef.current = setInterval(() => goTo('next'), 5000);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [goTo]);
+  const goToSlide = useCallback((i: number) => {
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
+    setDirection(i > current ? 1 : -1);
+    setCurrent(i);
+    startAuto();
+    setTimeout(() => { isTransitioningRef.current = false; }, 650);
+  }, [current, startAuto]);
 
-  const pauseAuto = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
+  // Touch / swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = e.touches[0].clientX;
   };
-  const resumeAuto = () => {
-    intervalRef.current = setInterval(() => goTo('next'), 5000);
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartRef.current === null) return;
+    const diff = touchStartRef.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      goTo(diff > 0 ? 'next' : 'prev');
+    }
+    touchStartRef.current = null;
+  };
+
+  const variants = {
+    enter: (dir: number) => ({ opacity: 0, x: dir * 60, scale: 0.97 }),
+    center: { opacity: 1, x: 0, scale: 1 },
+    exit: (dir: number) => ({ opacity: 0, x: -dir * 60, scale: 0.97 }),
   };
 
   return (
     <div
       className="relative rounded-2xl overflow-hidden shadow-xl shadow-[#333333]/8 group"
-      onMouseEnter={pauseAuto}
-      onMouseLeave={resumeAuto}
+      onMouseEnter={clearAuto}
+      onMouseLeave={startAuto}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="relative w-full aspect-[16/10] md:aspect-[16/9] overflow-hidden">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" custom={direction}>
           <motion.img
-            key={`${index}-${current}`}
+            key={current}
+            custom={direction}
             src={slides[current].src}
             alt={slides[current].alt}
             className="absolute inset-0 w-full h-full object-cover"
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/20 via-transparent to-transparent pointer-events-none" />
@@ -229,14 +281,14 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
         <>
           <button
             onClick={() => goTo('prev')}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/25"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white opacity-70 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white/25"
             aria-label="Previous image"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={() => goTo('next')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white/25"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white opacity-70 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white/25"
             aria-label="Next image"
           >
             <ChevronRight className="w-4 h-4" />
@@ -250,13 +302,7 @@ function Slideshow({ slides, index }: { slides: LodgeSlide[]; index: number }) {
           {slides.map((_, i) => (
             <button
               key={i}
-              onClick={() => {
-                if (!isTransitioningRef.current) {
-                  isTransitioningRef.current = true;
-                  setCurrent(i);
-                  setTimeout(() => { isTransitioningRef.current = false; }, 600);
-                }
-              }}
+              onClick={() => goToSlide(i)}
               className={`h-1.5 rounded-full transition-all duration-400 ${
                 i === current ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
               }`}
@@ -429,12 +475,12 @@ export default function CampsAndLodgesPage() {
               personally and will recommend the ideal fit for your style, budget, and dream itinerary.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
+              <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-[#B78A42] hover:bg-[#A67A35] text-white text-sm font-bold tracking-wider rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/30"
               >
                 PLAN YOUR STAY
-              </a>
+              </Link>
               <a
                 href="https://wa.me/255788071035"
                 target="_blank"

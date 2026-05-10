@@ -3,6 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { BadgeDollarSign, Settings, Headphones, ArrowRight } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 
 const values = [
   {
@@ -57,13 +58,13 @@ export default function ValueSection() {
               We go above and beyond to make your Tanzanian safari an experience of a lifetime.
               Every journey is backed by our promise of value, customization, and unwavering support.
             </p>
-            <a
+            <Link
               href="/about"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors group"
             >
               Learn More About Us
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
 
 
           </motion.div>

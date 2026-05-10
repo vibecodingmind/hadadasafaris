@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, ChevronDown } from 'lucide-react';
+import { useLocale } from 'next-intl';
+import { useRouter, usePathname } from '@/i18n/navigation';
 
 const languages = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
@@ -19,31 +21,16 @@ const languages = [
 
 export default function LanguageSwitcher({ isScrolled }: { isScrolled: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentCode, setCurrentCode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cookieMatch = document.cookie.match(/NEXT_LOCALE=(\w+)/);
-      return cookieMatch ? cookieMatch[1] : 'en';
-    }
-    return 'en';
-  });
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const currentLang = languages.find((l) => l.code === currentCode) || languages[0];
+  const currentLang = languages.find((l) => l.code === locale) || languages[0];
 
   const switchLocale = (code: string) => {
-    setCurrentCode(code);
-    document.cookie = `NEXT_LOCALE=${code};path=/;max-age=${60 * 60 * 24 * 365}`;
     setIsOpen(false);
-
-    // Construct new path with locale prefix
-    const currentPath = window.location.pathname;
-    // Remove existing locale prefix if present
-    const localeRegex = /^\/(en|ar|zh|nl|fr|de|it|pt|ru|es)(\/.*)?$/;
-    const match = currentPath.match(localeRegex);
-    let basePath = match ? (match[2] || '/') : currentPath;
-
-    // Build new URL with the selected locale
-    const newUrl = code === 'en' ? basePath : `/${code}${basePath === '/' ? '' : basePath}`;
-    window.location.href = newUrl || '/';
+    // Use next-intl router to switch locale while preserving the current path
+    router.replace(pathname, { locale: code });
   };
 
   return (
@@ -58,7 +45,7 @@ export default function LanguageSwitcher({ isScrolled }: { isScrolled: boolean }
         }`}
       >
         <Globe className="w-3.5 h-3.5" />
-        <span className="hidden xl:inline">{currentLang.code.toUpperCase()}</span>
+        <span className="hidden xl:inline">{locale.toUpperCase()}</span>
         <ChevronDown className="w-3 h-3" />
       </button>
 
@@ -82,7 +69,7 @@ export default function LanguageSwitcher({ isScrolled }: { isScrolled: boolean }
                     key={lang.code}
                     onClick={() => switchLocale(lang.code)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 text-left ${
-                      lang.code === currentCode
+                      lang.code === locale
                         ? 'bg-[#B78A42]/10 text-[#B78A42]'
                         : 'text-[#333333]/70 hover:bg-[#B78A42]/5 hover:text-[#B78A42]'
                     }`}

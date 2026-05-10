@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import { usePathname, Link } from '@/i18n/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, MessageSquare, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -63,7 +62,7 @@ const navItems: NavItem[] = [
 ];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
@@ -79,8 +78,9 @@ export default function Header() {
         setIsScrolled(true);
       }
     };
-    setIsScrolled(!isHome);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Check initial scroll position on mount / route change
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHome]);
 
@@ -117,7 +117,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
             {navItems.map((item) => (
               <div
                 key={item.label}
@@ -130,19 +130,24 @@ export default function Header() {
                     className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
                       isScrolled ? 'text-[#333333]' : 'text-white'
                     }`}
+                    aria-expanded={openDropdown === item.label}
+                    aria-haspopup="true"
+                    aria-label={`${item.label} menu`}
                   >
                     {item.label}
-                    <ChevronDown className="w-3 h-3" />
+                    <ChevronDown className="w-3 h-3" aria-hidden="true" />
                   </button>
                 ) : (
                   <Link
                     href={item.href}
-                    className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
+                    className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] focus:outline-none focus:ring-2 focus:ring-[#B78A42]/40 focus:ring-offset-2 ${
                       isScrolled ? 'text-[#333333]' : 'text-white'
                     } ${pathname === item.href ? 'text-[#B78A42]' : ''}`}
+                    aria-expanded={item.children ? openDropdown === item.label : undefined}
+                    aria-haspopup={item.children ? 'true' : undefined}
                   >
                     {item.label}
-                    {item.children && <ChevronDown className="w-3 h-3" />}
+                    {item.children && <ChevronDown className="w-3 h-3" aria-hidden="true" />}
                   </Link>
                 )}
 
@@ -206,19 +211,20 @@ export default function Header() {
               </div>
             ))}
             <LanguageSwitcher isScrolled={isScrolled} />
-            <Link href="/booking">
-              <Button className="ml-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
+            <Link href="/booking" aria-label="Book a safari now">
+              <Button className="ml-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 focus:outline-none focus:ring-2 focus:ring-[#B78A42]/50 focus:ring-offset-2">
                 BOOK NOW
               </Button>
             </Link>
           </nav>
 
           <button
-            className={`lg:hidden p-2 z-10 transition-colors duration-300 ${
+            className={`lg:hidden p-2 z-10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#B78A42]/50 focus:ring-offset-2 rounded-md ${
               isScrolled ? 'text-[#333333]' : 'text-white'
             }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>

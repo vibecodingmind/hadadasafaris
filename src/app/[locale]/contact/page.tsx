@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -10,10 +10,27 @@ import CookieConsent from '@/components/CookieConsent';
 import {
   MapPin, Phone, Mail, Clock, Send, MessageSquare,
   Instagram, Facebook, Youtube, ArrowRight, Calendar,
-  Users, Globe, CheckCircle2, Sparkles
+  Users, Globe, CheckCircle2, Sparkles, Heart
 } from 'lucide-react';
+
+// Custom SVG icons for social platforms
+function XTwitterIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 const contactMethods = [
   {
@@ -21,8 +38,7 @@ const contactMethods = [
     label: 'Email Us',
     value: 'info@hadadasafaris.com',
     href: 'mailto:info@hadadasafaris.com',
-    color: 'bg-[#B78A42]/8 group-hover:bg-[#B78A42]',
-    iconColor: 'text-[#B78A42] group-hover:text-white',
+    color: 'from-amber-400 to-orange-500',
     desc: 'We reply within 24 hours',
   },
   {
@@ -30,8 +46,7 @@ const contactMethods = [
     label: 'Call Us',
     value: '+255 788 071 035',
     href: 'tel:+255788071035',
-    color: 'bg-[#B78A42]/8 group-hover:bg-[#B78A42]',
-    iconColor: 'text-[#B78A42] group-hover:text-white',
+    color: 'from-emerald-400 to-teal-500',
     desc: 'Mon-Sat 8AM-6PM EAT',
   },
   {
@@ -39,8 +54,7 @@ const contactMethods = [
     label: 'WhatsApp',
     value: 'Chat with us instantly',
     href: 'https://wa.me/255788071035',
-    color: 'bg-[#25D366]/10 group-hover:bg-[#25D366]',
-    iconColor: 'text-[#25D366] group-hover:text-white',
+    color: 'from-green-400 to-green-600',
     desc: 'Quick responses guaranteed',
   },
   {
@@ -48,17 +62,17 @@ const contactMethods = [
     label: 'Visit Us',
     value: 'Arusha, Tanzania',
     href: null,
-    color: 'bg-[#B78A42]/8',
-    iconColor: 'text-[#B78A42]',
+    color: 'from-rose-400 to-pink-500',
     desc: 'Safari Capital of Africa',
   },
 ];
 
 const socialLinks = [
-  { label: 'Instagram', href: 'https://instagram.com/hadadasafaris', icon: Instagram, gradient: 'from-purple-500 to-pink-500' },
-  { label: 'Facebook', href: 'https://facebook.com/hadadasafaris', icon: Facebook, gradient: 'from-blue-600 to-blue-500' },
-  { label: 'YouTube', href: 'https://youtube.com/@hadadasafaris', icon: Youtube, gradient: 'from-red-600 to-red-500' },
-  { label: 'WhatsApp', href: 'https://wa.me/255788071035', icon: MessageSquare, gradient: 'from-[#25D366] to-[#128C7E]' },
+  { label: 'Instagram', href: 'https://instagram.com/hadadasafaris', icon: Instagram, gradient: 'from-purple-600 via-pink-500 to-orange-400' },
+  { label: 'Facebook', href: 'https://facebook.com/hadadasafaris', icon: Facebook, gradient: 'from-blue-600 to-blue-700' },
+  { label: 'YouTube', href: 'https://youtube.com/@hadadasafaris', icon: Youtube, gradient: 'from-red-600 to-red-700' },
+  { label: 'WhatsApp', href: 'https://wa.me/255788071035', icon: WhatsAppIcon, gradient: 'from-green-500 to-green-600' },
+  { label: 'X / Twitter', href: 'https://x.com/hadadasafaris', icon: XTwitterIcon, gradient: 'from-gray-700 to-gray-900' },
 ];
 
 const interests = [
@@ -72,6 +86,8 @@ export default function ContactPage() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const formRef = useRef(null);
   const formInView = useInView(formRef, { once: true, margin: '-100px' });
+  const socialRef = useRef(null);
+  const socialInView = useInView(socialRef, { once: true, margin: '-100px' });
   const [submitted, setSubmitted] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
@@ -89,16 +105,20 @@ export default function ContactPage() {
 
       <main className="flex-1">
         {/* ═══ HERO ═══ */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <img src="/images/ngorongoro-lunch.png" alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-[#1a1a1a]/65 backdrop-blur-sm" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/30 via-transparent to-[#1a1a1a]/60" />
+            <div className="absolute inset-0 bg-[#1a1a1a]/60 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/40 via-transparent to-[#1a1a1a]/70" />
           </div>
+
+          {/* Decorative floating orbs */}
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-[#B78A42]/10 blur-[120px] animate-pulse" />
+          <div className="absolute bottom-1/3 left-1/5 w-72 h-72 rounded-full bg-[#D5BC92]/8 blur-[100px]" />
 
           <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 py-32 text-center">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white text-xs font-semibold tracking-[0.2em] uppercase mb-6">
+              <span className="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white text-xs font-semibold tracking-[0.2em] uppercase mb-6 shadow-lg shadow-black/10">
                 <Sparkles className="w-3.5 h-3.5 text-[#D5BC92]" />
                 Get In Touch
               </span>
@@ -106,12 +126,14 @@ export default function ContactPage() {
                 Contact{' '}
                 <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">Us</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/75 leading-relaxed max-w-2xl mx-auto mb-8">
+              <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mx-auto mb-10">
                 Start planning your dream safari — we&apos;d love to hear from you. Our team responds within 24 hours.
               </p>
+
+              {/* Glass CTA buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/booking">
-                  <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/30 group">
+                  <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/30 group shadow-lg shadow-[#B78A42]/20">
                     <Calendar className="w-4 h-4 mr-2" /> BOOK A SAFARI
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -120,7 +142,7 @@ export default function ContactPage() {
                   href="https://wa.me/255788071035"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 border border-white/15 rounded-full text-white text-sm font-semibold tracking-wider hover:bg-white/15 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/15 rounded-full text-white text-sm font-semibold tracking-wider hover:bg-white/20 hover:border-white/25 transition-all duration-300 shadow-lg shadow-black/10"
                 >
                   <MessageSquare className="w-4 h-4 text-[#25D366]" /> WHATSAPP US
                 </a>
@@ -129,9 +151,13 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ═══ CONTACT METHODS ═══ */}
-        <section className="py-20 bg-white" ref={ref}>
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
+        {/* ═══ CONTACT METHODS — Glass Cards ═══ */}
+        <section className="py-20 bg-gradient-to-b from-[#FAFAF7] to-white relative" ref={ref}>
+          {/* Subtle bg orbs */}
+          <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-[#B78A42]/5 blur-[100px]" />
+          <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-[#D5BC92]/4 blur-[120px]" />
+
+          <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -162,10 +188,10 @@ export default function ContactPage() {
                   >
                     <Wrapper
                       {...wrapperProps}
-                      className="group block bg-[#FAFAF7] border border-[#B78A42]/8 rounded-2xl p-6 hover:border-[#B78A42]/20 hover:shadow-lg transition-all duration-300 text-left h-full"
+                      className="group block bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl p-6 hover:bg-white/90 hover:border-[#B78A42]/20 hover:shadow-xl hover:shadow-[#B78A42]/8 transition-all duration-500 text-left h-full"
                     >
-                      <div className={`w-12 h-12 ${method.color} rounded-xl flex items-center justify-center transition-all duration-300 mb-4`}>
-                        <Icon className={`w-5 h-5 ${method.iconColor} transition-colors duration-300`} />
+                      <div className={`w-12 h-12 bg-gradient-to-br ${method.color} rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-black/10 group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className="w-5 h-5 text-white" />
                       </div>
                       <h3 className="text-sm font-bold text-[#333333] mb-1">{method.label}</h3>
                       <p className="text-sm text-[#B78A42] font-semibold mb-1">{method.value}</p>
@@ -178,9 +204,13 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ═══ MAIN FORM + INFO ═══ */}
-        <section className="py-20 bg-[#FAFAF7]" ref={formRef}>
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
+        {/* ═══ MAIN FORM + INFO — Glass Layout ═══ */}
+        <section className="py-20 bg-[#FAFAF7] relative overflow-hidden" ref={formRef}>
+          {/* Animated bg elements */}
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-[#B78A42]/5 blur-[120px]" />
+          <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-[#D5BC92]/4 blur-[100px]" />
+
+          <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
               {/* Left — Info + Map + Socials */}
               <motion.div
@@ -197,15 +227,15 @@ export default function ContactPage() {
                     Let&apos;s Start Your <span className="text-[#B78A42]">Journey</span>
                   </h2>
                   <p className="text-base text-[#333333]/55 leading-relaxed">
-                    Whether you have a question, need advice, or are ready to book your dream safari, our team is here to help. Fill in the form or reach out directly.
+                    Whether you have a question, need advice, or are ready to book your dream safari, our team is here to help.
                   </p>
                 </div>
 
-                {/* Office Hours */}
-                <div className="bg-white border border-[#B78A42]/8 rounded-2xl p-6">
+                {/* Office Hours — Glass card */}
+                <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl p-6 shadow-lg shadow-[#B78A42]/5 hover:shadow-xl hover:shadow-[#B78A42]/8 transition-shadow duration-300">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-[#B78A42]/8 rounded-xl flex items-center justify-center">
-                      <Clock className="w-5 h-5 text-[#B78A42]" />
+                    <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/15">
+                      <Clock className="w-5 h-5 text-white" />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-[#333333]">Office Hours</h4>
@@ -226,68 +256,65 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Map */}
-                <div className="rounded-2xl overflow-hidden border border-[#B78A42]/10 h-56 bg-[#FAFAF7] relative">
+                {/* Map — Glass overlay */}
+                <div className="rounded-2xl overflow-hidden border border-white/50 shadow-lg shadow-[#B78A42]/5 relative h-56 bg-[#FAFAF7]">
                   <iframe
                     src="https://www.openstreetmap.org/export/embed.html?bbox=36.65%2C-3.42%2C36.75%2C-3.34&layer=mapnik&marker=-3.3869%2C36.6830"
                     className="w-full h-full border-0"
                     loading="lazy"
                     title="Hadada Safaris Location — Arusha, Tanzania"
                   />
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-xl border border-[#B78A42]/15 rounded-full">
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/30 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute bottom-3 left-3 flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-xl border border-[#B78A42]/15 rounded-full shadow-lg shadow-black/5">
                     <MapPin className="w-3 h-3 text-[#B78A42]" />
                     <span className="text-[10px] font-semibold text-[#333333]/60 tracking-wide">Arusha, Tanzania</span>
                   </div>
                 </div>
 
-                {/* Social Links */}
-                <div>
-                  <p className="text-xs font-semibold text-[#333333]/40 tracking-wider uppercase mb-3">Follow Us</p>
-                  <div className="flex items-center gap-3">
-                    {socialLinks.map((social) => {
-                      const Icon = social.icon;
-                      return (
-                        <a
-                          key={social.label}
-                          href={social.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={social.label}
-                          className="group relative w-11 h-11 bg-white border border-[#B78A42]/10 rounded-xl flex items-center justify-center text-[#B78A42] hover:text-white hover:border-transparent transition-all duration-300 overflow-hidden"
-                        >
-                          <div className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                          <Icon className="w-4.5 h-4.5 relative z-10" />
-                        </a>
-                      );
-                    })}
-                  </div>
+                {/* Quick contact pills */}
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="tel:+255788071035"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/70 backdrop-blur-xl border border-white/50 rounded-full text-xs font-semibold text-[#333333] hover:bg-white/90 hover:border-[#B78A42]/20 hover:shadow-md transition-all duration-300"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#B78A42]" /> +255 788 071 035
+                  </a>
+                  <a
+                    href="mailto:info@hadadasafaris.com"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/70 backdrop-blur-xl border border-white/50 rounded-full text-xs font-semibold text-[#333333] hover:bg-white/90 hover:border-[#B78A42]/20 hover:shadow-md transition-all duration-300"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-[#B78A42]" /> info@hadadasafaris.com
+                  </a>
                 </div>
               </motion.div>
 
-              {/* Right — Contact Form */}
+              {/* Right — Contact Form (Glass) */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={formInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="lg:col-span-3"
               >
-                <div className="bg-white border border-[#B78A42]/8 rounded-2xl p-6 md:p-8 shadow-lg shadow-[#333333]/3">
+                <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl p-6 md:p-8 shadow-xl shadow-[#B78A42]/5 relative overflow-hidden">
+                  {/* Subtle glass sheen */}
+                  <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-[#B78A42]/3 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" />
+
                   {submitted ? (
-                    <div className="text-center py-16">
+                    <div className="text-center py-16 relative z-10">
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                        className="w-20 h-20 bg-[#B78A42]/10 rounded-full flex items-center justify-center mx-auto mb-6"
+                        className="w-20 h-20 bg-gradient-to-br from-[#B78A42] to-[#D5BC92] rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#B78A42]/20"
                       >
-                        <CheckCircle2 className="w-10 h-10 text-[#B78A42]" />
+                        <CheckCircle2 className="w-10 h-10 text-white" />
                       </motion.div>
                       <h3 className="text-2xl font-bold text-[#333333] mb-3">Thank You!</h3>
                       <p className="text-sm text-[#333333]/50 mb-2">Your inquiry has been received.</p>
                       <p className="text-sm text-[#333333]/50 mb-8">Our team will get back to you within 24 hours.</p>
                       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Button
-                          className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full"
+                          className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full shadow-lg shadow-[#B78A42]/20"
                           onClick={() => setSubmitted(false)}
                         >
                           SEND ANOTHER INQUIRY
@@ -295,7 +322,7 @@ export default function ContactPage() {
                         <Link href="/booking">
                           <Button
                             variant="outline"
-                            className="border-[#B78A42]/20 text-[#B78A42] hover:bg-[#B78A42]/5 font-bold text-xs tracking-wider px-6 py-3 rounded-full group"
+                            className="border-[#B78A42]/20 text-[#B78A42] hover:bg-[#B78A42]/5 font-bold text-xs tracking-wider px-6 py-3 rounded-full group bg-white/50 backdrop-blur-xl"
                           >
                             PROCEED TO BOOKING <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
                           </Button>
@@ -303,7 +330,7 @@ export default function ContactPage() {
                       </div>
                     </div>
                   ) : (
-                    <>
+                    <div className="relative z-10">
                       <div className="flex items-center justify-between mb-6">
                         <div>
                           <h3 className="text-lg font-bold text-[#333333] mb-1">Plan Your Safari</h3>
@@ -318,20 +345,22 @@ export default function ContactPage() {
                         {/* Row 1: Name + Email */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                           <div>
-                            <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Full Name *</label>
+                            <label htmlFor="contact-name" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Full Name *</label>
                             <input
+                              id="contact-name"
                               type="text"
                               required
-                              className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors"
+                              className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300"
                               placeholder="John Doe"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Email *</label>
+                            <label htmlFor="contact-email" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Email *</label>
                             <input
+                              id="contact-email"
                               type="email"
                               required
-                              className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors"
+                              className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300"
                               placeholder="john@example.com"
                             />
                           </div>
@@ -340,18 +369,20 @@ export default function ContactPage() {
                         {/* Row 2: Phone + Travel Dates */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                           <div>
-                            <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Phone</label>
+                            <label htmlFor="contact-phone" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Phone</label>
                             <input
+                              id="contact-phone"
                               type="tel"
-                              className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors"
+                              className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300"
                               placeholder="+1 234 567 890"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Travel Dates</label>
+                            <label htmlFor="contact-dates" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Travel Dates</label>
                             <input
+                              id="contact-dates"
                               type="text"
-                              className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors"
+                              className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300"
                               placeholder="e.g. July 2025"
                             />
                           </div>
@@ -360,8 +391,8 @@ export default function ContactPage() {
                         {/* Row 3: Group Size + Budget */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                           <div>
-                            <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Group Size</label>
-                            <select className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors">
+                            <label htmlFor="contact-group-size" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Group Size</label>
+                            <select id="contact-group-size" className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300">
                               <option>1-2 People</option>
                               <option>3-4 People</option>
                               <option>5-6 People</option>
@@ -369,8 +400,8 @@ export default function ContactPage() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Budget Range</label>
-                            <select className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors">
+                            <label htmlFor="contact-budget" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Budget Range</label>
+                            <select id="contact-budget" className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300">
                               <option>$1,000 - $3,000</option>
                               <option>$3,000 - $5,000</option>
                               <option>$5,000 - $10,000</option>
@@ -382,7 +413,7 @@ export default function ContactPage() {
                         {/* Interests */}
                         <div>
                           <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-3">Interests</label>
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-2" role="group" aria-label="Select your interests">
                             {interests.map((interest) => (
                               <button
                                 key={interest}
@@ -390,8 +421,8 @@ export default function ContactPage() {
                                 onClick={() => toggleInterest(interest)}
                                 className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium transition-all duration-300 ${
                                   selectedInterests.includes(interest)
-                                    ? 'bg-[#B78A42] text-white border border-[#B78A42] shadow-sm shadow-[#B78A42]/20'
-                                    : 'bg-[#FAFAF7] text-[#333333]/50 border border-[#B78A42]/10 hover:border-[#B78A42]/25 hover:text-[#B78A42]'
+                                    ? 'bg-gradient-to-r from-[#B78A42] to-[#D5BC92] text-white border border-[#B78A42] shadow-md shadow-[#B78A42]/15'
+                                    : 'bg-white/60 backdrop-blur-sm text-[#333333]/50 border border-white/50 hover:border-[#B78A42]/25 hover:text-[#B78A42] hover:bg-white/80'
                                 }`}
                               >
                                 {selectedInterests.includes(interest) && <CheckCircle2 className="w-3 h-3" />}
@@ -403,10 +434,11 @@ export default function ContactPage() {
 
                         {/* Message */}
                         <div>
-                          <label className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Message</label>
+                          <label htmlFor="contact-message" className="block text-xs font-semibold text-[#333333]/50 tracking-wider uppercase mb-2">Message</label>
                           <textarea
+                            id="contact-message"
                             rows={4}
-                            className="w-full px-4 py-3 bg-[#FAFAF7] border border-[#B78A42]/10 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white transition-colors resize-none"
+                            className="w-full px-4 py-3 bg-white/60 backdrop-blur-sm border border-white/50 rounded-xl text-sm text-[#333333] placeholder:text-[#333333]/25 focus:outline-none focus:border-[#B78A42] focus:bg-white/80 focus:shadow-md focus:shadow-[#B78A42]/5 transition-all duration-300 resize-none"
                             placeholder="Tell us about your dream safari..."
                           />
                         </div>
@@ -414,7 +446,7 @@ export default function ContactPage() {
                         {/* Submit */}
                         <Button
                           type="submit"
-                          className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 group"
+                          className="w-full bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] text-white font-bold text-sm tracking-wider py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/10"
                         >
                           SEND INQUIRY <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                         </Button>
@@ -423,7 +455,7 @@ export default function ContactPage() {
                           Or skip the form — <Link href="/booking" className="text-[#B78A42] hover:underline">book directly</Link> or <a href="https://wa.me/255788071035" target="_blank" rel="noopener noreferrer" className="text-[#25D366] hover:underline">WhatsApp us</a>
                         </p>
                       </form>
-                    </>
+                    </div>
                   )}
                 </div>
               </motion.div>
@@ -431,8 +463,58 @@ export default function ContactPage() {
           </div>
         </section>
 
+        {/* ═══ CONNECT WITH US — Social Media ═══ */}
+        <section className="py-20 bg-white relative overflow-hidden" ref={socialRef}>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#B78A42]/3 blur-[150px]" />
+
+          <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={socialInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+                <Heart className="w-3.5 h-3.5" /> Stay Connected
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-[#333333] mb-3">
+                Connect With <span className="text-[#B78A42]">Us</span>
+              </h2>
+              <p className="text-base text-[#333333]/50 max-w-xl mx-auto">
+                Follow our safari adventures, get travel inspiration, and stay up to date with the latest offers
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
+              {socialLinks.map((social, i) => {
+                const Icon = social.icon;
+                return (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={socialInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: 0.1 + i * 0.06, duration: 0.5 }}
+                    className={`group relative flex flex-col items-center gap-3 p-6 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl hover:bg-white/90 hover:border-[#B78A42]/15 hover:shadow-xl hover:shadow-[#B78A42]/8 transition-all duration-500 overflow-hidden`}
+                  >
+                    {/* Gradient hover bg */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+
+                    <div className={`w-14 h-14 bg-gradient-to-br ${social.gradient} rounded-2xl flex items-center justify-center shadow-lg shadow-black/10 group-hover:scale-110 group-hover:shadow-xl transition-all duration-300`}>
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <span className="text-xs font-bold text-[#333333] tracking-wider uppercase relative z-10">{social.label}</span>
+                  </motion.a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* ═══ WHY CHOOSE US ═══ */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gradient-to-b from-[#FAFAF7] to-white relative">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -464,10 +546,10 @@ export default function ContactPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
-                    className="text-center p-6 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-2xl hover:border-[#B78A42]/15 transition-all duration-300"
+                    className="text-center p-6 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl hover:border-[#B78A42]/15 hover:shadow-xl hover:shadow-[#B78A42]/8 transition-all duration-500"
                   >
-                    <div className="w-12 h-12 bg-[#B78A42]/8 rounded-xl flex items-center justify-center mx-auto mb-3">
-                      <Icon className="w-5 h-5 text-[#B78A42]" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#B78A42] to-[#D5BC92] rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-[#B78A42]/10">
+                      <Icon className="w-5 h-5 text-white" />
                     </div>
                     <p className="text-2xl font-bold text-[#B78A42] mb-1">{stat.value}</p>
                     <p className="text-sm font-semibold text-[#333333] mb-1">{stat.label}</p>
@@ -479,13 +561,14 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ═══ CTA TO BOOKING ═══ */}
+        {/* ═══ READY TO BOOK CTA ═══ */}
         <section className="py-24 bg-[#1a1a1a] relative overflow-hidden">
           <div className="absolute inset-0">
             <img src="/images/serengeti-elephants.png" alt="" className="w-full h-full object-cover opacity-10" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a] via-[#1a1a1a]/95 to-[#1a1a1a]" />
           </div>
           <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-[#B78A42]/8 blur-[100px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-[#D5BC92]/5 blur-[120px]" />
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -494,6 +577,10 @@ export default function ContactPage() {
             transition={{ duration: 0.8 }}
             className="relative z-10 max-w-3xl mx-auto px-4 md:px-6 text-center"
           >
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-xl border border-white/15 rounded-full text-[#D5BC92] text-xs font-semibold tracking-[0.2em] uppercase mb-6">
+              <Sparkles className="w-3.5 h-3.5" />
+              Ready?
+            </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               Ready to Book Your{' '}
               <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">
@@ -506,7 +593,7 @@ export default function ContactPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/booking">
-                <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/30 group">
+                <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/30 group shadow-lg shadow-[#B78A42]/20">
                   <Calendar className="w-4 h-4 mr-2" />
                   RESERVE YOUR SAFARI
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -516,7 +603,7 @@ export default function ContactPage() {
                 href="https://wa.me/255788071035"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 border border-white/15 rounded-full text-white text-sm font-semibold tracking-wider hover:bg-white/15 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/15 rounded-full text-white text-sm font-semibold tracking-wider hover:bg-white/20 hover:border-white/25 transition-all duration-300"
               >
                 <MessageSquare className="w-4 h-4 text-[#25D366]" /> WHATSAPP US
               </a>
