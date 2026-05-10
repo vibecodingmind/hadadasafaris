@@ -1,30 +1,29 @@
-'use client';
-
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
-import DestinationsSection from '@/components/DestinationsSection';
-import HowItWorksSection from '@/components/HowItWorksSection';
-import MemoriesSection from '@/components/MemoriesSection';
-import SafariCraftingSection from '@/components/SafariCraftingSection';
-import BestTimeToVisit from '@/components/BestTimeToVisit';
-import ItinerariesSection from '@/components/ItinerariesSection';
-import PhotoGallery from '@/components/PhotoGallery';
-import ValueSection from '@/components/ValueSection';
-import SustainabilitySection from '@/components/SustainabilitySection';
-import TripAdvisorSection from '@/components/TripAdvisorSection';
-import FAQSection from '@/components/FAQSection';
-import PartnersStrip from '@/components/PartnersStrip';
-import CTABanner from '@/components/CTABanner';
+import dynamic from 'next/dynamic';
 import Footer from '@/components/Footer';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import ScrollToTop from '@/components/ScrollToTop';
-import CookieConsent from '@/components/CookieConsent';
-import Preloader from '@/components/Preloader';
+
+// Lazy-load below-fold sections for faster initial page load
+const DestinationsSection = dynamic(() => import('@/components/DestinationsSection'));
+const HowItWorksSection = dynamic(() => import('@/components/HowItWorksSection'));
+const MemoriesSection = dynamic(() => import('@/components/MemoriesSection'));
+const SafariCraftingSection = dynamic(() => import('@/components/SafariCraftingSection'));
+const BestTimeToVisit = dynamic(() => import('@/components/BestTimeToVisit'));
+const ItinerariesSection = dynamic(() => import('@/components/ItinerariesSection'));
+const PhotoGallery = dynamic(() => import('@/components/PhotoGallery'));
+const ValueSection = dynamic(() => import('@/components/ValueSection'));
+const SustainabilitySection = dynamic(() => import('@/components/SustainabilitySection'));
+const TripAdvisorSection = dynamic(() => import('@/components/TripAdvisorSection'));
+const FAQSection = dynamic(() => import('@/components/FAQSection'));
+const PartnersStrip = dynamic(() => import('@/components/PartnersStrip'));
+const CTABanner = dynamic(() => import('@/components/CTABanner'));
+const WhatsAppButton = dynamic(() => import('@/components/WhatsAppButton'));
+const ScrollToTop = dynamic(() => import('@/components/ScrollToTop'));
+const CookieConsent = dynamic(() => import('@/components/CookieConsent'));
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Preloader />
       <Header />
       <main className="flex-1">
         {/* Hero - Immersive dark & blurred entry */}

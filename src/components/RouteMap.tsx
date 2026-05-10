@@ -4,21 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import { RouteMapData } from '@/data/routeMaps';
 
 export default function RouteMap({ mapData }: { mapData: RouteMapData }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-  const mapInstanceRef = useRef<any>(null);
+  const [libs, setLibs] = useState<{ L: typeof import('leaflet'); RL: typeof import('react-leaflet') } | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current || mapInstanceRef.current) return;
-
     let cancelled = false;
 
-    // Dynamic imports to avoid SSR issues
+    // Single dynamic import — no double loading
     Promise.all([
       import('leaflet'),
       import('react-leaflet'),
     ]).then(([L, RL]) => {
-      if (cancelled || !containerRef.current) return;
+      if (cancelled) return;
 
       // Fix default marker icons
       delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -28,56 +24,10 @@ export default function RouteMap({ mapData }: { mapData: RouteMapData }) {
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
       });
 
-      // Store L reference for cleanup
-      mapInstanceRef.current = { L, RL };
-
-      setReady(true);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current = null;
-      }
-    };
-  }, []);
-
-  if (!ready) {
-    return (
-      <div ref={containerRef} className="w-full h-full min-h-[320px] md:min-h-[380px] bg-[#e8e4de] rounded-2xl flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-10 h-10 border-2 border-[#B78A42]/30 border-t-[#B78A42] rounded-full animate-spin mx-auto mb-3" />
-          <span className="text-xs text-[#333333]/40 font-semibold tracking-wider uppercase">Loading Map...</span>
-        </div>
-      </div>
-    );
-  }
-
-  return <MapContent mapData={mapData} />;
-}
-
-function MapContent({ mapData }: { mapData: RouteMapData }) {
-  const [libs, setLibs] = useState<{ L: typeof import('leaflet'); RL: typeof import('react-leaflet') } | null>(null);
-
-  useEffect(() => {
-    Promise.all([
-      import('leaflet'),
-      import('react-leaflet'),
-    ]).then(([L, RL]) => {
-      delete (L.Icon.Default.prototype as any)._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-      });
       setLibs({ L, RL });
     });
+
+    return () => { cancelled = true; };
   }, []);
 
   if (!libs) {

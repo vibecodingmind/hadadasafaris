@@ -37,6 +37,7 @@ import {
   Phone,
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const difficultyColors: Record<string, string> = {
   'Easy-Moderate': 'bg-green-100 text-green-700 border-green-200',
@@ -60,15 +61,22 @@ function RouteSlideshow({ images, alt }: { images: string[]; alt: string }) {
   return (
     <div className="relative w-full h-full min-h-[320px]">
       {images.map((img, i) => (
-        <motion.img
+        <motion.div
           key={i}
-          src={img}
-          alt={`${alt} slide ${i + 1}`}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0"
           initial={false}
           animate={{ opacity: i === current ? 1 : 0 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-        />
+        >
+          <Image
+            src={img}
+            alt={`${alt} slide ${i + 1}`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </motion.div>
       ))}
       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#1a1a1a]/30 to-transparent" />
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
@@ -677,7 +685,7 @@ export default function RoutePage() {
                     className="group bg-white rounded-2xl overflow-hidden border border-[#B78A42]/5 hover:border-[#B78A42]/20 hover:shadow-xl transition-all duration-500"
                   >
                     <div className="relative h-44 overflow-hidden">
-                      <img src="/images/kilimanjaro.png" alt={r.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      <Image src="/images/kilimanjaro.png" alt={r.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 33vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
                       <span className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold rounded-full border backdrop-blur-xl ${difficultyColors[r.difficulty] || 'bg-gray-100 text-gray-600 border-gray-200'}`}>
                         {r.difficulty}
