@@ -105,6 +105,118 @@ const difficultyColors: Record<string, string> = {
   'Challenging': 'bg-red-100 text-red-700 border-red-200',
 };
 
+function ScrollableRoutes({ routes, routesInView }: { routes: typeof destinations[0]['routes']; routesInView: boolean }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 5);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 5);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', checkScroll);
+    return () => {
+      el.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [routes]);
+
+  const scroll = (dir: 'left' | 'right') => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = 320; // card width + gap
+    el.scrollBy({ left: dir === 'right' ? cardWidth : -cardWidth, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="relative group/scroll">
+      {/* Left arrow */}
+      {canScrollLeft && (
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-20 w-11 h-11 bg-white border border-[#B78A42]/15 rounded-full shadow-lg flex items-center justify-center text-[#B78A42] hover:bg-[#B78A42] hover:text-white hover:border-[#B78A42] transition-all duration-300"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+      )}
+      {/* Right arrow */}
+      {canScrollRight && (
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-20 w-11 h-11 bg-white border border-[#B78A42]/15 rounded-full shadow-lg flex items-center justify-center text-[#B78A42] hover:bg-[#B78A42] hover:text-white hover:border-[#B78A42] transition-all duration-300"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      )}
+
+      {/* Scrollable container */}
+      <div
+        ref={scrollRef}
+        className="flex gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 cursor-grab active:cursor-grabbing"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
+        {routes!.map((route, i) => (
+          <motion.div
+            key={route.slug}
+            initial={{ opacity: 0, y: 20 }}
+            animate={routesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
+            className="flex-shrink-0 w-[280px] md:w-[300px] snap-start"
+          >
+            <Link
+              href={`/kilimanjaro/${route.slug}`}
+              className="group/card block bg-white border border-[#B78A42]/8 rounded-2xl overflow-hidden hover:border-[#B78A42]/25 hover:shadow-xl transition-all duration-500 h-full"
+            >
+              {/* Card Image */}
+              <div className="relative h-44 overflow-hidden">
+                <img
+                  src="/images/kilimanjaro.png"
+                  alt={route.name}
+                  className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
+                {/* Difficulty badge */}
+                <span className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold rounded-full border backdrop-blur-xl ${difficultyColors[route.difficulty] || 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                  {route.difficulty}
+                </span>
+                {/* Duration badge */}
+                <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-white/20 backdrop-blur-xl rounded-full">
+                  <Clock className="w-3 h-3 text-white" />
+                  <span className="text-[10px] font-bold text-white tracking-wide">{route.duration}</span>
+                </div>
+              </div>
+
+              {/* Card Content */}
+              <div className="p-5">
+                <h3 className="font-bold text-[#333333] mb-2 group-hover/card:text-[#B78A42] transition-colors">{route.name}</h3>
+                <p className="text-xs text-[#333333]/45 leading-relaxed line-clamp-2 mb-4">{route.description}</p>
+                <span className="inline-flex items-center gap-1 text-[#B78A42] text-xs font-semibold group-hover/card:gap-2 transition-all">
+                  View Route <ArrowRight className="w-3 h-3" />
+                </span>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Scroll progress dots */}
+      <div className="flex items-center justify-center gap-2 mt-5">
+        {routes!.map((_, i) => (
+          <div key={i} className="w-2 h-2 rounded-full bg-[#B78A42]/20" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function DestinationDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
@@ -127,7 +239,6 @@ export default function DestinationDetailPage() {
   const ctaInView = useInView(ctaRef, { once: true, margin: '-80px' });
 
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [openRoute, setOpenRoute] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -279,58 +390,7 @@ export default function DestinationDetailPage() {
                 </p>
               </motion.div>
 
-              {/* Horizontal scrollable cards with peek hint */}
-              <div className="relative">
-                <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
-                  {destination.routes.map((route, i) => (
-                    <motion.div
-                      key={route.slug}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={routesInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
-                      className="flex-shrink-0 w-[280px] md:w-[300px] snap-start"
-                    >
-                      <Link
-                        href={`/kilimanjaro/${route.slug}`}
-                        className="group block bg-white border border-[#B78A42]/8 rounded-2xl overflow-hidden hover:border-[#B78A42]/20 hover:shadow-xl transition-all duration-500 h-full"
-                      >
-                        {/* Card Image */}
-                        <div className="relative h-44 overflow-hidden">
-                          <img
-                            src="/images/kilimanjaro.png"
-                            alt={route.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
-                          {/* Difficulty badge */}
-                          <span className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold rounded-full border backdrop-blur-xl ${difficultyColors[route.difficulty] || 'bg-gray-100 text-gray-600 border-gray-200'}`}>
-                            {route.difficulty}
-                          </span>
-                          {/* Duration badge */}
-                          <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-white/20 backdrop-blur-xl rounded-full">
-                            <Clock className="w-3 h-3 text-white" />
-                            <span className="text-[10px] font-bold text-white tracking-wide">{route.duration}</span>
-                          </div>
-                        </div>
-
-                        {/* Card Content */}
-                        <div className="p-5">
-                          <h3 className="font-bold text-[#333333] mb-2 group-hover:text-[#B78A42] transition-colors">{route.name}</h3>
-                          <p className="text-xs text-[#333333]/45 leading-relaxed line-clamp-2 mb-4">{route.description}</p>
-                          <span className="inline-flex items-center gap-1 text-[#B78A42] text-xs font-semibold group-hover:gap-2 transition-all">
-                            View Route <ArrowRight className="w-3 h-3" />
-                          </span>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-                {/* Scroll hint gradient */}
-                <div className="hidden md:block absolute top-0 right-0 bottom-4 w-16 bg-gradient-to-l from-[#FAFAF7] to-transparent pointer-events-none" />
-                <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 items-center justify-center w-10 h-10 bg-white border border-[#B78A42]/10 rounded-full shadow-lg text-[#B78A42] cursor-grab">
-                  <ChevronRight className="w-4 h-4" />
-                </div>
-              </div>
+              <ScrollableRoutes routes={destination.routes} routesInView={routesInView} />
             </div>
           </section>
         )}
