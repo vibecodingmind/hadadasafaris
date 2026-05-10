@@ -250,7 +250,7 @@ export default function DestinationDetailPage() {
 
       <main className="flex-1">
         {/* Top spacer */}
-        <div className="pt-24 lg:pt-28 bg-white" />
+        <div className="pt-32 lg:pt-36 bg-white" />
 
         {/* Overview — Title left + Photo Slideshow right */}
         <section className="pb-20 lg:pb-28 bg-white" ref={overviewRef}>
@@ -298,13 +298,13 @@ export default function DestinationDetailPage() {
                 className="text-center mb-14"
               >
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-                  <TrendingUp className="w-3.5 h-3.5" /> Ascent Profile
+                  <TrendingUp className="w-3.5 h-3.5" /> Explore the Landscape
                 </span>
                 <h2 className="text-3xl md:text-5xl font-bold text-[#333333]">
-                  Climate <span className="text-[#B78A42]">Zones</span>
+                  Distinct <span className="text-[#B78A42]">Zones</span>
                 </h2>
                 <p className="text-base text-[#333333]/50 max-w-xl mx-auto mt-4">
-                  From tropical rainforest to arctic glacier, experience distinct worlds in a single ascent.
+                  {destination.name} features diverse landscapes, each with its own character, wildlife, and natural beauty.
                 </p>
               </motion.div>
 

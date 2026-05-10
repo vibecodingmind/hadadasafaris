@@ -31,7 +31,7 @@ export interface Destination {
   accordion: { question: string; answer: string }[];
   gallery: string[];
   routes?: Route[];
-  climateZones?: { name: string; elevation: string; description: string; icon: string }[];
+  climateZones?: { name: string; elevation: string; description: string; icon: string }[]; // 'elevation' used as subtitle label (altitude, depth, season, etc.)
 }
 
 export const destinations: Destination[] = [
@@ -55,6 +55,12 @@ export const destinations: Destination[] = [
       { question: 'What is the accommodation like in the Serengeti?', answer: 'The Serengeti offers a wide range from luxury tented camps to mid-range lodges. Our preferred camps include mobile camps that follow the migration, permanent luxury camps with stunning views, and intimate boutique properties. All offer comfortable beds, en-suite bathrooms, and excellent dining.' },
     ],
     gallery: ['/images/serengeti-elephants.png', '/images/migration.png', '/images/lion-portrait.png', '/images/balloon-safari.png'],
+    climateZones: [
+      { name: 'Southern Plains', elevation: '1,500 - 1,800m', description: 'Vast short-grass plains where wildebeest calve in their millions during the green season.', icon: 'Wheat' },
+      { name: 'Seronera Valley', elevation: '1,600 - 1,900m', description: 'Central woodlands and riverine thickets teeming with predators and year-round wildlife.', icon: 'TreePine' },
+      { name: 'Western Corridor', elevation: '1,200 - 1,500m', description: 'Griseti River woodlands and seasonal waterways where migration columns converge.', icon: 'Cloud' },
+      { name: 'Northern Hills', elevation: '1,700 - 2,100m', description: 'Rolling wooded hills and the legendary Mara River crossing points.', icon: 'Sun' },
+    ],
   },
   {
     name: 'Ngorongoro Crater',
@@ -76,6 +82,12 @@ export const destinations: Destination[] = [
       { question: 'Is the crater crowded?', answer: 'The crater is popular and can have many vehicles during peak season. However, the crater floor is large enough that crowds thin out quickly. We use experienced guides who know how to avoid the busiest areas while still delivering exceptional wildlife sightings. Early morning descents help beat the crowds.' },
     ],
     gallery: ['/images/ngorongoro-crater.png', '/images/ngorongoro-lunch.png', '/images/serengeti-elephants.png', '/images/cultural-experience.png'],
+    climateZones: [
+      { name: 'Crater Floor', elevation: '1,700 - 1,800m', description: 'Open grasslands, soda lakes, and swamps sheltering the densest wildlife concentration.', icon: 'Wheat' },
+      { name: 'Lerai Forest', elevation: '1,750 - 1,850m', description: 'Yellow-bark acacia woodland along springs, home to elephant and bushbuck.', icon: 'TreePine' },
+      { name: 'Lake Magadi', elevation: '1,700m', description: 'Alkaline soda lake attracting vast flamingo flocks and wading birds.', icon: 'Cloud' },
+      { name: 'Crater Rim', elevation: '2,200 - 2,400m', description: 'Lush montane forest and misty highlands offering panoramic views over the caldera.', icon: 'Sun' },
+    ],
   },
   {
     name: 'Tarangire National Park',
@@ -97,6 +109,12 @@ export const destinations: Destination[] = [
       { question: 'How does Tarangire compare to the Serengeti?', answer: 'While the Serengeti is vast and famous for the Great Migration, Tarangire offers a more intimate, uncrowded experience with equally impressive wildlife density during the dry season. Tarangire has a higher concentration of elephants and baobab trees, and its landscape has a distinct character. Many travelers combine both parks for a complete northern circuit experience.' },
     ],
     gallery: ['/images/tarangire.png', '/images/serengeti-elephants.png', '/images/lion-portrait.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Riverine Woodland', elevation: '1,000 - 1,100m', description: 'Lush acacia and baobab groves along the Tarangire River, a dry-season lifeline.', icon: 'TreePine' },
+      { name: 'Open Grassland', elevation: '1,050 - 1,200m', description: 'Termite-mound-dotted plains where massive elephant herds gather in season.', icon: 'Wheat' },
+      { name: 'Swamp & Springs', elevation: '1,000m', description: 'Permanent swamps and silale springs drawing buffalo, eland, and birdlife.', icon: 'Cloud' },
+      { name: 'Miombo Hills', elevation: '1,200 - 1,500m', description: 'Remote southern woodlands with rare species and exclusive walking safari terrain.', icon: 'Sun' },
+    ],
   },
   {
     name: 'Lake Manyara National Park',
@@ -118,6 +136,12 @@ export const destinations: Destination[] = [
       { question: 'Can I see flamingos year-round?', answer: 'Flamingo numbers fluctuate with the lake\'s water levels and algae availability. The best time for large flamingo flocks is during the dry season when the lake is shallower and more concentrated. However, some flamingos are typically present year-round. Your guide will take you to the best viewing spots.' },
     ],
     gallery: ['/images/lake-manyara.png', '/images/serengeti-elephants.png', '/images/cultural-experience.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Groundwater Forest', elevation: '960 - 1,000m', description: 'Dense, spring-fed tropical forest with blue monkeys, elephant, and bushbuck.', icon: 'TreePine' },
+      { name: 'Alkaline Lake Shore', elevation: '960m', description: 'Shallow soda lake fringed with flamingo, pelican, and stork colonies.', icon: 'Cloud' },
+      { name: 'Acacia Woodland', elevation: '970 - 1,050m', description: 'Open woodland where tree-climbing lions rest and giraffe browse.', icon: 'Wheat' },
+      { name: 'Rift Escarpment', elevation: '1,000 - 1,400m', description: 'Dramatic cliff walls rising above the park with breathtaking panoramic views.', icon: 'Sun' },
+    ],
   },
   {
     name: 'Selous Game Reserve',
@@ -139,6 +163,12 @@ export const destinations: Destination[] = [
       { question: 'What makes Selous different from the northern parks?', answer: 'Selous offers a completely different safari experience from the northern circuit. It is vastly larger, receives far fewer visitors, and offers activities not available in the north like boat safaris, walking safaris, and fly camping. The landscape is more varied with river systems and lakes, and the wildlife is less habituated to vehicles, providing a more raw, authentic experience.' },
     ],
     gallery: ['/images/selous.png', '/images/hero-safari.png', '/images/luxury-camp.png', '/images/serengeti-elephants.png'],
+    climateZones: [
+      { name: 'Rufiji River', elevation: '100 - 200m', description: 'Mighty river system with channels, lakes, and sandbanks teeming with hippo and crocodile.', icon: 'Cloud' },
+      { name: 'Miombo Woodland', elevation: '200 - 500m', description: 'Vast undulating woodland covering most of the reserve, home to wild dog and sable antelope.', icon: 'TreePine' },
+      { name: 'Flood Plains', elevation: '100 - 150m', description: 'Seasonal grasslands and oxbow lakes drawing elephant, buffalo, and waterbirds.', icon: 'Wheat' },
+      { name: 'Rocky Hills', elevation: '300 - 600m', description: 'Insellberg outcrops and ridges offering lookout points and leopard territory.', icon: 'Sun' },
+    ],
   },
   {
     name: 'Ruaha National Park',
@@ -160,6 +190,12 @@ export const destinations: Destination[] = [
       { question: 'Is Ruaha suitable for first-time safari goers?', answer: 'Ruaha is excellent for first-timers who want a more authentic, uncrowded experience. The wildlife densities are high, especially along the river during the dry season, and the lack of other vehicles means you can spend quality time with animals without feeling rushed or crowded. The dramatic scenery also makes it very photogenic.' },
     ],
     gallery: ['/images/ruaha.png', '/images/katavi.png', '/images/lion-portrait.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Great Ruaha River', elevation: '800 - 1,000m', description: 'Lifeblood river with palm-fringed banks where large predator prides and elephant herds gather.', icon: 'Cloud' },
+      { name: 'Miombo Woodland', elevation: '900 - 1,200m', description: 'Expansive woodland at the crossroads of east and southern African ecosystems.', icon: 'TreePine' },
+      { name: 'Baobab Hills', elevation: '1,000 - 1,500m', description: 'Dramatic red-earth escarpments studded with ancient baobabs and hot springs.', icon: 'Sun' },
+      { name: 'Jongomero Sands', elevation: '700 - 800m', description: 'Remote southern wilderness with sandy riverbeds and exclusive fly camping.', icon: 'Wheat' },
+    ],
   },
   {
     name: 'Zanzibar Island',
@@ -181,6 +217,12 @@ export const destinations: Destination[] = [
       { question: 'Can I combine Zanzibar with a safari?', answer: 'Absolutely \u2014 this is the most popular combination. We arrange seamless transitions from your safari to Zanzibar via domestic flights. Many guests do a 5-7 day safari followed by 3-5 days on the beach. It is the perfect way to decompress after the excitement of the bush.' },
     ],
     gallery: ['/images/zanzibar-beach.png', '/images/stone-town.png', '/images/mafia-island.png', '/images/cultural-experience.png'],
+    climateZones: [
+      { name: 'Stone Town', elevation: 'Sea Level', description: 'Historic Swahili trading town with carved doors, spice markets, and centuries of heritage.', icon: 'Wheat' },
+      { name: 'Coral Reefs', elevation: '0 - 30m depth', description: 'Vibrant underwater gardens with tropical fish, sea turtles, and colorful corals.', icon: 'Cloud' },
+      { name: 'Coastal Beaches', elevation: 'Sea Level', description: 'Turquoise lagoons and powder-white sands from Nungwi to Paje and Jambiani.', icon: 'Sun' },
+      { name: 'Spice Plantations', elevation: '20 - 60m', description: 'Fragrant clove, nutmeg, and cinnamon farms in the island lush interior.', icon: 'TreePine' },
+    ],
   },
   {
     name: 'Mafia Island',
@@ -202,6 +244,12 @@ export const destinations: Destination[] = [
       { question: 'How do I get to Mafia Island?', answer: 'Mafia is accessible by small aircraft from Dar es Salaam (approximately 30 minutes) or from Zanzibar (approximately 45 minutes). Flights operate daily during peak season. The airstrip is near Kilindoni, and your lodge will arrange transfers.' },
     ],
     gallery: ['/images/mafia-island.png', '/images/zanzibar-beach.png', '/images/pemba-island.png', '/images/stone-town.png'],
+    climateZones: [
+      { name: 'Marine Park Reefs', elevation: '0 - 30m depth', description: 'Pristine coral gardens with over 400 fish species and five sea turtle species.', icon: 'Cloud' },
+      { name: 'Whale Shark Channel', elevation: '10 - 40m depth', description: 'Seasonal gathering of gentle giants from October to March in warm coastal waters.', icon: 'Sun' },
+      { name: 'Mangrove Forests', elevation: 'Sea Level', description: 'Tidal mangrove systems nursering juvenile fish, crabs, and coastal birdlife.', icon: 'TreePine' },
+      { name: 'Inland Baobabs', elevation: '10 - 50m', description: 'Quiet interior with baobab groves, coconut plantations, and traditional villages.', icon: 'Wheat' },
+    ],
   },
   {
     name: 'Mount Kilimanjaro',
@@ -362,6 +410,12 @@ export const destinations: Destination[] = [
       { question: 'Is Arusha National Park worth visiting?', answer: 'Absolutely. While it does not have the large predator populations of the Serengeti, it offers unique experiences like walking safaris, canoeing on the Momella Lakes, and colobus monkey sightings that you cannot get elsewhere on the northern circuit. Its accessibility and diversity make it a perfect addition to any itinerary.' },
     ],
     gallery: ['/images/hero-safari.png', '/images/serengeti-elephants.png', '/images/lake-manyara.png', '/images/kilimanjaro.png'],
+    climateZones: [
+      { name: 'Montane Forest', elevation: '1,400 - 1,800m', description: 'Lush forest cloaking Mount Meru with colobus monkeys, leopard, and cascading streams.', icon: 'TreePine' },
+      { name: 'Momella Lakes', elevation: '1,400m', description: 'Shallow alkaline lakes tinged green and blue, home to flamingo and waterfowl.', icon: 'Cloud' },
+      { name: 'Ngurdoto Crater', elevation: '1,500 - 1,600m', description: 'Intact volcanic crater with dense swamp and forest, dubbed "Little Ngorongoro."', icon: 'Wheat' },
+      { name: 'Mount Meru Summit', elevation: '3,000 - 4,562m', description: 'Dramatic volcanic peak above the clouds, ideal for acclimatization treks.', icon: 'Sun' },
+    ],
   },
   {
     name: 'Gombe Stream National Park',
@@ -383,6 +437,12 @@ export const destinations: Destination[] = [
       { question: 'What else is there to do besides chimp trekking?', answer: 'Gombe offers forest walks to see other primates and birds, swimming and snorkeling in Lake Tanganyika, visits to the Jane Goodall research station, and relaxing on the lakeshore. The sunsets over the lake are spectacular, and the star-gazing from the beach is unforgettable.' },
     ],
     gallery: ['/images/gombe-stream.png', '/images/lake-victoria.png', '/images/katavi.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Lakeshore Beach', elevation: '773m (Lake Level)', description: 'Rocky and sandy coves along Lake Tanganyika with crystal-clear swimming water.', icon: 'Cloud' },
+      { name: 'Tropical Forest', elevation: '773 - 1,200m', description: 'Dense, steep rainforest where habituated chimpanzees forage and nest.', icon: 'TreePine' },
+      { name: 'Ridge & Valley', elevation: '1,200 - 1,500m', description: 'Ridgetop trails with panoramic views over the lake and surrounding hills.', icon: 'Sun' },
+      { name: 'River Gorges', elevation: '800 - 1,000m', description: 'Deep stream-cut valleys creating lush corridors through the forest.', icon: 'Wheat' },
+    ],
   },
   {
     name: 'Katavi National Park',
@@ -404,6 +464,12 @@ export const destinations: Destination[] = [
       { question: 'Can I combine Katavi with other parks?', answer: 'Yes, Katavi combines well with Mahale Mountains for a chimp-and-safari combo, or with Ruaha for a southern/western circuit experience. We typically arrange charter flights between these parks as road connections are very long and challenging.' },
     ],
     gallery: ['/images/katavi.png', '/images/ruaha.png', '/images/selous.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Lake Katavi Floodplain', elevation: '800 - 900m', description: 'Seasonal lake bed where thousands of hippo and buffalo concentrate in the dry season.', icon: 'Cloud' },
+      { name: 'Miombo Woodland', elevation: '900 - 1,200m', description: 'Vast, undulating woodland sheltering sable, roan, and wild dog away from crowds.', icon: 'TreePine' },
+      { name: 'Kapapa Ranges', elevation: '1,100 - 1,400m', description: 'Rocky hill country with escarpments and hidden waterfalls in remote wilderness.', icon: 'Sun' },
+      { name: 'Lake Chada', elevation: '800m', description: 'Seasonal soda lake surrounded by open grassland and palm groves.', icon: 'Wheat' },
+    ],
   },
   {
     name: 'Mahale Mountains',
@@ -425,6 +491,12 @@ export const destinations: Destination[] = [
       { question: 'Can I swim in Lake Tanganyika?', answer: 'Yes! Lake Tanganyika is one of the cleanest and clearest freshwater lakes in the world. Swimming, snorkeling, and kayaking are popular activities. The water is warm, clear, and bilharzia-free. The beaches are pristine white sand \u2014 you will feel like you are on a tropical island rather than an inland lake.' },
     ],
     gallery: ['/images/gombe-stream.png', '/images/lake-victoria.png', '/images/katavi.png', '/images/pemba-island.png'],
+    climateZones: [
+      { name: 'Lake Tanganyika Shores', elevation: '773m (Lake Level)', description: 'White-sand beaches and crystal waters among the finest inland beaches in Africa.', icon: 'Cloud' },
+      { name: 'Lowland Forest', elevation: '773 - 1,200m', description: 'Lush tropical forest home to habituated chimpanzees and eight other primate species.', icon: 'TreePine' },
+      { name: 'Montane Ridge', elevation: '1,200 - 2,000m', description: 'Misty mountain ridges with bamboo groves and rare Albertine Rift birdlife.', icon: 'Sun' },
+      { name: 'Nkungwe Peak', elevation: '2,000 - 2,460m', description: 'The highest summit, often shrouded in cloud, towering above the forest.', icon: 'Snowflake' },
+    ],
   },
   {
     name: 'Saadani National Park',
@@ -446,6 +518,12 @@ export const destinations: Destination[] = [
       { question: 'What is the Wami River boat safari like?', answer: 'The Wami River boat safari is a highlight of any Saadani visit. You will cruise along the river spotting hippos, crocodiles, and a rich variety of birdlife including fish eagles, kingfishers, and waders. The riverbanks are also frequented by elephants and other animals coming to drink. It is a peaceful, scenic, and rewarding experience.' },
     ],
     gallery: ['/images/hero-safari.png', '/images/zanzibar-beach.png', '/images/selous.png', '/images/cultural-experience.png'],
+    climateZones: [
+      { name: 'Indian Ocean Beach', elevation: 'Sea Level', description: 'Pristine coastline where wildlife roams on the sand — the only bush-meets-beach park in Tanzania.', icon: 'Sun' },
+      { name: 'Wami River Estuary', elevation: 'Sea Level', description: 'Tidal mangrove channels with hippo, crocodile, and spectacular birdlife.', icon: 'Cloud' },
+      { name: 'Coastal Savanna', elevation: '0 - 100m', description: 'Open grassland and acacia woodland where giraffe and elephant wander near the shore.', icon: 'Wheat' },
+      { name: 'Tropical Forest', elevation: '50 - 200m', description: 'Dense lowland forest interior sheltering leopard, baboon, and rare birds.', icon: 'TreePine' },
+    ],
   },
   {
     name: 'Mikumi National Park',
@@ -467,6 +545,12 @@ export const destinations: Destination[] = [
       { question: 'Can I combine Mikumi with Ruaha or Selous?', answer: 'Yes, Mikumi makes an excellent starting or ending point for a southern circuit itinerary. It connects well with both Ruaha (via charter flight or long drive) and Selous/Nyerere (via charter flight or road). Combining these parks gives you the full range of southern Tanzania\'s diverse landscapes and wildlife.' },
     ],
     gallery: ['/images/ruaha.png', '/images/selous.png', '/images/katavi.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Mkata Floodplain', elevation: '500 - 600m', description: 'Vast open grassland resembling a miniature Serengeti with reliable game viewing.', icon: 'Wheat' },
+      { name: 'Uluguru Backdrop', elevation: '600 - 1,000m', description: 'Dramatic mountain slopes framing the floodplain with stunning photographic compositions.', icon: 'Sun' },
+      { name: 'Miombo Woodland', elevation: '600 - 900m', description: 'Undulating woodland sheltering leopard, wild dog, and over 400 bird species.', icon: 'TreePine' },
+      { name: 'Riverine Thickets', elevation: '500m', description: 'Dense vegetation along watercourses drawing elephant, buffalo, and hippo.', icon: 'Cloud' },
+    ],
   },
   {
     name: 'Rubondo Island',
@@ -488,6 +572,12 @@ export const destinations: Destination[] = [
       { question: 'Is Rubondo suitable for families?', answer: 'Rubondo is better suited for adventurous families with older children who can appreciate forest walking and the novelty of an island wilderness. The fishing and boat activities are engaging for kids. However, the limited wildlife visibility compared to traditional safari parks means it is best for families who have already experienced a classic safari.' },
     ],
     gallery: ['/images/lake-victoria.png', '/images/gombe-stream.png', '/images/pemba-island.png', '/images/hero-safari.png'],
+    climateZones: [
+      { name: 'Lake Victoria Shore', elevation: '1,133m (Lake Level)', description: 'Rocky and sandy coves with world-class fishing for Nile perch and tilapia.', icon: 'Cloud' },
+      { name: 'Tropical Forest', elevation: '1,133 - 1,300m', description: 'Dense, untouched forest where introduced chimpanzees and elephants roam wild.', icon: 'TreePine' },
+      { name: 'Grass Clearings', elevation: '1,150 - 1,200m', description: 'Open forest glades where giraffe and suni antelope graze peacefully.', icon: 'Wheat' },
+      { name: 'Papyrus Swamps', elevation: '1,133m', description: 'Marshy wetlands harboring sitatunga antelope and over 300 bird species.', icon: 'Sun' },
+    ],
   },
 ];
 
