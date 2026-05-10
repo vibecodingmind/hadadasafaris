@@ -256,7 +256,7 @@ export default function DestinationDetailPage() {
           </section>
         )}
 
-        {/* Climbing Routes (Kilimanjaro-specific) */}
+        {/* Climbing Routes (Kilimanjaro-specific) - Scrollable Cards */}
         {isKilimanjaro && destination.routes && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]" ref={routesRef}>
             <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -277,68 +277,53 @@ export default function DestinationDetailPage() {
                 </p>
               </motion.div>
 
-              <div className="space-y-4">
+              {/* Horizontal scrollable cards */}
+              <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                 {destination.routes.map((route, i) => (
                   <motion.div
                     key={route.slug}
                     initial={{ opacity: 0, y: 20 }}
                     animate={routesInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.1 + i * 0.06, duration: 0.5 }}
-                    className="bg-white border border-[#B78A42]/8 rounded-2xl overflow-hidden hover:border-[#B78A42]/15 transition-all duration-300"
+                    transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
+                    className="flex-shrink-0 w-[280px] md:w-[300px] snap-start"
                   >
-                    <button
-                      onClick={() => setOpenRoute(openRoute === route.slug ? null : route.slug)}
-                      className="w-full flex items-center justify-between px-6 py-5 text-left group"
+                    <Link
+                      href={`/kilimanjaro/${route.slug}`}
+                      className="group block bg-white border border-[#B78A42]/8 rounded-2xl overflow-hidden hover:border-[#B78A42]/20 hover:shadow-xl transition-all duration-500 h-full"
                     >
-                      <div className="flex items-center gap-5 flex-1 min-w-0">
-                        <div className="w-14 h-14 bg-[#B78A42]/5 rounded-xl flex items-center justify-center flex-shrink-0">
-                          <Mountain className="w-6 h-6 text-[#B78A42]" />
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="font-bold text-[#333333] group-hover:text-[#B78A42] transition-colors">{route.name}</h3>
-                          <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-                            <span className="flex items-center gap-1 text-xs text-[#333333]/40">
-                              <Clock className="w-3 h-3 text-[#B78A42]" /> {route.duration}
-                            </span>
-                            <span className={`inline-flex px-2.5 py-0.5 text-[10px] font-semibold rounded-full border ${difficultyColors[route.difficulty] || 'bg-gray-100 text-gray-600 border-gray-200'}`}>
-                              {route.difficulty}
-                            </span>
-                            <span className="text-xs text-[#333333]/40">
-                              Success: <span className="text-[#B78A42] font-semibold">{route.successRate}</span>
-                            </span>
-                          </div>
+                      {/* Card Image */}
+                      <div className="relative h-40 overflow-hidden">
+                        <img
+                          src="/images/kilimanjaro.png"
+                          alt={route.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
+                        {/* Difficulty badge */}
+                        <span className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold rounded-full border backdrop-blur-xl ${difficultyColors[route.difficulty] || 'bg-gray-100 text-gray-600 border-gray-200'}`}>
+                          {route.difficulty}
+                        </span>
+                        {/* Success rate badge */}
+                        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-[#B78A42]/90 backdrop-blur-xl rounded-full">
+                          <TrendingUp className="w-3 h-3 text-white" />
+                          <span className="text-[10px] font-bold text-white tracking-wide">{route.successRate} SUCCESS</span>
                         </div>
                       </div>
-                      <ChevronDown className={`w-5 h-5 text-[#B78A42] transition-transform duration-300 flex-shrink-0 ml-4 ${openRoute === route.slug ? 'rotate-180' : ''}`} />
-                    </button>
-                    <AnimatePresence>
-                      {openRoute === route.slug && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-6 pb-6">
-                            <div className="w-full h-px bg-[#B78A42]/10 mb-5" />
-                            <p className="text-sm text-[#333333]/55 leading-relaxed mb-5">{route.description}</p>
-                            <div className="flex flex-wrap gap-2 mb-5">
-                              {route.highlights.map((h) => (
-                                <span key={h} className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-full text-xs text-[#333333]/50">
-                                  <Star className="w-3 h-3 text-[#B78A42]" /> {h}
-                                </span>
-                              ))}
-                            </div>
-                            <Link href="/contact">
-                              <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full group/btn transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20">
-                                INQUIRE ABOUT THIS ROUTE <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-                              </Button>
-                            </Link>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+
+                      {/* Card Content */}
+                      <div className="p-5">
+                        <h3 className="font-bold text-[#333333] mb-2 group-hover:text-[#B78A42] transition-colors">{route.name}</h3>
+                        <p className="text-xs text-[#333333]/45 leading-relaxed line-clamp-2 mb-4">{route.description}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-xs text-[#333333]/40">
+                            <Clock className="w-3 h-3 text-[#B78A42]" /> {route.duration}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[#B78A42] text-xs font-semibold group-hover:gap-2 transition-all">
+                            View Route <ArrowRight className="w-3 h-3" />
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
                   </motion.div>
                 ))}
               </div>

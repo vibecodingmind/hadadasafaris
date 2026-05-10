@@ -5,7 +5,12 @@ export interface Route {
   difficulty: string;
   successRate: string;
   description: string;
+  longDescription: string;
   highlights: string[];
+  itinerary: { day: string; title: string; description: string }[];
+  includes: string[];
+  excludes: string[];
+  tips: string[];
 }
 
 export interface Destination {
@@ -221,12 +226,113 @@ export const destinations: Destination[] = [
     ],
     gallery: ['/images/kilimanjaro.png', '/images/hero-safari.png', '/images/migration.png', '/images/ngorongoro-crater.png'],
     routes: [
-      { name: 'Machame Route', slug: 'machame', duration: '6-7 Days', difficulty: 'Moderate', successRate: '95%', description: 'Known as the "Whiskey Route," Machame is the most popular path to Uhuru Peak. It offers stunning scenic variety, excellent acclimatization with its climb-high-sleep-low profile, and a high summit success rate. You\'ll traverse through rainforest, moorland, alpine desert, and arctic zones.', highlights: ['Great acclimatization profile', 'Stunning scenic variety', 'Lava Tower ascent', 'Barranco Wall climb', 'High success rate'] },
-      { name: 'Lemosho Route', slug: 'lemosho', duration: '7-8 Days', difficulty: 'Moderate', successRate: '96%', description: 'The Lemosho Route is considered the most beautiful trail on Kilimanjaro. Starting from the west, it offers pristine wilderness, fewer crowds in the early days, and excellent acclimatization. It joins the Machame route at Lava Tower and approaches the summit via Barafu Camp.', highlights: ['Most scenic route', 'Low traffic on early days', 'Excellent acclimatization', 'Shira Plateau traverse', 'Highest success rate'] },
-      { name: 'Marangu Route', slug: 'marangu', duration: '5-6 Days', difficulty: 'Easy-Moderate', successRate: '85%', description: 'The "Coca-Cola Route" is the oldest and most established path. It\'s the only route with sleeping huts instead of tents, making it popular for budget-conscious climbers. However, its shorter duration means less acclimatization time.', highlights: ['Only route with huts', 'Shortest and cheapest', 'Gradual slope', 'Well-established path', 'Good for first-timers'] },
-      { name: 'Umbwe Route', slug: 'umbwe', duration: '6-7 Days', difficulty: 'Challenging', successRate: '88%', description: 'The most direct and steepest route to the summit. Umbwe is for experienced trekkers seeking a challenge. The rapid ascent means acclimatization can be difficult, but the solitude and wild beauty are unmatched.', highlights: ['Shortest approach', 'Most challenging', 'Very few climbers', 'Dramatic scenery', 'Wild and untouched'] },
-      { name: 'Rongai Route', slug: 'rongai', duration: '6-7 Days', difficulty: 'Moderate', successRate: '90%', description: 'The only route approaching from the north, Rongai offers a drier, less traveled experience. It retains a wilderness feel and passes through beautiful forest with chances to spot wildlife. The descent is via the Marangu route.', highlights: ['Drier weather', 'Less crowded', 'Wilderness experience', 'Good wildlife viewing', 'Unique northern approach'] },
-      { name: 'Shira Route', slug: 'shira', duration: '7-8 Days', difficulty: 'Moderate-Hard', successRate: '91%', description: 'Starting at a high elevation on the Shira Plateau, this route is for those who want dramatic views from day one. The drive to the trailhead is an adventure itself. It joins the Machame route and offers excellent acclimatization.', highlights: ['High starting elevation', 'Dramatic plateau views', 'Good acclimatization', 'Less crowded', 'Scenic vehicle approach'] },
+      {
+        name: 'Machame Route', slug: 'machame', duration: '6-7 Days', difficulty: 'Moderate', successRate: '95%',
+        description: 'Known as the "Whiskey Route," Machame is the most popular path to Uhuru Peak. It offers stunning scenic variety, excellent acclimatization with its climb-high-sleep-low profile, and a high summit success rate.',
+        longDescription: 'The Machame Route, affectionately known as the "Whiskey Route," is the most popular trail on Mount Kilimanjaro and for good reason. This route offers the most stunning scenic variety of all the paths, taking you through all five climate zones from the lush rainforest at the base, through the otherworldly moorland, across the stark alpine desert, and up into the arctic zone near the summit. The Machame Route follows a climb-high-sleep-low acclimatization profile, which is the single most important factor in achieving a successful summit. On Day 4, you climb to Lava Tower at 4,630m before descending to Barranco Camp at 3,960m, giving your body crucial time to adapt to the altitude. The dramatic Barranco Wall scramble on Day 5 is one of the most thrilling and memorable sections of any Kilimanjaro route. The route approaches the summit from Barafu Camp, with a midnight push to Uhuru Peak to witness sunrise over the African continent.',
+        highlights: ['Great acclimatization profile', 'Stunning scenic variety', 'Lava Tower ascent', 'Barranco Wall climb', 'High success rate'],
+        itinerary: [
+          { day: 'Day 1', title: 'Machame Gate to Machame Camp', description: 'Drive to Machame Gate (1,490m). Trek through lush montane rainforest to Machame Camp (2,980m). 5-6 hours hiking.' },
+          { day: 'Day 2', title: 'Machame Camp to Shira Camp', description: 'Exit the forest into heath and moorland. Trek to Shira Plateau with views of Kibo Peak. Overnight at Shira Camp (3,840m). 4-5 hours hiking.' },
+          { day: 'Day 3', title: 'Shira Camp to Lava Tower to Barranco Camp', description: 'Climb to Lava Tower (4,630m) for acclimatization, then descend to Barranco Camp (3,960m). This climb-high-sleep-low day is key for altitude adaptation. 6-7 hours hiking.' },
+          { day: 'Day 4', title: 'Barranco Camp to Karanga Camp', description: 'Scramble up the dramatic Barranco Wall, then traverse alpine desert to Karanga Camp (4,040m). 4-5 hours hiking.' },
+          { day: 'Day 5', title: 'Karanga Camp to Barafu Camp', description: 'Trek through alpine desert to Barafu Camp (4,670m). Rest and prepare for the midnight summit push. 3-4 hours hiking.' },
+          { day: 'Day 6', title: 'Summit Day - Barafu to Uhuru Peak to Mweka Camp', description: 'Midnight departure for Uhuru Peak (5,895m). Watch sunrise from the Roof of Africa, then descend to Mweka Camp (3,100m). 12-14 hours hiking.' },
+          { day: 'Day 7', title: 'Mweka Camp to Mweka Gate', description: 'Final descent through rainforest to Mweka Gate. Collect your summit certificate and celebrate. 3-4 hours hiking.' },
+        ],
+        includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
+        excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
+        tips: ['Train for endurance at least 3 months before your climb', 'Go pole pole (slowly) — this is the #1 factor for success', 'Drink 3-4 liters of water daily', 'Consider taking diamox after consulting your doctor', 'Pack layers for extreme temperature variation'],
+      },
+      {
+        name: 'Lemosho Route', slug: 'lemosho', duration: '7-8 Days', difficulty: 'Moderate', successRate: '96%',
+        description: 'The Lemosho Route is considered the most beautiful trail on Kilimanjaro. Starting from the west, it offers pristine wilderness, fewer crowds, and excellent acclimatization.',
+        longDescription: 'The Lemosho Route is widely regarded as the most beautiful and scenic trail on Mount Kilimanjaro, and it also boasts the highest summit success rate at 96%. Starting from the western side of the mountain, the Lemosho Route begins with a long drive through the lush cultivation zone before arriving at the remote Lemosho Glades trailhead. The first two days are spent traversing the pristine Shira Plateau, where you will encounter very few other climbers and enjoy a sense of true wilderness that is rare on Kilimanjaro. The route then joins the Machame Route at Lava Tower, taking advantage of the same excellent climb-high-sleep-low acclimatization profile. The extra day on the Shira Plateau provides even more time for your body to adapt to the altitude, which is why this route has the highest success rate. The Lemosho Route offers unparalleled views of the mountain from the west, including stunning sunsets over the Shira Plateau and dramatic vistas of Kibo Peak.',
+        highlights: ['Most scenic route', 'Low traffic on early days', 'Excellent acclimatization', 'Shira Plateau traverse', 'Highest success rate'],
+        itinerary: [
+          { day: 'Day 1', title: 'Lemosho Glades to Mti Mkubwa Camp', description: 'Drive to Lemosho trailhead (2,100m). Trek through rainforest to Mti Mkubwa Camp (2,820m). 3-4 hours hiking.' },
+          { day: 'Day 2', title: 'Mti Mkubwa to Shira Camp 1', description: 'Climb through moorland to the edge of the Shira Plateau. Overnight at Shira Camp 1 (3,500m). 5-6 hours hiking.' },
+          { day: 'Day 3', title: 'Shira Camp 1 to Shira Camp 2', description: 'Traverse the Shira Plateau with stunning views. Acclimatization walk in the afternoon. Overnight at Shira Camp 2 (3,840m). 3-4 hours hiking.' },
+          { day: 'Day 4', title: 'Shira Camp 2 to Lava Tower to Barranco Camp', description: 'Climb to Lava Tower (4,630m), descend to Barranco Camp (3,960m). Key acclimatization day. 6-7 hours hiking.' },
+          { day: 'Day 5', title: 'Barranco Camp to Karanga Camp', description: 'Scramble the Barranco Wall and traverse to Karanga Camp (4,040m). 4-5 hours hiking.' },
+          { day: 'Day 6', title: 'Karanga Camp to Barafu Camp', description: 'Trek to Barafu Camp (4,670m). Rest and prepare for summit. 3-4 hours hiking.' },
+          { day: 'Day 7', title: 'Summit Day - Barafu to Uhuru Peak to Mweka Camp', description: 'Midnight push to Uhuru Peak (5,895m). Sunrise at the summit, then descend to Mweka Camp (3,100m). 12-14 hours hiking.' },
+          { day: 'Day 8', title: 'Mweka Camp to Mweka Gate', description: 'Descend through rainforest to Mweka Gate. Collect certificate and celebrate. 3-4 hours hiking.' },
+        ],
+        includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
+        excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
+        tips: ['The extra day on the Shira Plateau is the secret to the 96% success rate', 'Bring a good camera — this is the most photogenic route', 'Start training hikes at least 3 months in advance', 'Pack a -20°C sleeping bag for summit night', 'Stay hydrated throughout the trek'],
+      },
+      {
+        name: 'Marangu Route', slug: 'marangu', duration: '5-6 Days', difficulty: 'Easy-Moderate', successRate: '85%',
+        description: 'The "Coca-Cola Route" is the oldest and most established path. It\'s the only route with sleeping huts instead of tents, making it popular for budget-conscious climbers.',
+        longDescription: 'The Marangu Route, known as the "Coca-Cola Route," is the oldest, most established, and most straightforward path on Mount Kilimanjaro. It is the only route that offers sleeping huts with beds and mattresses instead of tents, making it an attractive option for those who prefer more comfortable accommodation or are on a tighter budget. The route approaches from the southeast and follows a gradual, steady ascent through rainforest, moorland, and alpine desert to Kibo Hut, from where the summit attempt begins. The same trail is used for both ascent and descent, which means less scenic variety compared to other routes. The main drawback of the Marangu Route is its shorter duration — the standard 5-day itinerary does not provide sufficient acclimatization time for many climbers, resulting in a lower success rate. We strongly recommend the 6-day version with an extra acclimatization day at Horombo Huts, which significantly improves your chances of reaching Uhuru Peak.',
+        highlights: ['Only route with huts', 'Shortest and cheapest', 'Gradual slope', 'Well-established path', 'Good for first-timers'],
+        itinerary: [
+          { day: 'Day 1', title: 'Marangu Gate to Mandara Huts', description: 'Trek through rainforest to Mandara Huts (2,720m). Optional walk to Maundi Crater. 4-5 hours hiking.' },
+          { day: 'Day 2', title: 'Mandara Huts to Horombo Huts', description: 'Climb through moorland to Horombo Huts (3,720m). Spectacular views of Mawenzi Peak. 6-7 hours hiking.' },
+          { day: 'Day 3', title: 'Acclimatization Day at Horombo', description: 'Rest day or short hike to Zebra Rocks or Mawenzi Hut (4,600m). Essential for altitude adaptation. 3-4 hours hiking.' },
+          { day: 'Day 4', title: 'Horombo Huts to Kibo Hut', description: 'Trek through alpine desert to Kibo Hut (4,730m). Rest and prepare for midnight summit push. 5-6 hours hiking.' },
+          { day: 'Day 5', title: 'Summit Day - Kibo to Uhuru Peak to Horombo', description: 'Midnight departure via Gilman\'s Point (5,681m) to Uhuru Peak (5,895m). Descend to Horombo Huts. 12-15 hours hiking.' },
+          { day: 'Day 6', title: 'Horombo Huts to Marangu Gate', description: 'Final descent through moorland and rainforest. Collect certificate at the gate. 5-6 hours hiking.' },
+        ],
+        includes: ['Professional mountain guide and assistant guides', 'Porter team', 'All meals on the mountain', 'Hut accommodation with beds and mattresses', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
+        excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees', 'Sleeping bag (available for rent)'],
+        tips: ['Choose the 6-day option over 5 days — the acclimatization day makes a huge difference', 'Bring a warm sleeping bag as the huts can be cold', 'The same path up and down means less scenic variety', 'Book early — hut spaces are limited and fill up fast', 'The gradual slope makes it deceptively easy — respect the altitude'],
+      },
+      {
+        name: 'Umbwe Route', slug: 'umbwe', duration: '6-7 Days', difficulty: 'Challenging', successRate: '88%',
+        description: 'The most direct and steepest route to the summit. Umbwe is for experienced trekkers seeking a challenge with solitude and wild beauty.',
+        longDescription: 'The Umbwe Route is the most direct and steepest path to the summit of Mount Kilimanjaro, making it the most challenging of all the established routes. This route is recommended only for experienced trekkers who are confident in their fitness and ability to handle significant altitude gain over a short distance. The Umbwe Route gains altitude rapidly, ascending from the rainforest to the moorland in a single demanding day. The steep sections through the forest involve some scrambling and require good balance and stamina. What the Umbwe Route lacks in gradual acclimatization, it makes up for in solitude and raw natural beauty. You will encounter very few other climbers on this route, especially in the early days, giving you a true wilderness experience. The route joins the Machame Route at Barranco Camp, after which you follow the same path through the Barranco Wall and on to the summit. We recommend the 7-day version with an extra acclimatization day to improve your summit chances.',
+        highlights: ['Shortest approach', 'Most challenging', 'Very few climbers', 'Dramatic scenery', 'Wild and untouched'],
+        itinerary: [
+          { day: 'Day 1', title: 'Umbwe Gate to Umbwe Cave Camp', description: 'Steep ascent through dense rainforest to Umbwe Cave Camp (2,940m). The most demanding first day of any route. 5-6 hours hiking.' },
+          { day: 'Day 2', title: 'Umbwe Cave to Barranco Camp', description: 'Continue steep climb through moorland. Join Machame Route at Barranco Camp (3,960m). 5-6 hours hiking.' },
+          { day: 'Day 3', title: 'Acclimatization at Barranco', description: 'Rest day with optional hike to Lava Tower (4,630m) for acclimatization. Return to Barranco Camp. 4-5 hours hiking.' },
+          { day: 'Day 4', title: 'Barranco Camp to Karanga Camp', description: 'Scramble the Barranco Wall, traverse to Karanga Camp (4,040m). 4-5 hours hiking.' },
+          { day: 'Day 5', title: 'Karanga Camp to Barafu Camp', description: 'Trek to Barafu Camp (4,670m). Rest and prepare for summit. 3-4 hours hiking.' },
+          { day: 'Day 6', title: 'Summit Day - Barafu to Uhuru Peak to Mweka Camp', description: 'Midnight push to Uhuru Peak (5,895m). Sunrise at the summit, descend to Mweka Camp (3,100m). 12-14 hours hiking.' },
+          { day: 'Day 7', title: 'Mweka Camp to Mweka Gate', description: 'Descend through rainforest to Mweka Gate. Collect certificate. 3-4 hours hiking.' },
+        ],
+        includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
+        excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
+        tips: ['Only attempt this route if you have prior high-altitude trekking experience', 'The acclimatization day at Barranco is essential — do not skip it', 'Trekking poles are highly recommended for the steep sections', 'Train specifically for steep ascents and descents', 'Be prepared for solitude — you may not see other groups for days'],
+      },
+      {
+        name: 'Rongai Route', slug: 'rongai', duration: '6-7 Days', difficulty: 'Moderate', successRate: '90%',
+        description: 'The only route approaching from the north, Rongai offers a drier, less traveled experience with wilderness feel and wildlife viewing chances.',
+        longDescription: 'The Rongai Route is the only trail that approaches Mount Kilimanjaro from the north, near the Kenyan border. This unique approach means the Rongai Route receives significantly less rainfall than the southern routes, resulting in drier conditions and clearer trekking. The route retains a genuine wilderness feel, especially in the early days, and passes through beautiful forest where you may spot wildlife including colobus monkeys, buffalo, and even elephant. The gradual ascent through the rainforest and moorland makes this route one of the more comfortable climbing experiences, and the drier conditions reduce the risk of gear getting soaked. The Rongai Route diverges from the Marangu Route at Kibo Hut, and the descent follows the Marangu trail, so you get to experience two different sides of the mountain. The northern approach also offers unique views of the mountain that are not visible from the southern routes. This route is an excellent choice for those who prefer a quieter, more remote experience with a good chance of wildlife encounters.',
+        highlights: ['Drier weather', 'Less crowded', 'Wilderness experience', 'Good wildlife viewing', 'Unique northern approach'],
+        itinerary: [
+          { day: 'Day 1', title: 'Rongai Gate to Simba Camp', description: 'Drive to Rongai Gate (1,950m). Trek through rainforest to Simba Camp (2,650m). 3-4 hours hiking.' },
+          { day: 'Day 2', title: 'Simba Camp to Kikelewa Camp', description: 'Climb through moorland with views of Kibo and Mawenzi peaks. Overnight at Kikelewa Camp (3,600m). 6-7 hours hiking.' },
+          { day: 'Day 3', title: 'Kikelewa Camp to Mawenzi Tarn', description: 'Steep climb to Mawenzi Tarn (4,330m) beneath the dramatic spires of Mawenzi Peak. Afternoon acclimatization walk. 4-5 hours hiking.' },
+          { day: 'Day 4', title: 'Mawenzi Tarn to Kibo Hut', description: 'Cross the lunar landscape of the saddle between Mawenzi and Kibo. Overnight at Kibo Hut (4,730m). 4-5 hours hiking.' },
+          { day: 'Day 5', title: 'Summit Day - Kibo to Uhuru Peak to Horombo', description: 'Midnight push via Gilman\'s Point to Uhuru Peak (5,895m). Descend to Horombo Huts (3,720m). 12-15 hours hiking.' },
+          { day: 'Day 6', title: 'Horombo Huts to Marangu Gate', description: 'Descend through moorland and rainforest to Marangu Gate. Collect certificate. 5-6 hours hiking.' },
+        ],
+        includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
+        excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
+        tips: ['The drier conditions make this a great choice during the short rainy season', 'Bring binoculars for wildlife spotting in the forest zone', 'The descent via Marangu means you will see a different side of the mountain', 'The Mawenzi Tarn camp is one of the most scenic on Kilimanjaro', 'Start hydrating early — the dry air means you lose water faster'],
+      },
+      {
+        name: 'Shira Route', slug: 'shira', duration: '7-8 Days', difficulty: 'Moderate-Hard', successRate: '91%',
+        description: 'Starting at a high elevation on the Shira Plateau, this route offers dramatic views from day one with a scenic vehicle approach.',
+        longDescription: 'The Shira Route is a dramatic and adventurous path that begins at one of the highest starting points of any Kilimanjaro route. Instead of hiking up from the base, you are driven to the Shira Plateau at 3,500m, making this the only route where the journey to the trailhead is an adventure in itself. The drive takes you through lush rainforest and moorland before arriving at the Shira Gate, where you begin your trek already at high altitude. This high starting elevation means you must be particularly mindful of altitude from day one, but it also rewards you with dramatic plateau views and stunning sunsets from the very first evening. The Shira Route then joins the Machame Route at Lava Tower, following the same excellent acclimatization profile through Barranco Wall and on to the summit. The Shira Plateau is one of the most visually striking areas on Kilimanjaro — a vast, open expanse of moorland dotted with giant lobelias and framed by the volcanic cone of Kibo Peak. This route is ideal for experienced trekkers who want dramatic scenery from the start.',
+        highlights: ['High starting elevation', 'Dramatic plateau views', 'Good acclimatization', 'Less crowded', 'Scenic vehicle approach'],
+        itinerary: [
+          { day: 'Day 1', title: 'Shira Gate to Shira Camp 1', description: 'Drive to Shira Gate (3,500m). Short acclimatization hike to Shira Camp 1 (3,500m). 2-3 hours hiking.' },
+          { day: 'Day 2', title: 'Shira Camp 1 to Shira Camp 2', description: 'Traverse the Shira Plateau with increasingly dramatic views. Acclimatization walk. Overnight at Shira Camp 2 (3,840m). 4-5 hours hiking.' },
+          { day: 'Day 3', title: 'Shira Camp 2 to Lava Tower to Barranco Camp', description: 'Climb to Lava Tower (4,630m), descend to Barranco Camp (3,960m). Key acclimatization day. 6-7 hours hiking.' },
+          { day: 'Day 4', title: 'Barranco Camp to Karanga Camp', description: 'Scramble the Barranco Wall, traverse to Karanga Camp (4,040m). 4-5 hours hiking.' },
+          { day: 'Day 5', title: 'Karanga Camp to Barafu Camp', description: 'Trek to Barafu Camp (4,670m). Rest and prepare for summit. 3-4 hours hiking.' },
+          { day: 'Day 6', title: 'Summit Day - Barafu to Uhuru Peak to Mweka Camp', description: 'Midnight push to Uhuru Peak (5,895m). Sunrise at the summit, descend to Mweka Camp (3,100m). 12-14 hours hiking.' },
+          { day: 'Day 7', title: 'Mweka Camp to Mweka Gate', description: 'Descend through rainforest to Mweka Gate. Collect certificate. 3-4 hours hiking.' },
+        ],
+        includes: ['Professional mountain guide and assistant guides', 'Porter team (3-4 per climber)', 'All meals on the mountain', 'Camping equipment (tents, sleeping mats)', 'Park fees and rescue fees', 'Emergency oxygen and first aid kit', 'Transfer to/from gate', 'Summit certificate'],
+        excludes: ['International flights', 'Travel insurance', 'Personal climbing gear', 'Tips for guide and porter team', 'Pre/post-climb accommodation', 'Visa fees'],
+        tips: ['The high starting elevation means altitude effects begin on day one', 'Take it very slow on the first day despite the short hiking distance', 'The Shira Plateau sunset is one of the best on the mountain — have your camera ready', 'Consider arriving a day early in Moshi to pre-acclimatize', 'The vehicle approach means you miss the rainforest zone — consider a pre-climb nature walk'],
+      },
     ],
     climateZones: [
       { name: 'Cultivation Zone', elevation: '800 - 1,800m', description: 'Lush farmland and villages at the mountain base, with coffee and banana plantations.', icon: 'Wheat' },
@@ -387,6 +493,14 @@ export const destinations: Destination[] = [
 
 export function getDestinationBySlug(slug: string): Destination | undefined {
   return destinations.find(d => d.slug === slug);
+}
+
+export function getRouteBySlug(routeSlug: string): { route: Route; destination: Destination } | undefined {
+  const kilimanjaro = destinations.find(d => d.slug === 'kilimanjaro');
+  if (!kilimanjaro?.routes) return undefined;
+  const route = kilimanjaro.routes.find(r => r.slug === routeSlug);
+  if (!route) return undefined;
+  return { route, destination: kilimanjaro };
 }
 
 export function getAllDestinationSlugs(): string[] {

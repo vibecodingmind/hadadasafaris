@@ -59,12 +59,12 @@ const navItems: NavItem[] = [
     label: 'MT. KILIMANJARO',
     href: '/kilimanjaro',
     children: [
-      { label: 'Machame Route', href: '/kilimanjaro' },
-      { label: 'Lemosho Route', href: '/kilimanjaro' },
-      { label: 'Marangu Route', href: '/kilimanjaro' },
-      { label: 'Umbwe Route', href: '/kilimanjaro' },
-      { label: 'Rongai Route', href: '/kilimanjaro' },
-      { label: 'Shira Route', href: '/kilimanjaro' },
+      { label: 'Machame Route', href: '/kilimanjaro/machame' },
+      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho' },
+      { label: 'Marangu Route', href: '/kilimanjaro/marangu' },
+      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe' },
+      { label: 'Rongai Route', href: '/kilimanjaro/rongai' },
+      { label: 'Shira Route', href: '/kilimanjaro/shira' },
     ],
   },
   {
