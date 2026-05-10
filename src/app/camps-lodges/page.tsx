@@ -21,6 +21,7 @@ interface Lodge {
   location: string;
   description: string;
   slides: LodgeSlide[];
+  darkBg?: boolean;
 }
 
 const lodges: Lodge[] = [
@@ -63,25 +64,26 @@ const lodges: Lodge[] = [
   {
     name: 'Wilderness Collection',
     subtitle: 'Untamed Beauty, Five-Star Luxury',
-    location: 'Tanzania\'s Finest Wilderness Areas',
+    location: "Tanzania's Finest Wilderness Areas",
     description:
-      'Wilderness Collection seamlessly blends the untamed beauty of Africa\'s wilderness with five-star luxury, offering an unforgettable and curated safari experience. Enjoy eco-sensitive tented accommodations, gourmet dining, and tailor-made adventures — all crafted to immerse you in the heart of nature with comfort and style. Each property in the collection has been thoughtfully designed to honour its extraordinary natural setting while delivering world-class hospitality, ensuring that your connection with the wild is never compromised by the comforts you deserve.',
+      "Wilderness Collection seamlessly blends the untamed beauty of Africa's wilderness with five-star luxury, offering an unforgettable and curated safari experience. Enjoy eco-sensitive tented accommodations, gourmet dining, and tailor-made adventures — all crafted to immerse you in the heart of nature with comfort and style. Each property in the collection has been thoughtfully designed to honour its extraordinary natural setting while delivering world-class hospitality, ensuring that your connection with the wild is never compromised by the comforts you deserve.",
     slides: [
       { src: '/images/wilderness-collection.png', alt: 'Wilderness Collection lodge' },
-      { src: '/images/craters-edge.png', alt: 'Crater\'s Edge – Ngorongoro' },
+      { src: '/images/craters-edge.png', alt: "Crater's Edge – Ngorongoro" },
       { src: '/images/warangi-ridge.png', alt: 'Warangi Ridge – Serengeti' },
     ],
+    darkBg: true,
   },
   {
-    name: 'Crater\'s Edge – Ngorongoro',
+    name: "Crater's Edge – Ngorongoro",
     subtitle: 'Elegance on the Crater Rim',
     location: 'Northeastern Ngorongoro Crater Rim',
     description:
-      'Located on the serene northeastern rim of the Ngorongoro Crater, Crater\'s Edge offers seventeen luxurious, insulated tents — perfect for couples, families, or small groups seeking an intimate connection with one of Africa\'s greatest natural wonders. The lodge sits just one kilometre from Lemala Gate, granting effortless access to the crater floor for early-morning game drives. Guests enjoy stunning crater views from private decks, elegant dining experiences, a cozy lounge with fireplace, and a curated library — all designed to complement the awe-inspiring landscape that surrounds you.',
+      "Located on the serene northeastern rim of the Ngorongoro Crater, Crater's Edge offers seventeen luxurious, insulated tents — perfect for couples, families, or small groups seeking an intimate connection with one of Africa's greatest natural wonders. The lodge sits just one kilometre from Lemala Gate, granting effortless access to the crater floor for early-morning game drives. Guests enjoy stunning crater views from private decks, elegant dining experiences, a cozy lounge with fireplace, and a curated library — all designed to complement the awe-inspiring landscape that surrounds you.",
     slides: [
-      { src: '/images/craters-edge.png', alt: 'Crater\'s Edge exterior' },
-      { src: '/images/craters-edge-2.png', alt: 'Crater\'s Edge tent interior' },
-      { src: '/images/craters-edge-3.png', alt: 'Crater\'s Edge dining room' },
+      { src: '/images/craters-edge.png', alt: "Crater's Edge exterior" },
+      { src: '/images/craters-edge-2.png', alt: "Crater's Edge tent interior" },
+      { src: '/images/craters-edge-3.png', alt: "Crater's Edge dining room" },
     ],
   },
   {
@@ -89,7 +91,7 @@ const lodges: Lodge[] = [
     subtitle: 'Panoramic Serengeti Luxury',
     location: 'Central Serengeti',
     description:
-      'Warangi Ridge sits in the heart of the Central Serengeti, offering fifteen luxury tents with private decks and panoramic views that stretch endlessly across the plains. Each tent features a private plunge pool, fireplace, indoor and outdoor showers, and a standalone bathtub — creating a private sanctuary amid one of the world\'s most spectacular wildlife arenas. Refined dining is served on dramatic rock-view decks, where the vast Serengeti unfolds before you. This is where the raw power of the Serengeti meets uncompromising luxury.',
+      "Warangi Ridge sits in the heart of the Central Serengeti, offering fifteen luxury tents with private decks and panoramic views that stretch endlessly across the plains. Each tent features a private plunge pool, fireplace, indoor and outdoor showers, and a standalone bathtub — creating a private sanctuary amid one of the world's most spectacular wildlife arenas. Refined dining is served on dramatic rock-view decks, where the vast Serengeti unfolds before you. This is where the raw power of the Serengeti meets uncompromising luxury.",
     slides: [
       { src: '/images/warangi-ridge.png', alt: 'Warangi Ridge exterior' },
       { src: '/images/warangi-ridge-2.png', alt: 'Warangi Ridge private pool deck' },
@@ -101,7 +103,7 @@ const lodges: Lodge[] = [
     subtitle: 'Eco-Conscious Luxury',
     location: 'Serengeti, Ngorongoro & Tarangire',
     description:
-      'Lemala Camps & Lodges offer a premium collection of intimate tented camps and classic lodges located in Tanzania\'s most spectacular wildlife destinations — from the sweeping plains of the Serengeti to the dramatic rim of the Ngorongoro Crater and the ancient baobabs of Tarangire. Designed for discerning safari-goers, Lemala blends warm East African hospitality with eco-conscious luxury. Each camp provides front-row seats to wildlife experiences, personalised service, and immersive comfort — from crater rim elegance to thrilling plains encounters. Guests enjoy elegant tented accommodations with en-suite bathrooms, all-inclusive gourmet dining with bush meal options, private dining and sundowner setups, wellness facilities, and cultural visits that connect you with the land and its people.',
+      "Lemala Camps & Lodges offer a premium collection of intimate tented camps and classic lodges located in Tanzania's most spectacular wildlife destinations — from the sweeping plains of the Serengeti to the dramatic rim of the Ngorongoro Crater and the ancient baobabs of Tarangire. Designed for discerning safari-goers, Lemala blends warm East African hospitality with eco-conscious luxury. Each camp provides front-row seats to wildlife experiences, personalised service, and immersive comfort — from crater rim elegance to thrilling plains encounters. Guests enjoy elegant tented accommodations with en-suite bathrooms, all-inclusive gourmet dining with bush meal options, private dining and sundowner setups, wellness facilities, and cultural visits that connect you with the land and its people.",
     slides: [
       { src: '/images/lemala-camps.png', alt: 'Lemala Camps' },
       { src: '/images/lemala-camps-2.png', alt: 'Lemala bush dining experience' },
@@ -109,11 +111,35 @@ const lodges: Lodge[] = [
     ],
   },
   {
+    name: 'Entara Camps & Lodges',
+    subtitle: 'Authentic Wilderness Immersion',
+    location: 'Serengeti, Ngorongoro & Southern Tanzania',
+    description:
+      "Entara Camps & Lodges deliver an authentic wilderness immersion, placing guests in the heart of Tanzania's most extraordinary landscapes without sacrificing comfort or warmth. Each camp is thoughtfully designed to blend seamlessly with its natural surroundings — from the vast golden plains of the Serengeti to the lush highlands of Ngorongoro and the remote beauty of southern Tanzania. Entara's intimate, eco-sensitive camps offer a genuine connection to the land: fall asleep to the sounds of the wild, wake to breathtaking sunrises, and share stories around the campfire under a canopy of stars. With expert local guides, personalised service, and a deep respect for the environment, Entara creates safari moments that feel both profoundly real and effortlessly comfortable.",
+    slides: [
+      { src: '/images/entara-camps.png', alt: 'Entara Camps in the wilderness' },
+      { src: '/images/entara-camps-2.png', alt: 'Entara Camps tent interior' },
+      { src: '/images/entara-camps-3.png', alt: 'Entara Camps bush breakfast' },
+    ],
+  },
+  {
+    name: 'Nimali Africa',
+    subtitle: 'Contemporary Safari Elegance',
+    location: 'Serengeti & Tarangire, Tanzania',
+    description:
+      "Nimali Africa redefines the safari experience with a collection of contemporary luxury lodges that celebrate the beauty of simplicity and the power of place. Set in some of Tanzania's most iconic locations — from the endless Serengeti plains to the ancient baobab-studded landscapes of Tarangire — each Nimali property is a masterclass in refined design, where clean modern lines meet the raw grandeur of the African bush. Spacious suites with floor-to-ceiling windows frame ever-changing vistas, private decks invite quiet contemplation, and plunge pools offer cool respite after a morning of game viewing. Nimali's commitment to sustainability, community partnership, and exceptional guiding ensures that every stay is as meaningful as it is memorable.",
+    slides: [
+      { src: '/images/nimali-africa.png', alt: 'Nimali Africa lodge' },
+      { src: '/images/nimali-africa-2.png', alt: 'Nimali Africa suite with savanna views' },
+      { src: '/images/nimali-africa-3.png', alt: 'Nimali Africa fire pit lounge' },
+    ],
+  },
+  {
     name: 'Legendary Lodge',
     subtitle: 'A Peaceful Gateway',
     location: 'Arusha, Tanzania',
     description:
-      'Set within a historic coffee estate on the outskirts of Arusha, Legendary Lodge offers a peaceful and luxurious gateway to Tanzania\'s Northern Safari Circuit. Surrounded by lush tropical gardens and the beauty of Mount Meru\'s landscapes, the lodge blends timeless elegance with warm Tanzanian hospitality. The lodge features spacious garden cottages and family cottages designed for comfort, privacy, and relaxation — with beautifully appointed interiors, fireplaces, private verandas, and tranquil surroundings. Guests can enjoy guided coffee tours through the neighbouring estate, garden spa treatments, cycling and walking trails, cultural excursions in Arusha, and private dining experiences. It is the perfect place to unwind before or after a safari adventure.',
+      "Set within a historic coffee estate on the outskirts of Arusha, Legendary Lodge offers a peaceful and luxurious gateway to Tanzania's Northern Safari Circuit. Surrounded by lush tropical gardens and the beauty of Mount Meru's landscapes, the lodge blends timeless elegance with warm Tanzanian hospitality. The lodge features spacious garden cottages and family cottages designed for comfort, privacy, and relaxation — with beautifully appointed interiors, fireplaces, private verandas, and tranquil surroundings. Guests can enjoy guided coffee tours through the neighbouring estate, garden spa treatments, cycling and walking trails, cultural excursions in Arusha, and private dining experiences. It is the perfect place to unwind before or after a safari adventure.",
     slides: [
       { src: '/images/legendary-lodge.png', alt: 'Legendary Lodge exterior' },
       { src: '/images/legendary-lodge-2.png', alt: 'Legendary Lodge gardens and Mount Meru' },
@@ -125,7 +151,7 @@ const lodges: Lodge[] = [
     subtitle: 'Luxury on a Coffee Farm',
     location: 'Karatu, Great Rift Valley Escarpment',
     description:
-      'Nestled on a working coffee farm high on the Great Rift Valley escarpment, Acacia Farm Lodge offers a perfect blend of luxury, tranquility, and authentic Tanzanian charm. Surrounded by lush gardens, coffee plants, and panoramic views of the Karatu highlands and nearby Ngorongoro forest, the lodge provides a peaceful retreat in the heart of Tanzania\'s Northern Safari Circuit. Ideally located between Lake Manyara, Tarangire, Ngorongoro Crater, and Serengeti National Park, Acacia Farm Lodge serves as an excellent base for safari adventures. Guests relax in spacious luxury suites featuring elegant African-inspired decor, private verandas, and modern comforts — complemented by a swimming pool, spa, fine dining, coffee tours, and guided nature walks.',
+      "Nestled on a working coffee farm high on the Great Rift Valley escarpment, Acacia Farm Lodge offers a perfect blend of luxury, tranquility, and authentic Tanzanian charm. Surrounded by lush gardens, coffee plants, and panoramic views of the Karatu highlands and nearby Ngorongoro forest, the lodge provides a peaceful retreat in the heart of Tanzania's Northern Safari Circuit. Ideally located between Lake Manyara, Tarangire, Ngorongoro Crater, and Serengeti National Park, Acacia Farm Lodge serves as an excellent base for safari adventures. Guests relax in spacious luxury suites featuring elegant African-inspired decor, private verandas, and modern comforts — complemented by a swimming pool, spa, fine dining, coffee tours, and guided nature walks.",
     slides: [
       { src: '/images/acacia-farm-lodge.png', alt: 'Acacia Farm Lodge' },
       { src: '/images/acacia-farm-lodge-2.png', alt: 'Acacia Farm Lodge Rift Valley views' },
@@ -137,7 +163,7 @@ const lodges: Lodge[] = [
     subtitle: 'Exceptional Luxury Collection',
     location: 'Arusha, Serengeti, Ngorongoro & Beyond',
     description:
-      'The Elewana Collection is known for its exceptional luxury lodges and tented camps set in some of Tanzania\'s most breathtaking destinations. Combining elegance, comfort, and authentic African hospitality, each property offers a unique stay surrounded by stunning landscapes and unforgettable natural beauty. From peaceful coffee estates in Arusha to the endless plains of the Serengeti and the scenic highlands of Ngorongoro, every lodge and camp is thoughtfully designed to provide privacy, relaxation, and personalised service. Guests enjoy beautifully appointed suites, fine dining experiences, wellness facilities, and immersive cultural and nature-inspired activities. With a strong commitment to sustainability and community support, Elewana properties deliver a refined and authentic East African experience.',
+      "The Elewana Collection is known for its exceptional luxury lodges and tented camps set in some of Tanzania's most breathtaking destinations. Combining elegance, comfort, and authentic African hospitality, each property offers a unique stay surrounded by stunning landscapes and unforgettable natural beauty. From peaceful coffee estates in Arusha to the endless plains of the Serengeti and the scenic highlands of Ngorongoro, every lodge and camp is thoughtfully designed to provide privacy, relaxation, and personalised service. Guests enjoy beautifully appointed suites, fine dining experiences, wellness facilities, and immersive cultural and nature-inspired activities. With a strong commitment to sustainability and community support, Elewana properties deliver a refined and authentic East African experience.",
     slides: [
       { src: '/images/elewana-camps.png', alt: 'Elewana Camps' },
       { src: '/images/elewana-camps-2.png', alt: 'Elewana Camps suite interior' },
@@ -248,9 +274,8 @@ function LodgeSection({ lodge, index }: { lodge: Lodge; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const isEven = index % 2 === 0;
-  const isDark = index === 3; // Wilderness Collection gets dark background
 
-  if (isDark) {
+  if (lodge.darkBg) {
     return (
       <section ref={ref} className="py-20 lg:py-28 bg-[#1a1a1a] text-white">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -281,7 +306,7 @@ function LodgeSection({ lodge, index }: { lodge: Lodge; index: number }) {
   }
 
   return (
-    <section ref={ref} className={`py-20 lg:py-28 ${index % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF7]'}`}>
+    <section ref={ref} className={`py-20 lg:py-28 ${isEven ? 'bg-white' : 'bg-[#FAFAF7]'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center`}>
           <motion.div
@@ -357,8 +382,8 @@ export default function CampsAndLodgesPage() {
               className="mt-10 flex flex-wrap gap-8 border-t border-[#B78A42]/8 pt-8"
             >
               {[
-                { value: '10', label: 'Partner Lodges' },
-                { value: '5', label: 'Regions' },
+                { value: '12', label: 'Partner Lodges' },
+                { value: '6', label: 'Regions' },
                 { value: '100%', label: 'Handpicked' },
               ].map((stat) => (
                 <div key={stat.label} className="flex items-baseline gap-2">

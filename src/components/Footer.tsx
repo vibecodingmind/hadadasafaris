@@ -43,7 +43,7 @@ const footerLinks: { title: string; links: { label: string; href: string }[] }[]
       { label: 'Our Team', href: '/about' },
       { label: 'Blog', href: '/about' },
       { label: 'Careers', href: '/about' },
-      { label: 'Partners', href: '/suppliers' },
+      { label: 'Partners', href: '/camps-lodges' },
       { label: 'Contact', href: '/contact' },
     ],
   },

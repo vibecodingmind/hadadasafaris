@@ -53,7 +53,7 @@ const navItems: NavItem[] = [
     href: '#',
     noClick: true,
     children: [
-      { label: 'Camp & Lodges', href: '/suppliers' },
+      { label: 'Camp & Lodges', href: '/camps-lodges' },
       { label: 'Domestic Flights', href: '/domestic-flights' },
       { label: 'Balloon Safaris', href: '/destinations/balloon-safari' },
     ],
