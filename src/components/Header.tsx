@@ -4,18 +4,20 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Phone, MessageSquare } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, MessageSquare, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface NavChild {
   label: string;
   href: string;
+  description?: string;
 }
 
 interface NavItem {
   label: string;
   href: string;
   children?: NavChild[];
+  noClick?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -24,22 +26,22 @@ const navItems: NavItem[] = [
     label: 'DESTINATIONS',
     href: '/destinations',
     children: [
-      { label: 'Serengeti National Park', href: '/destinations/serengeti' },
-      { label: 'Ngorongoro Crater', href: '/destinations/ngorongoro' },
-      { label: 'Tarangire National Park', href: '/destinations/tarangire' },
-      { label: 'Lake Manyara', href: '/destinations/lake-manyara' },
-      { label: 'Zanzibar Island', href: '/destinations/zanzibar' },
-      { label: 'Mafia Island', href: '/destinations/mafia' },
-      { label: 'Selous Game Reserve', href: '/destinations/selous' },
-      { label: 'Ruaha National Park', href: '/destinations/ruaha' },
-      { label: 'Mount Kilimanjaro', href: '/destinations/kilimanjaro' },
-      { label: 'Gombe Stream', href: '/destinations/gombe' },
-      { label: 'Katavi National Park', href: '/destinations/katavi' },
-      { label: 'Mahale Mountains', href: '/destinations/mahale' },
-      { label: 'Arusha National Park', href: '/destinations/arusha' },
-      { label: 'Saadani National Park', href: '/destinations/saadani' },
-      { label: 'Mikumi National Park', href: '/destinations/mikumi' },
-      { label: 'Rubondo Island', href: '/destinations/rubondo' },
+      { label: 'Serengeti National Park', href: '/destinations/serengeti', description: 'The Great Migration' },
+      { label: 'Ngorongoro Crater', href: '/destinations/ngorongoro', description: "World's Largest Caldera" },
+      { label: 'Tarangire National Park', href: '/destinations/tarangire', description: 'Land of Giants' },
+      { label: 'Lake Manyara', href: '/destinations/lake-manyara', description: 'Tree-Climbing Lions' },
+      { label: 'Zanzibar Island', href: '/destinations/zanzibar', description: 'Paradise Island' },
+      { label: 'Mafia Island', href: '/destinations/mafia', description: 'Marine Paradise' },
+      { label: 'Selous Game Reserve', href: '/destinations/selous', description: "Africa's Largest Reserve" },
+      { label: 'Ruaha National Park', href: '/destinations/ruaha', description: 'Untamed Wilderness' },
+      { label: 'Mount Kilimanjaro', href: '/destinations/kilimanjaro', description: "Africa's Highest Peak" },
+      { label: 'Gombe Stream', href: '/destinations/gombe', description: 'Chimpanzee Sanctuary' },
+      { label: 'Katavi National Park', href: '/destinations/katavi', description: 'Remote Frontier' },
+      { label: 'Mahale Mountains', href: '/destinations/mahale', description: 'Primate Paradise' },
+      { label: 'Arusha National Park', href: '/destinations/arusha', description: 'The Overlooked Gem' },
+      { label: 'Saadani National Park', href: '/destinations/saadani', description: 'Where Bush Meets Beach' },
+      { label: 'Mikumi National Park', href: '/destinations/mikumi', description: 'Accessible Wilderness' },
+      { label: 'Rubondo Island', href: '/destinations/rubondo', description: 'Island Refuge' },
     ],
   },
   {
@@ -57,14 +59,15 @@ const navItems: NavItem[] = [
   },
   {
     label: 'MT. KILIMANJARO',
-    href: '/kilimanjaro',
+    href: '#',
+    noClick: true,
     children: [
-      { label: 'Machame Route', href: '/kilimanjaro/machame' },
-      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho' },
-      { label: 'Marangu Route', href: '/kilimanjaro/marangu' },
-      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe' },
-      { label: 'Rongai Route', href: '/kilimanjaro/rongai' },
-      { label: 'Shira Route', href: '/kilimanjaro/shira' },
+      { label: 'Machame Route', href: '/kilimanjaro/machame', description: '6-7 Days · Moderate · 95%' },
+      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho', description: '7-8 Days · Moderate · 96%' },
+      { label: 'Marangu Route', href: '/kilimanjaro/marangu', description: '5-6 Days · Easy-Moderate · 85%' },
+      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe', description: '6-7 Days · Challenging · 88%' },
+      { label: 'Rongai Route', href: '/kilimanjaro/rongai', description: '6-7 Days · Moderate · 90%' },
+      { label: 'Shira Route', href: '/kilimanjaro/shira', description: '7-8 Days · Moderate-Hard · 91%' },
     ],
   },
   {
@@ -144,35 +147,79 @@ export default function Header() {
                 onMouseEnter={() => item.children && setOpenDropdown(item.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <Link
-                  href={item.href}
-                  className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
-                    isScrolled ? 'text-[#333333]' : 'text-white'
-                  } ${pathname === item.href ? 'text-[#B78A42]' : ''}`}
-                >
-                  {item.label}
-                  {item.children && <ChevronDown className="w-3 h-3" />}
-                </Link>
+                {item.noClick ? (
+                  <button
+                    className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
+                      isScrolled ? 'text-[#333333]' : 'text-white'
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
+                      isScrolled ? 'text-[#333333]' : 'text-white'
+                    } ${pathname === item.href ? 'text-[#B78A42]' : ''}`}
+                  >
+                    {item.label}
+                    {item.children && <ChevronDown className="w-3 h-3" />}
+                  </Link>
+                )}
 
                 <AnimatePresence>
                   {item.children && openDropdown === item.label && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.2 }}
-                      className={`absolute top-full left-0 min-w-[260px] max-h-[70vh] bg-white/90 backdrop-blur-2xl border border-[#B78A42]/10 rounded-xl shadow-xl overflow-y-auto ${item.label === 'DESTINATIONS' ? 'min-w-[300px]' : ''}`}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
                     >
-                      <div className="py-2">
-                        {item.children.map((child) => (
+                      <div className={`bg-white shadow-2xl shadow-[#333333]/10 border border-[#B78A42]/8 overflow-hidden ${
+                        item.label === 'DESTINATIONS' ? 'w-[340px]' : item.label === 'MT. KILIMANJARO' ? 'w-[320px]' : 'w-[280px]'
+                      }`}>
+                        {/* Top accent line */}
+                        <div className="h-[2px] bg-gradient-to-r from-transparent via-[#B78A42] to-transparent" />
+                        
+                        {/* Column header */}
+                        <div className="px-5 pt-4 pb-2">
+                          <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#B78A42]">{item.label}</span>
+                        </div>
+
+                        {/* Items */}
+                        <div className="px-2 pb-2 max-h-[60vh] overflow-y-auto scrollbar-hide">
+                          {item.children.map((child) => (
+                            <Link
+                              key={child.label}
+                              href={child.href}
+                              className="group/item flex items-center gap-3 px-3 py-2.5 hover:bg-[#B78A42]/5 transition-all duration-200"
+                            >
+                              <div className="w-1 h-1 bg-[#B78A42]/30 group-hover/item:bg-[#B78A42] rounded-full transition-all duration-200 flex-shrink-0" />
+                              <div className="min-w-0 flex-1">
+                                <span className="block text-[13px] font-medium text-[#333333]/80 group-hover/item:text-[#B78A42] transition-colors duration-200 tracking-wide truncate">
+                                  {child.label}
+                                </span>
+                                {child.description && (
+                                  <span className="block text-[10px] text-[#333333]/35 mt-0.5 tracking-wide">{child.description}</span>
+                                )}
+                              </div>
+                              <ArrowRight className="w-3 h-3 text-[#B78A42]/0 group-hover/item:text-[#B78A42] -translate-x-1 group-hover/item:translate-x-0 transition-all duration-200 flex-shrink-0" />
+                            </Link>
+                          ))}
+                        </div>
+
+                        {/* Bottom link */}
+                        {!item.noClick && (
                           <Link
-                            key={child.label}
-                            href={child.href}
-                            className="block px-5 py-2.5 text-sm text-[#333333]/70 hover:text-[#B78A42] hover:bg-[#B78A42]/5 transition-all duration-200 tracking-wide"
+                            href={item.href}
+                            className="group/view flex items-center justify-between px-5 py-3 border-t border-[#B78A42]/5 hover:bg-[#B78A42]/5 transition-all duration-200"
                           >
-                            {child.label}
+                            <span className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#B78A42]">View All</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-[#B78A42] group-hover/view:translate-x-1 transition-transform duration-200" />
                           </Link>
-                        ))}
+                        )}
                       </div>
                     </motion.div>
                   )}
@@ -205,19 +252,25 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white/90 backdrop-blur-2xl border-t border-[#B78A42]/8 overflow-hidden"
+            className="lg:hidden bg-white/95 backdrop-blur-2xl border-t border-[#B78A42]/8 overflow-hidden"
           >
             <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
               {navItems.map((item) => (
                 <div key={item.label} className="border-b border-[#333333]/6 last:border-0">
                   <div className="flex items-center justify-between">
-                    <Link
-                      href={item.href}
-                      className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80 hover:text-[#B78A42] transition-colors"
-                      onClick={() => !item.children && setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
+                    {item.noClick ? (
+                      <span className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80">
+                        {item.label}
+                      </span>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80 hover:text-[#B78A42] transition-colors"
+                        onClick={() => !item.children && setMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                     {item.children && (
                       <button
                         onClick={() =>
@@ -251,6 +304,9 @@ export default function Header() {
                               onClick={() => setMobileMenuOpen(false)}
                             >
                               {child.label}
+                              {child.description && (
+                                <span className="block text-[10px] text-[#333333]/30 mt-0.5">{child.description}</span>
+                              )}
                             </Link>
                           ))}
                         </div>
