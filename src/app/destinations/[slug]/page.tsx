@@ -14,9 +14,6 @@ import {
   MapPin,
   ChevronDown,
   ArrowRight,
-  Star,
-  PawPrint,
-  Compass,
   Send,
   Mountain,
   Clock,
@@ -26,8 +23,6 @@ import {
   Sun,
   Snowflake,
   Wheat,
-  Eye,
-  X,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
@@ -72,9 +67,7 @@ function PhotoSlideshow({ images, alt }: { images: string[]; alt: string }) {
           transition={{ duration: 1, ease: 'easeInOut' }}
         />
       ))}
-      {/* Gradient overlay bottom */}
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#1a1a1a]/40 to-transparent" />
-      {/* Dots */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
         {images.map((_, i) => (
           <button
@@ -86,7 +79,6 @@ function PhotoSlideshow({ images, alt }: { images: string[]; alt: string }) {
           />
         ))}
       </div>
-      {/* Prev / Next */}
       <button
         onClick={() => setCurrent(current === 0 ? total - 1 : current - 1)}
         className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/25 transition-all z-10"
@@ -213,21 +205,15 @@ export default function DestinationDetailPage() {
 
   const overviewRef = useRef(null);
   const routesRef = useRef(null);
-  const wildlifeRef = useRef(null);
-  const galleryRef = useRef(null);
   const faqRef = useRef(null);
   const ctaRef = useRef(null);
 
   const overviewInView = useInView(overviewRef, { once: true, margin: '-80px' });
   const routesInView = useInView(routesRef, { once: true, margin: '-80px' });
-  const wildlifeInView = useInView(wildlifeRef, { once: true, margin: '-80px' });
-  const galleryInView = useInView(galleryRef, { once: true, margin: '-80px' });
   const faqInView = useInView(faqRef, { once: true, margin: '-80px' });
   const ctaInView = useInView(ctaRef, { once: true, margin: '-80px' });
 
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   if (!destination) {
     return (
@@ -253,11 +239,9 @@ export default function DestinationDetailPage() {
   }
 
   const otherDestinations = destinations.filter(d => d.slug !== slug).slice(0, 3);
-  const hasGallery = destination.gallery && destination.gallery.length > 0;
-  const hasWildlife = destination.wildlife && destination.wildlife.length > 0;
-  const hasActivities = destination.activities && destination.activities.length > 0;
   const hasClimateZones = destination.climateZones && destination.climateZones.length > 0;
   const hasRoutes = destination.routes && destination.routes.length > 0;
+  const hasGallery = destination.gallery && destination.gallery.length > 0;
   const slideshowImages = hasGallery ? destination.gallery! : [destination.image];
 
   return (
@@ -265,14 +249,13 @@ export default function DestinationDetailPage() {
       <Header />
 
       <main className="flex-1">
-        {/* Top spacer (no PageHero, clean layout like Kilimanjaro) */}
+        {/* Top spacer */}
         <div className="pt-24 lg:pt-28 bg-white" />
 
         {/* Overview — Title left + Photo Slideshow right */}
         <section className="pb-20 lg:pb-28 bg-white" ref={overviewRef}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Left: Title & Description */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={overviewInView ? { opacity: 1, x: 0 } : {}}
@@ -286,7 +269,6 @@ export default function DestinationDetailPage() {
                 </p>
               </motion.div>
 
-              {/* Right: Photo Slideshow */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={overviewInView ? { opacity: 1, x: 0 } : {}}
@@ -304,7 +286,7 @@ export default function DestinationDetailPage() {
           </div>
         </section>
 
-        {/* Climate Zones (data-driven — only shows if destination has this data) */}
+        {/* Climate Zones */}
         {hasClimateZones && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]">
             <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -352,7 +334,7 @@ export default function DestinationDetailPage() {
           </section>
         )}
 
-        {/* Climbing Routes (data-driven — only shows if destination has routes) */}
+        {/* Climbing Routes */}
         {hasRoutes && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]" ref={routesRef}>
             <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -374,125 +356,6 @@ export default function DestinationDetailPage() {
               </motion.div>
 
               <ScrollableRoutes routes={destination.routes} routesInView={routesInView} />
-            </div>
-          </section>
-        )}
-
-        {/* Wildlife & Activities (data-driven) */}
-        {(hasWildlife || hasActivities) && (
-          <section className="py-20 lg:py-28 bg-white" ref={wildlifeRef}>
-            <div className="max-w-7xl mx-auto px-4 md:px-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-                {/* Wildlife */}
-                {hasWildlife && (
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
-                      <PawPrint className="w-3.5 h-3.5" /> Wildlife
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-[#333333] mb-6">
-                      The Wild Inhabitants
-                    </h3>
-                    <div className="flex flex-wrap gap-2.5">
-                      {destination.wildlife.map((w, i) => (
-                        <motion.span
-                          key={i}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={wildlifeInView ? { opacity: 1, scale: 1 } : {}}
-                          transition={{ delay: 0.03 + i * 0.03, duration: 0.4 }}
-                          className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-full text-sm text-[#333333]/60 hover:border-[#B78A42]/20 hover:text-[#333333] hover:bg-[#B78A42]/5 transition-all duration-300 cursor-default"
-                        >
-                          <PawPrint className="w-3.5 h-3.5 text-[#B78A42]" /> {w}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Activities */}
-                {hasActivities && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.15 }}
-                  >
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
-                      <Compass className="w-3.5 h-3.5" /> Activities
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-bold text-[#333333] mb-6">
-                      Things to Do
-                    </h3>
-                    <div className="space-y-3">
-                      {destination.activities.map((a, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, x: 15 }}
-                          animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
-                          transition={{ delay: 0.05 + i * 0.05, duration: 0.4 }}
-                          className="flex items-center gap-3 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-xl p-4 hover:border-[#B78A42]/15 hover:shadow-md transition-all duration-300 group"
-                        >
-                          <div className="w-9 h-9 bg-[#B78A42]/8 group-hover:bg-[#B78A42] rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300">
-                            <Compass className="w-4 h-4 text-[#B78A42] group-hover:text-white transition-colors duration-300" />
-                          </div>
-                          <span className="text-sm font-medium text-[#333333]/70 group-hover:text-[#333333] transition-colors">{a}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Gallery (data-driven) */}
-        {hasGallery && (
-          <section className="py-20 lg:py-28 bg-[#FAFAF7]" ref={galleryRef}>
-            <div className="max-w-7xl mx-auto px-4 md:px-6">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={galleryInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-14"
-              >
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-                  <Eye className="w-3.5 h-3.5" /> Gallery
-                </span>
-                <h2 className="text-3xl md:text-5xl font-bold text-[#333333]">
-                  Visual <span className="text-[#B78A42]">Journey</span>
-                </h2>
-              </motion.div>
-
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                {destination.gallery!.map((img, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={galleryInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ delay: 0.1 + i * 0.08, duration: 0.5 }}
-                    className={`rounded-2xl overflow-hidden cursor-pointer group ${
-                      i === 0 ? 'col-span-2 row-span-2' : ''
-                    }`}
-                    onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
-                  >
-                    <div className={`relative overflow-hidden ${i === 0 ? 'h-full min-h-[280px] md:min-h-[400px]' : 'h-44 md:h-52'}`}>
-                      <img
-                        src={img}
-                        alt={`${destination.name} gallery ${i + 1}`}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-[#333333]/0 group-hover:bg-[#333333]/30 transition-all duration-500 flex items-center justify-center">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/25">
-                          <Eye className="w-5 h-5 text-white" />
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </div>
           </section>
         )}
@@ -649,70 +512,6 @@ export default function DestinationDetailPage() {
           </motion.div>
         </section>
       </main>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxOpen && hasGallery && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[100] bg-[#1a1a1a]/95 backdrop-blur-xl flex items-center justify-center"
-            onClick={() => setLightboxOpen(false)}
-          >
-            <button
-              onClick={() => setLightboxOpen(false)}
-              className="absolute top-6 right-6 w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all z-10"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : destination.gallery!.length - 1);
-              }}
-              className="absolute left-4 md:left-8 w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all z-10"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightboxIndex(lightboxIndex < destination.gallery!.length - 1 ? lightboxIndex + 1 : 0);
-              }}
-              className="absolute right-4 md:right-8 w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all z-10"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            <div className="max-w-5xl w-full px-4" onClick={e => e.stopPropagation()}>
-              <motion.img
-                key={lightboxIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-                src={destination.gallery![lightboxIndex]}
-                alt={`${destination.name} gallery`}
-                className="w-full max-h-[80vh] object-contain rounded-xl"
-              />
-              <div className="flex items-center justify-center gap-3 mt-5">
-                {destination.gallery!.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setLightboxIndex(i)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      i === lightboxIndex ? 'bg-[#B78A42] scale-125' : 'bg-white/30 hover:bg-white/50'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <Footer />
       <WhatsAppButton />
