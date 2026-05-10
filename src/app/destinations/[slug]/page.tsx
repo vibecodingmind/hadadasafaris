@@ -4,7 +4,6 @@ import { useParams } from 'next/navigation';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Header from '@/components/Header';
-import PageHero from '@/components/PageHero';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -31,7 +30,6 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Phone,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -43,7 +41,14 @@ const climateIcons: Record<string, React.ElementType> = {
   Snowflake,
 };
 
-function KilimanjaroSlideshow({ images }: { images: string[] }) {
+const difficultyColors: Record<string, string> = {
+  'Easy-Moderate': 'bg-green-100 text-green-700 border-green-200',
+  'Moderate': 'bg-amber-100 text-amber-700 border-amber-200',
+  'Moderate-Hard': 'bg-orange-100 text-orange-700 border-orange-200',
+  'Challenging': 'bg-red-100 text-red-700 border-red-200',
+};
+
+function PhotoSlideshow({ images, alt }: { images: string[]; alt: string }) {
   const [current, setCurrent] = useState(0);
   const total = images.length;
 
@@ -60,7 +65,7 @@ function KilimanjaroSlideshow({ images }: { images: string[] }) {
         <motion.img
           key={i}
           src={img}
-          alt={`Kilimanjaro slide ${i + 1}`}
+          alt={`${alt} slide ${i + 1}`}
           className="absolute inset-0 w-full h-full object-cover"
           initial={false}
           animate={{ opacity: i === current ? 1 : 0 }}
@@ -98,13 +103,6 @@ function KilimanjaroSlideshow({ images }: { images: string[] }) {
   );
 }
 
-const difficultyColors: Record<string, string> = {
-  'Easy-Moderate': 'bg-green-100 text-green-700 border-green-200',
-  'Moderate': 'bg-amber-100 text-amber-700 border-amber-200',
-  'Moderate-Hard': 'bg-orange-100 text-orange-700 border-orange-200',
-  'Challenging': 'bg-red-100 text-red-700 border-red-200',
-};
-
 function ScrollableRoutes({ routes, routesInView }: { routes: typeof destinations[0]['routes']; routesInView: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -132,13 +130,12 @@ function ScrollableRoutes({ routes, routesInView }: { routes: typeof destination
   const scroll = (dir: 'left' | 'right') => {
     const el = scrollRef.current;
     if (!el) return;
-    const cardWidth = 320; // card width + gap
+    const cardWidth = 320;
     el.scrollBy({ left: dir === 'right' ? cardWidth : -cardWidth, behavior: 'smooth' });
   };
 
   return (
     <div className="relative group/scroll">
-      {/* Left arrow */}
       {canScrollLeft && (
         <button
           onClick={() => scroll('left')}
@@ -147,7 +144,6 @@ function ScrollableRoutes({ routes, routesInView }: { routes: typeof destination
           <ChevronLeft className="w-5 h-5" />
         </button>
       )}
-      {/* Right arrow */}
       {canScrollRight && (
         <button
           onClick={() => scroll('right')}
@@ -157,7 +153,6 @@ function ScrollableRoutes({ routes, routesInView }: { routes: typeof destination
         </button>
       )}
 
-      {/* Scrollable container */}
       <div
         ref={scrollRef}
         className="flex gap-5 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 cursor-grab active:cursor-grabbing"
@@ -175,7 +170,6 @@ function ScrollableRoutes({ routes, routesInView }: { routes: typeof destination
               href={`/kilimanjaro/${route.slug}`}
               className="group/card block bg-white border border-[#B78A42]/8 rounded-2xl overflow-hidden hover:border-[#B78A42]/25 hover:shadow-xl transition-all duration-500 h-full"
             >
-              {/* Card Image */}
               <div className="relative h-44 overflow-hidden">
                 <img
                   src="/images/kilimanjaro.png"
@@ -183,18 +177,14 @@ function ScrollableRoutes({ routes, routesInView }: { routes: typeof destination
                   className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/60 via-transparent to-transparent" />
-                {/* Difficulty badge */}
                 <span className={`absolute top-3 right-3 px-2.5 py-1 text-[10px] font-bold rounded-full border backdrop-blur-xl ${difficultyColors[route.difficulty] || 'bg-gray-100 text-gray-600 border-gray-200'}`}>
                   {route.difficulty}
                 </span>
-                {/* Duration badge */}
                 <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-white/20 backdrop-blur-xl rounded-full">
                   <Clock className="w-3 h-3 text-white" />
                   <span className="text-[10px] font-bold text-white tracking-wide">{route.duration}</span>
                 </div>
               </div>
-
-              {/* Card Content */}
               <div className="p-5">
                 <h3 className="font-bold text-[#333333] mb-2 group-hover/card:text-[#B78A42] transition-colors">{route.name}</h3>
                 <p className="text-xs text-[#333333]/45 leading-relaxed line-clamp-2 mb-4">{route.description}</p>
@@ -207,7 +197,6 @@ function ScrollableRoutes({ routes, routesInView }: { routes: typeof destination
         ))}
       </div>
 
-      {/* Scroll progress dots */}
       <div className="flex items-center justify-center gap-2 mt-5">
         {routes!.map((_, i) => (
           <div key={i} className="w-2 h-2 rounded-full bg-[#B78A42]/20" />
@@ -223,7 +212,6 @@ export default function DestinationDetailPage() {
   const destination = getDestinationBySlug(slug);
 
   const overviewRef = useRef(null);
-  const highlightsRef = useRef(null);
   const routesRef = useRef(null);
   const wildlifeRef = useRef(null);
   const galleryRef = useRef(null);
@@ -231,7 +219,6 @@ export default function DestinationDetailPage() {
   const ctaRef = useRef(null);
 
   const overviewInView = useInView(overviewRef, { once: true, margin: '-80px' });
-  const highlightsInView = useInView(highlightsRef, { once: true, margin: '-80px' });
   const routesInView = useInView(routesRef, { once: true, margin: '-80px' });
   const wildlifeInView = useInView(wildlifeRef, { once: true, margin: '-80px' });
   const galleryInView = useInView(galleryRef, { once: true, margin: '-80px' });
@@ -266,25 +253,23 @@ export default function DestinationDetailPage() {
   }
 
   const otherDestinations = destinations.filter(d => d.slug !== slug).slice(0, 3);
-  const isKilimanjaro = slug === 'kilimanjaro';
+  const hasGallery = destination.gallery && destination.gallery.length > 0;
+  const hasWildlife = destination.wildlife && destination.wildlife.length > 0;
+  const hasActivities = destination.activities && destination.activities.length > 0;
+  const hasClimateZones = destination.climateZones && destination.climateZones.length > 0;
+  const hasRoutes = destination.routes && destination.routes.length > 0;
+  const slideshowImages = hasGallery ? destination.gallery! : [destination.image];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAF7]">
       <Header />
-      {!isKilimanjaro && (
-        <PageHero
-          title={destination.name.split(' ').slice(0, -1).join(' ') || 'Explore'}
-          highlight={destination.name.split(' ').slice(-1)[0]}
-          subtitle={destination.tagline}
-          image={destination.heroImage}
-        />
-      )}
-      <main className="flex-1">
-        {/* Spacer for Kilimanjaro (no PageHero) */}
-        {isKilimanjaro && <div className="pt-24 lg:pt-28 bg-white" />}
 
-        {/* Overview */}
-        <section className="py-20 lg:py-28 bg-white" ref={overviewRef}>
+      <main className="flex-1">
+        {/* Top spacer (no PageHero, clean layout like Kilimanjaro) */}
+        <div className="pt-24 lg:pt-28 bg-white" />
+
+        {/* Overview — Title left + Photo Slideshow right */}
+        <section className="pb-20 lg:pb-28 bg-white" ref={overviewRef}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left: Title & Description */}
@@ -294,11 +279,7 @@ export default function DestinationDetailPage() {
                 transition={{ duration: 0.8 }}
               >
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
-                  {isKilimanjaro ? (
-                    <>Mt. <span className="text-[#B78A42]">Kilimanjaro</span></>
-                  ) : (
-                    <>Discover <span className="text-[#B78A42]">{destination.name}</span></>
-                  )}
+                  Discover <span className="text-[#B78A42]">{destination.name}</span>
                 </h2>
                 <p className="text-base text-[#333333]/60 leading-relaxed">
                   {destination.longDescription}
@@ -312,9 +293,8 @@ export default function DestinationDetailPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
                 <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-[#333333]/8 group">
-                  {/* Slides */}
-                  {isKilimanjaro && destination.gallery ? (
-                    <KilimanjaroSlideshow images={destination.gallery} />
+                  {slideshowImages.length > 1 ? (
+                    <PhotoSlideshow images={slideshowImages} alt={destination.name} />
                   ) : (
                     <img src={destination.image} alt={destination.name} className="w-full h-[480px] object-cover" />
                   )}
@@ -324,8 +304,8 @@ export default function DestinationDetailPage() {
           </div>
         </section>
 
-        {/* Climate Zones (Kilimanjaro-specific) */}
-        {isKilimanjaro && destination.climateZones && (
+        {/* Climate Zones (data-driven — only shows if destination has this data) */}
+        {hasClimateZones && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]">
             <div className="max-w-7xl mx-auto px-4 md:px-6">
               <motion.div
@@ -339,15 +319,15 @@ export default function DestinationDetailPage() {
                   <TrendingUp className="w-3.5 h-3.5" /> Ascent Profile
                 </span>
                 <h2 className="text-3xl md:text-5xl font-bold text-[#333333]">
-                  Five <span className="text-[#B78A42]">Climate Zones</span>
+                  Climate <span className="text-[#B78A42]">Zones</span>
                 </h2>
                 <p className="text-base text-[#333333]/50 max-w-xl mx-auto mt-4">
-                  From tropical rainforest to arctic glacier, Kilimanjaro takes you through five distinct worlds in a single ascent.
+                  From tropical rainforest to arctic glacier, experience distinct worlds in a single ascent.
                 </p>
               </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                {destination.climateZones.map((zone, i) => {
+              <div className={`grid grid-cols-1 md:grid-cols-${Math.min(destination.climateZones!.length, 5)} gap-4`}>
+                {destination.climateZones!.map((zone, i) => {
                   const ZoneIcon = climateIcons[zone.icon] || Mountain;
                   return (
                     <motion.div
@@ -372,8 +352,8 @@ export default function DestinationDetailPage() {
           </section>
         )}
 
-        {/* Climbing Routes (Kilimanjaro-specific) - Scrollable Cards */}
-        {isKilimanjaro && destination.routes && (
+        {/* Climbing Routes (data-driven — only shows if destination has routes) */}
+        {hasRoutes && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]" ref={routesRef}>
             <div className="max-w-7xl mx-auto px-4 md:px-6">
               <motion.div
@@ -389,7 +369,7 @@ export default function DestinationDetailPage() {
                   Climbing <span className="text-[#B78A42]">Routes</span>
                 </h2>
                 <p className="text-base text-[#333333]/50 max-w-xl mx-auto mt-4">
-                  Six distinct routes to Uhuru Peak, each with its own character, scenery, and challenge level.
+                  Distinct routes to the summit, each with its own character, scenery, and challenge level.
                 </p>
               </motion.div>
 
@@ -398,74 +378,78 @@ export default function DestinationDetailPage() {
           </section>
         )}
 
-        {/* Wildlife & Activities (hidden for Kilimanjaro) */}
-        {!isKilimanjaro && (
-        <section className="py-20 lg:py-28 bg-white" ref={wildlifeRef}>
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-              {/* Wildlife */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
-                  <PawPrint className="w-3.5 h-3.5" /> Wildlife
-                </span>
-                <h3 className="text-2xl md:text-3xl font-bold text-[#333333] mb-6">
-                  {isKilimanjaro ? 'Mountain Wildlife' : 'The Wild Inhabitants'}
-                </h3>
-                <div className="flex flex-wrap gap-2.5">
-                  {destination.wildlife.map((w, i) => (
-                    <motion.span
-                      key={i}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={wildlifeInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 0.03 + i * 0.03, duration: 0.4 }}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-full text-sm text-[#333333]/60 hover:border-[#B78A42]/20 hover:text-[#333333] hover:bg-[#B78A42]/5 transition-all duration-300 cursor-default"
-                    >
-                      <PawPrint className="w-3.5 h-3.5 text-[#B78A42]" /> {w}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
+        {/* Wildlife & Activities (data-driven) */}
+        {(hasWildlife || hasActivities) && (
+          <section className="py-20 lg:py-28 bg-white" ref={wildlifeRef}>
+            <div className="max-w-7xl mx-auto px-4 md:px-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                {/* Wildlife */}
+                {hasWildlife && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
+                      <PawPrint className="w-3.5 h-3.5" /> Wildlife
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-[#333333] mb-6">
+                      The Wild Inhabitants
+                    </h3>
+                    <div className="flex flex-wrap gap-2.5">
+                      {destination.wildlife.map((w, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={wildlifeInView ? { opacity: 1, scale: 1 } : {}}
+                          transition={{ delay: 0.03 + i * 0.03, duration: 0.4 }}
+                          className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-full text-sm text-[#333333]/60 hover:border-[#B78A42]/20 hover:text-[#333333] hover:bg-[#B78A42]/5 transition-all duration-300 cursor-default"
+                        >
+                          <PawPrint className="w-3.5 h-3.5 text-[#B78A42]" /> {w}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
 
-              {/* Activities */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 }}
-              >
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
-                  <Compass className="w-3.5 h-3.5" /> Activities
-                </span>
-                <h3 className="text-2xl md:text-3xl font-bold text-[#333333] mb-6">
-                  Things to Do
-                </h3>
-                <div className="space-y-3">
-                  {destination.activities.map((a, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: 15 }}
-                      animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ delay: 0.05 + i * 0.05, duration: 0.4 }}
-                      className="flex items-center gap-3 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-xl p-4 hover:border-[#B78A42]/15 hover:shadow-md transition-all duration-300 group"
-                    >
-                      <div className="w-9 h-9 bg-[#B78A42]/8 group-hover:bg-[#B78A42] rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300">
-                        <Compass className="w-4 h-4 text-[#B78A42] group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <span className="text-sm font-medium text-[#333333]/70 group-hover:text-[#333333] transition-colors">{a}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+                {/* Activities */}
+                {hasActivities && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                  >
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
+                      <Compass className="w-3.5 h-3.5" /> Activities
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-bold text-[#333333] mb-6">
+                      Things to Do
+                    </h3>
+                    <div className="space-y-3">
+                      {destination.activities.map((a, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: 15 }}
+                          animate={wildlifeInView ? { opacity: 1, x: 0 } : {}}
+                          transition={{ delay: 0.05 + i * 0.05, duration: 0.4 }}
+                          className="flex items-center gap-3 bg-[#FAFAF7] border border-[#B78A42]/5 rounded-xl p-4 hover:border-[#B78A42]/15 hover:shadow-md transition-all duration-300 group"
+                        >
+                          <div className="w-9 h-9 bg-[#B78A42]/8 group-hover:bg-[#B78A42] rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                            <Compass className="w-4 h-4 text-[#B78A42] group-hover:text-white transition-colors duration-300" />
+                          </div>
+                          <span className="text-sm font-medium text-[#333333]/70 group-hover:text-[#333333] transition-colors">{a}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         )}
 
-        {/* Gallery (hidden for Kilimanjaro) */}
-        {!isKilimanjaro && destination.gallery && destination.gallery.length > 0 && (
+        {/* Gallery (data-driven) */}
+        {hasGallery && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]" ref={galleryRef}>
             <div className="max-w-7xl mx-auto px-4 md:px-6">
               <motion.div
@@ -483,7 +467,7 @@ export default function DestinationDetailPage() {
               </motion.div>
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                {destination.gallery.map((img, i) => (
+                {destination.gallery!.map((img, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -624,7 +608,6 @@ export default function DestinationDetailPage() {
             <img src={destination.heroImage} alt="" className="w-full h-full object-cover opacity-20" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a] via-[#1a1a1a]/90 to-[#1a1a1a]" />
           </div>
-          {/* Decorative orbs */}
           <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-[#B78A42]/10 blur-[100px]" />
           <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-[#D5BC92]/8 blur-[120px]" />
 
@@ -669,7 +652,7 @@ export default function DestinationDetailPage() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {lightboxOpen && (
+        {lightboxOpen && hasGallery && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -688,7 +671,7 @@ export default function DestinationDetailPage() {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : destination.gallery.length - 1);
+                setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : destination.gallery!.length - 1);
               }}
               className="absolute left-4 md:left-8 w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all z-10"
             >
@@ -698,7 +681,7 @@ export default function DestinationDetailPage() {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex(lightboxIndex < destination.gallery.length - 1 ? lightboxIndex + 1 : 0);
+                setLightboxIndex(lightboxIndex < destination.gallery!.length - 1 ? lightboxIndex + 1 : 0);
               }}
               className="absolute right-4 md:right-8 w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all z-10"
             >
@@ -711,12 +694,12 @@ export default function DestinationDetailPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
-                src={destination.gallery[lightboxIndex]}
+                src={destination.gallery![lightboxIndex]}
                 alt={`${destination.name} gallery`}
                 className="w-full max-h-[80vh] object-contain rounded-xl"
               />
               <div className="flex items-center justify-center gap-3 mt-5">
-                {destination.gallery.map((_, i) => (
+                {destination.gallery!.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setLightboxIndex(i)}
