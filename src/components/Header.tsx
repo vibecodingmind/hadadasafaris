@@ -50,10 +50,14 @@ const navItems: NavItem[] = [
   },
   {
     label: 'SUPPLIERS',
-    href: '/suppliers',
+    href: '#',
+    noClick: true,
     children: [
       { label: 'Camp & Lodges', href: '/suppliers' },
       { label: 'Domestic Flights', href: '/suppliers' },
+      { label: 'Balloon Safaris', href: '/destinations/balloon-safari' },
+      { label: 'Entara Camps & Lodges', href: '/suppliers' },
+      { label: 'Nimali Africa', href: '/suppliers' },
     ],
   },
   { label: 'CONTACT', href: '/contact' },

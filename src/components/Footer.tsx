@@ -77,7 +77,7 @@ export default function Footer() {
               </a>
               <a href="tel:+255123456789" className="flex items-center gap-2 text-white/40 hover:text-[#B78A42] transition-colors">
                 <Phone className="w-4 h-4" />
-                +255 123 456 789
+                +255 788 071 035
               </a>
               <span className="flex items-center gap-2 text-white/40">
                 <MapPin className="w-4 h-4" />
