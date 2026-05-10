@@ -2,11 +2,13 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
+import CookieConsent from '@/components/CookieConsent';
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -17,6 +19,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Header />
       <PageHero title="Contact" highlight="Us" subtitle="Start planning your dream safari — we'd love to hear from you" image="/images/ngorongoro-lunch.png" />
       <Breadcrumb items={[{ label: 'Contact' }]} />
       <main className="flex-1">
@@ -177,6 +180,7 @@ export default function ContactPage() {
       <Footer />
       <WhatsAppButton />
       <ScrollToTop />
+      <CookieConsent />
     </div>
   );
 }

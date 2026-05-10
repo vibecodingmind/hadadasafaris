@@ -2,11 +2,13 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
+import CookieConsent from '@/components/CookieConsent';
 import { Tent, Plane, Wind, TreePine, Star, ExternalLink } from 'lucide-react';
 
 const suppliers = [
@@ -38,6 +40,7 @@ export default function SuppliersPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Header />
       <PageHero title="Our" highlight="Suppliers" subtitle="Trusted partners who share our commitment to exceptional safari experiences" image="/images/luxury-camp.png" />
       <Breadcrumb items={[{ label: 'Our Suppliers' }]} />
       <main className="flex-1">
@@ -79,6 +82,7 @@ export default function SuppliersPage() {
       <Footer />
       <WhatsAppButton />
       <ScrollToTop />
+      <CookieConsent />
     </div>
   );
 }

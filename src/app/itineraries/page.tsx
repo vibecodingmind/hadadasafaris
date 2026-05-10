@@ -2,11 +2,13 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
+import CookieConsent from '@/components/CookieConsent';
 import { Calendar, Clock, Users, ArrowRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -26,6 +28,7 @@ export default function ItinerariesPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Header />
       <PageHero title="Safari" highlight="Itineraries" subtitle="Handcrafted journeys designed to immerse you in the magic of Tanzania" image="/images/serengeti-elephants.png" />
       <Breadcrumb items={[{ label: 'Itineraries' }]} />
       <main className="flex-1">
@@ -91,6 +94,7 @@ export default function ItinerariesPage() {
       <Footer />
       <WhatsAppButton />
       <ScrollToTop />
+      <CookieConsent />
     </div>
   );
 }

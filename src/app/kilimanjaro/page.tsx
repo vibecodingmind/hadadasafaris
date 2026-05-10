@@ -2,11 +2,13 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
+import CookieConsent from '@/components/CookieConsent';
 import { Mountain, Clock, TrendingUp, ArrowRight, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -26,6 +28,7 @@ export default function KilimanjaroPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Header />
       <PageHero title="Mt." highlight="Kilimanjaro" subtitle="Conquer Africa's highest peak — 5,895m of pure determination and breathtaking beauty" image="/images/kilimanjaro.png" />
       <Breadcrumb items={[{ label: 'Mt. Kilimanjaro' }]} />
       <main className="flex-1">
@@ -103,6 +106,7 @@ export default function KilimanjaroPage() {
       <Footer />
       <WhatsAppButton />
       <ScrollToTop />
+      <CookieConsent />
     </div>
   );
 }

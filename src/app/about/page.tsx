@@ -2,11 +2,13 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Breadcrumb from '@/components/Breadcrumb';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
+import CookieConsent from '@/components/CookieConsent';
 import { Users, Award, Globe, Heart, Target, Shield } from 'lucide-react';
 
 const team = [
@@ -35,6 +37,7 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Header />
       <PageHero
         title="About"
         highlight="Hadada Safaris"
@@ -125,6 +128,7 @@ export default function AboutPage() {
       <Footer />
       <WhatsAppButton />
       <ScrollToTop />
+      <CookieConsent />
     </div>
   );
 }
