@@ -20,7 +20,28 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'ABOUT', href: '/about' },
-  { label: 'DESTINATIONS', href: '/destinations' },
+  {
+    label: 'DESTINATIONS',
+    href: '/destinations',
+    children: [
+      { label: 'Serengeti National Park', href: '/destinations/serengeti' },
+      { label: 'Ngorongoro Crater', href: '/destinations/ngorongoro' },
+      { label: 'Tarangire National Park', href: '/destinations/tarangire' },
+      { label: 'Lake Manyara', href: '/destinations/lake-manyara' },
+      { label: 'Zanzibar Island', href: '/destinations/zanzibar' },
+      { label: 'Mafia Island', href: '/destinations/mafia' },
+      { label: 'Selous Game Reserve', href: '/destinations/selous' },
+      { label: 'Ruaha National Park', href: '/destinations/ruaha' },
+      { label: 'Mount Kilimanjaro', href: '/destinations/kilimanjaro' },
+      { label: 'Gombe Stream', href: '/destinations/gombe' },
+      { label: 'Katavi National Park', href: '/destinations/katavi' },
+      { label: 'Mahale Mountains', href: '/destinations/mahale' },
+      { label: 'Arusha National Park', href: '/destinations/arusha' },
+      { label: 'Saadani National Park', href: '/destinations/saadani' },
+      { label: 'Mikumi National Park', href: '/destinations/mikumi' },
+      { label: 'Rubondo Island', href: '/destinations/rubondo' },
+    ],
+  },
   {
     label: 'ITINERARIES',
     href: '/itineraries',
@@ -140,7 +161,7 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 min-w-[260px] bg-white/90 backdrop-blur-2xl border border-[#B78A42]/10 rounded-xl shadow-xl overflow-hidden"
+                      className={`absolute top-full left-0 min-w-[260px] max-h-[70vh] bg-white/90 backdrop-blur-2xl border border-[#B78A42]/10 rounded-xl shadow-xl overflow-y-auto ${item.label === 'DESTINATIONS' ? 'min-w-[300px]' : ''}`}
                     >
                       <div className="py-2">
                         {item.children.map((child) => (

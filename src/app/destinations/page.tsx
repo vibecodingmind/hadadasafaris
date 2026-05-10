@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Breadcrumb from '@/components/Breadcrumb';
@@ -10,23 +11,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
 import CookieConsent from '@/components/CookieConsent';
 import { MapPin, ArrowRight } from 'lucide-react';
-
-const destinations = [
-  { name: 'Mount Kilimanjaro', slug: 'kilimanjaro', image: '/images/kilimanjaro.png', tagline: "Africa's Highest Peak", description: 'Rising 5,895m above sea level, Kilimanjaro is Africa\'s tallest mountain and the world\'s highest free-standing peak. Trek through five distinct climate zones from tropical rainforest to arctic summit.' },
-  { name: 'Serengeti National Park', slug: 'serengeti', image: '/images/serengeti-elephants.png', tagline: 'The Great Migration', description: 'Home to the legendary Great Migration, the Serengeti hosts over 2 million wildebeest and zebra in an endless cycle of life. Witness thrilling predator-prey interactions on the vast golden plains.' },
-  { name: 'Ngorongoro Conservation Area', slug: 'ngorongoro', image: '/images/ngorongoro-crater.png', tagline: 'The World\'s Largest Caldera', description: 'A natural wonder and UNESCO World Heritage Site, the Ngorongoro Crater shelters one of Africa\'s densest wildlife populations including the Big Five within its 260km² volcanic bowl.' },
-  { name: 'Olduvai Gorge', slug: 'olduvai', image: '/images/olduvai-gorge.png', tagline: 'Cradle of Mankind', description: 'One of the most important paleoanthropological sites in the world, where some of the earliest human fossils were discovered. Walk where our ancestors walked millions of years ago.' },
-  { name: 'Lake Manyara National Park', slug: 'lake-manyara', image: '/images/lake-manyara.png', tagline: 'Tree-Climbing Lions', description: 'Famous for its tree-climbing lions, flamingo-lined lake shores, and dense groundwater forest. A compact park that delivers incredible diversity in a stunning Rift Valley setting.' },
-  { name: 'Gombe Stream National Park', slug: 'gombe', image: '/images/gombe-stream.png', tagline: 'Chimpanzee Sanctuary', description: 'Made famous by Jane Goodall\'s pioneering research, Gombe is home to habituated chimpanzee communities. Trek through lush forest to observe our closest relatives in the wild.' },
-  { name: 'Selous National Park', slug: 'selous', image: '/images/selous.png', tagline: "Africa's Largest Reserve", description: 'One of the largest faunal reserves in the world, Selous offers remote, untouched wilderness with boat safaris, walking safaris, and fly camping under the stars.' },
-  { name: 'Ruaha National Park', slug: 'ruaha', image: '/images/ruaha.png', tagline: 'Untamed Wilderness', description: 'Tanzania\'s largest national park is a hidden gem with dramatic landscapes, 10% of the world\'s lions, and rare species like the African wild dog. True off-the-beaten-path safari.' },
-  { name: 'Katavi National Park', slug: 'katavi', image: '/images/katavi.png', tagline: 'Remote & Unspoiled', description: 'One of Tanzania\'s most isolated parks, Katavi offers an untouched safari experience with massive herds of buffalo, hippos by the thousand, and very few other visitors.' },
-  { name: 'Zanzibar Beaches', slug: 'zanzibar', image: '/images/zanzibar-beach.png', tagline: 'Paradise Island', description: 'Turquoise waters, pristine white sand beaches, and a rich Swahili cultural heritage. The perfect place to unwind after a safari or enjoy a tropical island escape.' },
-  { name: 'Stone Town', slug: 'stone-town', image: '/images/stone-town.png', tagline: 'Historic Swahili City', description: 'A UNESCO World Heritage Site, Stone Town is a labyrinth of narrow streets, ornate carved doors, spice markets, and centuries of Arab, Persian, Indian, and European influences.' },
-  { name: 'Mafia Island', slug: 'mafia', image: '/images/mafia-island.png', tagline: 'Marine Paradise', description: 'Home to the Mafia Island Marine Park, this unspoiled island offers world-class diving, whale shark encounters, and pristine coral reefs without the tourist crowds.' },
-  { name: 'Pemba Island', slug: 'pemba', image: '/images/pemba-island.png', tagline: 'The Green Island', description: 'Known as "The Green Island" for its lush vegetation, Pemba offers exclusive clove plantations, pristine diving, and a deeply authentic Swahili cultural experience.' },
-  { name: 'Lake Victoria', slug: 'lake-victoria', image: '/images/lake-victoria.png', tagline: "Africa's Largest Lake", description: 'The source of the Nile and Africa\'s largest freshwater lake. Visit fishing villages, explore Rubondo Island National Park, and witness spectacular birdlife along the shores.' },
-];
+import { destinations } from '@/data/destinations';
 
 export default function DestinationsPage() {
   const ref = useRef(null);
@@ -55,12 +40,9 @@ export default function DestinationsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {destinations.map((dest, i) => (
-                <motion.a
+                <Link
                   key={dest.slug}
-                  href={`/destinations#${dest.slug}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.05 + i * 0.04, duration: 0.5 }}
+                  href={`/destinations/${dest.slug}`}
                   className="group bg-white rounded-2xl overflow-hidden border border-[#B78A42]/5 hover:border-[#B78A42]/20 hover:shadow-xl transition-all duration-500"
                 >
                   <div className="relative h-56 overflow-hidden">
@@ -75,7 +57,7 @@ export default function DestinationsPage() {
                       Discover <ArrowRight className="w-3 h-3" />
                     </span>
                   </div>
-                </motion.a>
+                </Link>
               ))}
             </div>
           </div>
