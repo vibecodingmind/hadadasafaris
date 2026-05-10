@@ -5,14 +5,16 @@ import { useRef, useState } from 'react';
 import { Camera, X } from 'lucide-react';
 
 const photos = [
-  { src: '/images/serengeti-elephants.png', alt: 'Elephants in Serengeti' },
-  { src: '/images/ngorongoro-crater.png', alt: 'Ngorongoro Crater' },
-  { src: '/images/zanzibar-beach.png', alt: 'Zanzibar Beach' },
-  { src: '/images/migration.png', alt: 'Great Migration' },
-  { src: '/images/kilimanjaro.png', alt: 'Mount Kilimanjaro' },
-  { src: '/images/luxury-camp.png', alt: 'Luxury Safari Camp' },
-  { src: '/images/ngorongoro-lunch.png', alt: 'Bush Lunch' },
-  { src: '/images/cultural-experience.png', alt: 'Cultural Experience' },
+  { src: '/images/serengeti-elephants.png', alt: 'Elephants in Serengeti', span: 'col-span-2 row-span-2' },
+  { src: '/images/ngorongoro-crater.png', alt: 'Ngorongoro Crater', span: '' },
+  { src: '/images/zanzibar-beach.png', alt: 'Zanzibar Beach', span: '' },
+  { src: '/images/migration.png', alt: 'Great Migration', span: '' },
+  { src: '/images/kilimanjaro.png', alt: 'Mount Kilimanjaro', span: '' },
+  { src: '/images/luxury-camp.png', alt: 'Luxury Safari Camp', span: 'col-span-2 row-span-1' },
+  { src: '/images/ngorongoro-lunch.png', alt: 'Bush Lunch', span: '' },
+  { src: '/images/cultural-experience.png', alt: 'Cultural Experience', span: '' },
+  { src: '/images/balloon-safari.png', alt: 'Balloon Safari', span: '' },
+  { src: '/images/lion-portrait.png', alt: 'Lion Portrait', span: '' },
 ];
 
 export default function PhotoGallery() {
@@ -21,9 +23,7 @@ export default function PhotoGallery() {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
 
   return (
-    <section className="py-24 bg-[#FAFAF7] relative overflow-hidden" ref={ref}>
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#B78A42]/3 rounded-full blur-[150px]" />
-
+    <section className="py-24 bg-white relative overflow-hidden" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -43,25 +43,21 @@ export default function PhotoGallery() {
           </p>
         </motion.div>
 
-        {/* Masonry-like grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {/* Clean grid layout — featured image + uniform tiles */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[220px]">
           {photos.map((photo, i) => (
             <motion.div
               key={photo.src}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
-              className={`relative group cursor-pointer overflow-hidden rounded-2xl ${
-                i === 0 || i === 5 ? 'md:row-span-2' : ''
-              }`}
+              className={`relative group cursor-pointer overflow-hidden rounded-2xl ${photo.span}`}
               onClick={() => setSelectedPhoto(photo.src)}
             >
               <img
                 src={photo.src}
                 alt={photo.alt}
-                className={`w-full object-cover group-hover:scale-110 transition-transform duration-700 ${
-                  i === 0 || i === 5 ? 'h-48 md:h-full min-h-[200px]' : 'h-48 md:h-56'
-                }`}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
