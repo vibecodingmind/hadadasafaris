@@ -22,28 +22,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'ABOUT', href: '/about' },
-  {
-    label: 'DESTINATIONS',
-    href: '/destinations',
-    children: [
-      { label: 'Serengeti National Park', href: '/destinations/serengeti', description: 'The Great Migration' },
-      { label: 'Ngorongoro Crater', href: '/destinations/ngorongoro', description: "World's Largest Caldera" },
-      { label: 'Tarangire National Park', href: '/destinations/tarangire', description: 'Land of Giants' },
-      { label: 'Lake Manyara', href: '/destinations/lake-manyara', description: 'Tree-Climbing Lions' },
-      { label: 'Zanzibar Island', href: '/destinations/zanzibar', description: 'Paradise Island' },
-      { label: 'Mafia Island', href: '/destinations/mafia', description: 'Marine Paradise' },
-      { label: 'Selous Game Reserve', href: '/destinations/selous', description: "Africa's Largest Reserve" },
-      { label: 'Ruaha National Park', href: '/destinations/ruaha', description: 'Untamed Wilderness' },
-      { label: 'Mount Kilimanjaro', href: '/destinations/kilimanjaro', description: "Africa's Highest Peak" },
-      { label: 'Gombe Stream', href: '/destinations/gombe', description: 'Chimpanzee Sanctuary' },
-      { label: 'Katavi National Park', href: '/destinations/katavi', description: 'Remote Frontier' },
-      { label: 'Mahale Mountains', href: '/destinations/mahale', description: 'Primate Paradise' },
-      { label: 'Arusha National Park', href: '/destinations/arusha', description: 'The Overlooked Gem' },
-      { label: 'Saadani National Park', href: '/destinations/saadani', description: 'Where Bush Meets Beach' },
-      { label: 'Mikumi National Park', href: '/destinations/mikumi', description: 'Accessible Wilderness' },
-      { label: 'Rubondo Island', href: '/destinations/rubondo', description: 'Island Refuge' },
-    ],
-  },
+  { label: 'DESTINATIONS', href: '/destinations' },
   {
     label: 'ITINERARIES',
     href: '/itineraries',
