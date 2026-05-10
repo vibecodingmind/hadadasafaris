@@ -10,6 +10,8 @@ import ScrollToTop from '@/components/ScrollToTop';
 import CookieConsent from '@/components/CookieConsent';
 import { Button } from '@/components/ui/button';
 import { getRouteBySlug } from '@/data/destinations';
+import { getRouteMapData } from '@/data/routeMaps';
+import RouteMap from '@/components/RouteMap';
 import {
   Mountain,
   Clock,
@@ -293,34 +295,23 @@ export default function RoutePage() {
         <section className="pb-12 bg-white">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Left — Route Map */}
+              {/* Left — Interactive Route Map */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative rounded-2xl overflow-hidden shadow-lg shadow-[#333333]/8 bg-[#1a1a1a] h-[320px] md:h-[380px]"
+                className="relative rounded-2xl overflow-hidden shadow-lg shadow-[#333333]/8 h-[320px] md:h-[380px]"
               >
-                <img
-                  src={`/images/kilimanjaro-${routeSlug}-map.png`}
-                  alt={`${route.name} Map`}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    if (target.parentElement) {
-                      target.parentElement.innerHTML = `
-                        <div class="w-full h-full flex flex-col items-center justify-center text-white/40">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
-                          <span class="mt-2 text-xs font-semibold tracking-wider uppercase">Route Map</span>
-                          <span class="text-[10px] text-white/25 mt-1">${route.name}</span>
-                        </div>
-                      `;
-                    }
-                  }}
-                />
-                <div className="absolute top-3 left-3 px-3 py-1.5 bg-white/15 backdrop-blur-xl border border-white/20 rounded-full">
-                  <span className="text-[10px] font-bold text-white tracking-wider uppercase">Route Map</span>
-                </div>
+                {(() => {
+                  const mapData = getRouteMapData(routeSlug);
+                  return mapData ? (
+                    <RouteMap mapData={mapData} />
+                  ) : (
+                    <div className="w-full h-full bg-[#e8e4de] flex items-center justify-center">
+                      <span className="text-xs text-[#333333]/40 font-semibold tracking-wider uppercase">Map Unavailable</span>
+                    </div>
+                  );
+                })()}
               </motion.div>
 
               {/* Right — Photo Slideshow */}
