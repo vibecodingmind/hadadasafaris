@@ -56,8 +56,6 @@ const navItems: NavItem[] = [
       { label: 'Camp & Lodges', href: '/suppliers' },
       { label: 'Domestic Flights', href: '/domestic-flights' },
       { label: 'Balloon Safaris', href: '/destinations/balloon-safari' },
-      { label: 'Entara Camps & Lodges', href: '/suppliers' },
-      { label: 'Nimali Africa', href: '/suppliers' },
     ],
   },
   { label: 'CONTACT', href: '/contact' },
