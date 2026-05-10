@@ -3,9 +3,41 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+
+const pageMessages: Record<string, string> = {
+  '/camps-lodges': 'Hello! I\'m interested in your partner camps and lodges. Can you help me choose the right one for my safari?',
+  '/domestic-flights': 'Hello! I\'d like to know more about domestic flights for my safari. Can you help with booking?',
+  '/destinations/balloon-safari': 'Hello! I\'m interested in booking a balloon safari over the Serengeti. What are the options?',
+  '/destinations/serengeti': 'Hello! I\'d love to plan a safari to the Serengeti. Can you help me create an itinerary?',
+  '/destinations/ngorongoro': 'Hello! I\'m interested in visiting the Ngorongoro Crater. Can you help plan my trip?',
+  '/destinations/zanzibar': 'Hello! I\'d like to plan a trip to Zanzibar. Can you help me with options?',
+  '/destinations/kilimanjaro': 'Hello! I\'m interested in climbing Mount Kilimanjaro. Which route do you recommend?',
+  '/itineraries': 'Hello! I\'d like to explore your safari itineraries. Can you recommend one for me?',
+  '/contact': 'Hello! I\'d like to get in touch about planning a safari.',
+};
 
 export default function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+
+  const getMessage = () => {
+    // Check exact path first
+    if (pageMessages[pathname]) return pageMessages[pathname];
+    // Check Kilimanjaro routes
+    if (pathname.startsWith('/kilimanjaro/')) {
+      const route = pathname.split('/').pop();
+      return `Hello! I'm interested in climbing Kilimanjaro via the ${route ? route.charAt(0).toUpperCase() + route.slice(1) : ''} route. Can you help me plan?`;
+    }
+    // Check destination pages
+    if (pathname.startsWith('/destinations/')) {
+      return 'Hello! I\'m interested in one of your safari destinations. Can you help me plan my trip?';
+    }
+    // Default
+    return 'Hello Hadada Safaris! I\'m interested in planning a safari in Tanzania.';
+  };
+
+  const waUrl = `https://wa.me/255788071035?text=${encodeURIComponent(getMessage())}`;
 
   return (
     <motion.div
@@ -17,7 +49,7 @@ export default function WhatsAppButton() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <a
-        href="https://wa.me/255123456789?text=Hello%20Hadada%20Safaris!%20I'm%20interested%20in%20a%20safari."
+        href={waUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-3 group"

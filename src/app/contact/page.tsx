@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTop from '@/components/ScrollToTop';
 import CookieConsent from '@/components/CookieConsent';
-import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageSquare, Instagram, Facebook, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function ContactPage() {
@@ -86,6 +86,33 @@ export default function ContactPage() {
                   <div className="text-center">
                     <MapPin className="w-8 h-8 text-[#B78A42]/30 mx-auto mb-2" />
                     <span className="text-xs text-[#333333]/30">Arusha, Tanzania</span>
+                  </div>
+                </div>
+
+                {/* Social Media */}
+                <div className="mt-6">
+                  <p className="text-xs font-semibold text-[#333333]/40 tracking-wider uppercase mb-3">Follow Us</p>
+                  <div className="flex items-center gap-3">
+                    {[
+                      { label: 'Instagram', href: 'https://instagram.com/hadadasafaris', icon: Instagram, color: 'hover:bg-pink-500' },
+                      { label: 'Facebook', href: 'https://facebook.com/hadadasafaris', icon: Facebook, color: 'hover:bg-blue-600' },
+                      { label: 'YouTube', href: 'https://youtube.com/@hadadasafaris', icon: Youtube, color: 'hover:bg-red-600' },
+                      { label: 'WhatsApp', href: 'https://wa.me/255788071035', icon: MessageSquare, color: 'hover:bg-[#25D366]' },
+                    ].map((social) => {
+                      const Icon = social.icon;
+                      return (
+                        <a
+                          key={social.label}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={social.label}
+                          className={`w-10 h-10 bg-[#B78A42]/8 border border-[#B78A42]/10 rounded-xl flex items-center justify-center text-[#B78A42] ${social.color} hover:text-white hover:border-transparent transition-all duration-300`}
+                        >
+                          <Icon className="w-4.5 h-4.5" />
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               </motion.div>
