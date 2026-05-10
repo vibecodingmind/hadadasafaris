@@ -391,8 +391,9 @@ export default function DestinationDetailPage() {
           </section>
         )}
 
-        {/* Wildlife & Activities (non-Kilimanjaro gets activities section) */}
-        <section className={`py-20 lg:py-28 ${isKilimanjaro ? 'bg-white' : 'bg-white'}`} ref={wildlifeRef}>
+        {/* Wildlife & Activities (hidden for Kilimanjaro) */}
+        {!isKilimanjaro && (
+        <section className="py-20 lg:py-28 bg-white" ref={wildlifeRef}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
               {/* Wildlife */}
@@ -454,9 +455,10 @@ export default function DestinationDetailPage() {
             </div>
           </div>
         </section>
+        )}
 
-        {/* Gallery */}
-        {destination.gallery && destination.gallery.length > 0 && (
+        {/* Gallery (hidden for Kilimanjaro) */}
+        {!isKilimanjaro && destination.gallery && destination.gallery.length > 0 && (
           <section className="py-20 lg:py-28 bg-[#FAFAF7]" ref={galleryRef}>
             <div className="max-w-7xl mx-auto px-4 md:px-6">
               <motion.div
