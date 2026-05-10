@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import PageHero from '@/components/PageHero';
 import Footer from '@/components/Footer';
@@ -42,6 +42,61 @@ const climateIcons: Record<string, React.ElementType> = {
   Sun,
   Snowflake,
 };
+
+function KilimanjaroSlideshow({ images }: { images: string[] }) {
+  const [current, setCurrent] = useState(0);
+  const total = images.length;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % total);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [total]);
+
+  return (
+    <div className="relative w-full h-[480px]">
+      {images.map((img, i) => (
+        <motion.img
+          key={i}
+          src={img}
+          alt={`Kilimanjaro slide ${i + 1}`}
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={false}
+          animate={{ opacity: i === current ? 1 : 0 }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+        />
+      ))}
+      {/* Gradient overlay bottom */}
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#1a1a1a]/40 to-transparent" />
+      {/* Dots */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-400 ${
+              i === current ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/60'
+            }`}
+          />
+        ))}
+      </div>
+      {/* Prev / Next */}
+      <button
+        onClick={() => setCurrent(current === 0 ? total - 1 : current - 1)}
+        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/25 transition-all z-10"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+      <button
+        onClick={() => setCurrent((current + 1) % total)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/25 transition-all z-10"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
 
 const difficultyColors: Record<string, string> = {
   'Easy-Moderate': 'bg-green-100 text-green-700 border-green-200',
@@ -115,64 +170,38 @@ export default function DestinationDetailPage() {
         {/* Overview */}
         <section className="py-20 lg:py-28 bg-white" ref={overviewRef}>
           <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left: Title & Description */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={overviewInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
-                className="lg:col-span-3"
               >
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
-                  <MapPin className="w-3.5 h-3.5" /> {destination.region}
-                </span>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
-                  Discover <span className="text-[#B78A42]">{destination.name}</span>
+                  {isKilimanjaro ? (
+                    <>Mt. <span className="text-[#B78A42]">Kilimanjaro</span></>
+                  ) : (
+                    <>Discover <span className="text-[#B78A42]">{destination.name}</span></>
+                  )}
                 </h2>
-                <p className="text-base text-[#333333]/60 leading-relaxed mb-5">
+                <p className="text-base text-[#333333]/60 leading-relaxed">
                   {destination.longDescription}
                 </p>
               </motion.div>
 
+              {/* Right: Photo Slideshow */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={overviewInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="lg:col-span-2"
               >
-                <div className="sticky top-28 space-y-6">
-                  {/* CTA Card */}
-                  <div className="bg-[#FAFAF7] border border-[#B78A42]/8 rounded-2xl p-6">
-                    <h3 className="font-bold text-[#333333] mb-2">Plan Your Visit</h3>
-                    <p className="text-sm text-[#333333]/45 leading-relaxed mb-5">
-                      Let us craft a personalized itinerary featuring {destination.name} and beyond.
-                    </p>
-                    <Link href="/contact">
-                      <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider py-3.5 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 group">
-                        INQUIRE NOW <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </Link>
-                    <div className="flex gap-3 mt-4">
-                      <a
-                        href="tel:+255123456789"
-                        className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-white border border-[#B78A42]/10 rounded-xl text-xs font-semibold text-[#333333]/50 hover:text-[#B78A42] hover:border-[#B78A42]/20 transition-all"
-                      >
-                        <Phone className="w-3.5 h-3.5" /> Call Us
-                      </a>
-                      <a
-                        href="https://wa.me/255123456789"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#25D366]/8 border border-[#25D366]/15 rounded-xl text-xs font-semibold text-[#25D366] hover:bg-[#25D366]/12 transition-all"
-                      >
-                        <Send className="w-3.5 h-3.5" /> WhatsApp
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Quick Image */}
-                  <div className="rounded-2xl overflow-hidden border border-[#B78A42]/5 shadow-lg shadow-[#333333]/5">
-                    <img src={destination.image} alt={destination.name} className="w-full h-56 object-cover" />
-                  </div>
+                <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-[#333333]/8 group">
+                  {/* Slides */}
+                  {isKilimanjaro && destination.gallery ? (
+                    <KilimanjaroSlideshow images={destination.gallery} />
+                  ) : (
+                    <img src={destination.image} alt={destination.name} className="w-full h-[480px] object-cover" />
+                  )}
                 </div>
               </motion.div>
             </div>
