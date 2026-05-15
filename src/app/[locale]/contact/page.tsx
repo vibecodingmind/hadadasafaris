@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -10,7 +10,7 @@ import CookieConsent from '@/components/CookieConsent';
 import {
   MapPin, Phone, Mail, Clock, Send, MessageSquare,
   Instagram, Facebook, Youtube, ArrowRight, Calendar,
-  Users, Globe, CheckCircle2, Sparkles, Heart
+  Users, Globe, CheckCircle2, Sparkles, Heart, Loader2, AlertCircle
 } from 'lucide-react';
 
 // Custom SVG icons for social platforms
@@ -89,6 +89,8 @@ export default function ContactPage() {
   const socialRef = useRef(null);
   const socialInView = useInView(socialRef, { once: true, margin: '-100px' });
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   const toggleInterest = (interest: string) => {
@@ -341,7 +343,47 @@ export default function ContactPage() {
                         </Link>
                       </div>
 
-                      <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-5">
+                      <form onSubmit={async (e: FormEvent<HTMLFormElement>) => {
+                        e.preventDefault();
+                        setErrorMessage('');
+                        setIsLoading(true);
+                        try {
+                          const form = e.currentTarget;
+                          const formData = new FormData(form);
+                          const data = Object.fromEntries(formData.entries());
+
+                          const response = await fetch('https://formsubmit.co/ajax/info@hadadasafaris.com', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              Accept: 'application/json',
+                            },
+                            body: JSON.stringify({
+                              name: data['contact-name'] || '',
+                              email: data['contact-email'] || '',
+                              phone: data['contact-phone'] || '',
+                              travelDates: data['contact-dates'] || '',
+                              groupSize: data['contact-group-size'] || '',
+                              budget: data['contact-budget'] || '',
+                              interests: selectedInterests.join(', ') || 'None selected',
+                              message: data['contact-message'] || '',
+                              _subject: 'New Safari Inquiry - Hadada Safaris Website',
+                              _captcha: 'false',
+                              _template: 'table',
+                            }),
+                          });
+
+                          if (!response.ok) {
+                            throw new Error('Failed to send inquiry. Please try again.');
+                          }
+
+                          setSubmitted(true);
+                        } catch (err) {
+                          setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again or contact us directly.');
+                        } finally {
+                          setIsLoading(false);
+                        }
+                      }} className="space-y-5">
                         {/* Row 1: Name + Email */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                           <div>
@@ -443,12 +485,29 @@ export default function ContactPage() {
                           />
                         </div>
 
+                        {/* Error Message */}
+                        {errorMessage && (
+                          <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                            <span>{errorMessage}</span>
+                          </div>
+                        )}
+
                         {/* Submit */}
                         <Button
                           type="submit"
-                          className="w-full bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] text-white font-bold text-sm tracking-wider py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/10"
+                          disabled={isLoading}
+                          className="w-full bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] disabled:from-[#B78A42]/50 disabled:to-[#A67A35]/50 disabled:text-white/60 text-white font-bold text-sm tracking-wider py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/10"
                         >
-                          SEND INQUIRY <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" /> SENDING...
+                            </>
+                          ) : (
+                            <>
+                              SEND INQUIRY <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                            </>
+                          )}
                         </Button>
 
                         <p className="text-center text-[10px] text-[#333333]/30 tracking-wide">

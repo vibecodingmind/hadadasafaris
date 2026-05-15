@@ -4,101 +4,28 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
-const destinations = [
-  {
-    name: 'Mount Kilimanjaro',
-    slug: 'kilimanjaro',
-    image: '/images/kilimanjaro.png',
-    tagline: "Africa's Highest Peak",
-  },
-  {
-    name: 'Serengeti National Park',
-    slug: 'serengeti',
-    image: '/images/serengeti-elephants.png',
-    tagline: 'The Great Migration',
-  },
-  {
-    name: 'Ngorongoro Conservation Area',
-    slug: 'ngorongoro',
-    image: '/images/ngorongoro-crater.png',
-    tagline: 'The World\'s Largest Caldera',
-  },
-  {
-    name: 'Olduvai Gorge',
-    slug: 'olduvai',
-    image: '/images/olduvai-gorge.png',
-    tagline: 'Cradle of Mankind',
-  },
-  {
-    name: 'Lake Manyara National Park',
-    slug: 'lake-manyara',
-    image: '/images/lake-manyara.png',
-    tagline: 'Tree-Climbing Lions',
-  },
-  {
-    name: 'Gombe Stream National Park',
-    slug: 'gombe',
-    image: '/images/gombe-stream.png',
-    tagline: 'Chimpanzee Sanctuary',
-  },
-  {
-    name: 'Selous National Park',
-    slug: 'selous',
-    image: '/images/selous.png',
-    tagline: "Africa's Largest Reserve",
-  },
-  {
-    name: 'Ruaha National Park',
-    slug: 'ruaha',
-    image: '/images/ruaha.png',
-    tagline: 'Untamed Wilderness',
-  },
-  {
-    name: 'Katavi National Park',
-    slug: 'katavi',
-    image: '/images/katavi.png',
-    tagline: 'Remote & Unspoiled',
-  },
-  {
-    name: 'Zanzibar Beaches',
-    slug: 'zanzibar',
-    image: '/images/zanzibar-beach.png',
-    tagline: 'Paradise Island',
-  },
-  {
-    name: 'Stone Town',
-    slug: 'stone-town',
-    image: '/images/stone-town.png',
-    tagline: 'Historic Swahili City',
-  },
-  {
-    name: 'Mafia Island',
-    slug: 'mafia',
-    image: '/images/mafia-island.png',
-    tagline: 'Marine Paradise',
-  },
-  {
-    name: 'Pemba Island',
-    slug: 'pemba',
-    image: '/images/pemba-island.png',
-    tagline: 'The Green Island',
-  },
-  {
-    name: 'Lake Victoria',
-    slug: 'lake-victoria',
-    image: '/images/lake-victoria.png',
-    tagline: "Africa's Largest Lake",
-  },
-  {
-    name: 'Balloon Safari',
-    slug: 'balloon-safari',
-    image: '/images/balloon-safari.png',
-    tagline: 'Above the Wild',
-  },
+const destinationKeys = [
+  { nameKey: 'kilimanjaro', slug: 'kilimanjaro', image: '/images/kilimanjaro.png' },
+  { nameKey: 'serengeti', slug: 'serengeti', image: '/images/serengeti-elephants.png' },
+  { nameKey: 'ngorongoro', slug: 'ngorongoro', image: '/images/ngorongoro-crater.png' },
+  { nameKey: 'olduvai', slug: 'olduvai', image: '/images/olduvai-gorge.png' },
+  { nameKey: 'lakeManyara', slug: 'lake-manyara', image: '/images/lake-manyara.png' },
+  { nameKey: 'gombe', slug: 'gombe', image: '/images/gombe-stream.png' },
+  { nameKey: 'selous', slug: 'selous', image: '/images/selous.png' },
+  { nameKey: 'ruaha', slug: 'ruaha', image: '/images/ruaha.png' },
+  { nameKey: 'katavi', slug: 'katavi', image: '/images/katavi.png' },
+  { nameKey: 'zanzibar', slug: 'zanzibar', image: '/images/zanzibar-beach.png' },
+  { nameKey: 'stoneTown', slug: 'stone-town', image: '/images/stone-town.png' },
+  { nameKey: 'mafia', slug: 'mafia', image: '/images/mafia-island.png' },
+  { nameKey: 'pemba', slug: 'pemba', image: '/images/pemba-island.png' },
+  { nameKey: 'lakeVictoria', slug: 'lake-victoria', image: '/images/lake-victoria.png' },
+  { nameKey: 'balloonSafari', slug: 'balloon-safari', image: '/images/balloon-safari.png' },
 ];
 
 export default function DestinationsSection() {
+  const t = useTranslations('destinations');
   const ref = useRef(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -150,13 +77,13 @@ export default function DestinationsSection() {
             <div>
               <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
                 <MapPin className="w-3.5 h-3.5" />
-                Destinations
+                {t('label')}
               </span>
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
-                Discover Tanzania&apos;s Top Destinations
+                {t('title')}
               </h2>
               <p className="text-base text-[#333333]/50 max-w-xl leading-relaxed">
-                From the breathtaking peak of Kilimanjaro to the idyllic shores of Zanzibar, every corner tells a story.
+                {t('description')}
               </p>
             </div>
 
@@ -166,7 +93,7 @@ export default function DestinationsSection() {
                 href="/destinations"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#B78A42] hover:text-[#333333] transition-colors mr-2"
               >
-                View All Destinations
+                {t('viewAll')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <button
@@ -208,9 +135,9 @@ export default function DestinationsSection() {
             className="flex gap-5 overflow-x-auto scrollbar-hide pl-4 md:pl-[max(1rem,calc((100vw-80rem)/2+1rem))] pr-4 md:pr-8 py-2"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {destinations.map((dest, i) => (
+            {destinationKeys.map((dest, i) => (
               <Link
-                key={dest.name}
+                key={dest.nameKey}
                 href={`/destinations/${dest.slug}`}
               >
               <motion.div
@@ -223,7 +150,7 @@ export default function DestinationsSection() {
                 <div className="relative h-64 overflow-hidden rounded-2xl">
                   <img
                     src={dest.image}
-                    alt={dest.name}
+                    alt={t(dest.nameKey)}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   {/* Soft gradient overlay */}
@@ -232,7 +159,7 @@ export default function DestinationsSection() {
                   {/* Glass tagline pill */}
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-white/20 backdrop-blur-xl border border-white/25 rounded-full text-[10px] font-semibold tracking-wider uppercase text-white">
-                      {dest.tagline}
+                      {t(`${dest.nameKey}Tagline`)}
                     </span>
                   </div>
 
@@ -240,7 +167,7 @@ export default function DestinationsSection() {
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <div className="bg-white/15 backdrop-blur-xl border border-white/20 rounded-xl px-4 py-3">
                       <h3 className="text-white font-bold text-[14px] leading-tight truncate">
-                        {dest.name}
+                        {t(dest.nameKey)}
                       </h3>
                     </div>
                   </div>
@@ -258,8 +185,8 @@ export default function DestinationsSection() {
                 <ArrowRight className="w-6 h-6 text-[#B78A42]" />
               </div>
               <div className="text-center px-4">
-                <span className="text-[#333333] font-bold text-sm block">View All</span>
-                <span className="text-[#333333]/40 text-xs">Destinations</span>
+                <span className="text-[#333333] font-bold text-sm block">{t('viewAllShort')}</span>
+                <span className="text-[#333333]/40 text-xs">{t('destinationsLabel')}</span>
               </div>
             </Link>
           </div>

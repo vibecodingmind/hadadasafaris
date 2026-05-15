@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from '@/i18n/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
@@ -41,6 +43,8 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 }
 
 export default function HeroSection() {
+  const t = useTranslations('hero');
+
   return (
     <section id="home" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -67,7 +71,7 @@ export default function HeroSection() {
         >
           <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/15 backdrop-blur-xl border border-white/25 rounded-full text-white text-xs font-semibold tracking-[0.2em] uppercase mb-8">
             <span className="w-2 h-2 bg-[#B78A42] rounded-full animate-pulse" />
-            Tanzania Awaits
+            {t('tagline')}
           </span>
         </motion.div>
 
@@ -77,7 +81,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 text-white whitespace-nowrap"
         >
-          Explore <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">Tanzania&apos;s</span> Wonders
+          {t('title')}
         </motion.h1>
 
         <motion.p
@@ -86,9 +90,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-xl md:text-2xl text-white/90 leading-relaxed mb-12 max-w-2xl mx-auto"
         >
-          At Hadada Safari, we specialize in creating exceptional safari experiences
-          that connect you to Tanzania&apos;s breathtaking landscapes, vibrant cultures,
-          and magnificent wildlife.
+          {t('description')}
         </motion.p>
 
         <motion.div
@@ -97,14 +99,18 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-wrap items-center justify-center gap-4"
         >
-          <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group">
-            INQUIRE NOW
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          <Button className="bg-white/15 backdrop-blur-xl border border-white/25 text-white hover:bg-white/25 hover:border-white/40 font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300">
-            <MapPin className="w-4 h-4 mr-2" />
-            DESTINATIONS
-          </Button>
+          <Link href="/booking">
+            <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group">
+              {t('cta')}
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+          <Link href="/destinations">
+            <Button className="bg-white/15 backdrop-blur-xl border border-white/25 text-white hover:bg-white/25 hover:border-white/40 font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300">
+              <MapPin className="w-4 h-4 mr-2" />
+              {t('secondary')}
+            </Button>
+          </Link>
         </motion.div>
 
         {/* Stats - frosted glass strip with animated counters */}
@@ -115,10 +121,10 @@ export default function HeroSection() {
           className="mt-16 inline-flex flex-wrap items-center justify-center gap-6 md:gap-10 bg-white/12 backdrop-blur-2xl border border-white/20 rounded-2xl px-8 py-5 shadow-lg shadow-black/5"
         >
           {[
-            { target: 15, suffix: '+', label: 'Years Experience' },
-            { target: 55, suffix: '+', label: 'Happy Travelers' },
-            { target: 25, suffix: '+', label: 'Unique Routes' },
-            { target: 98, suffix: '%', label: 'Satisfaction Rate' },
+            { target: 15, suffix: '+', label: t('yearsExperience') },
+            { target: 55, suffix: '+', label: t('happyTravelers') },
+            { target: 25, suffix: '+', label: t('uniqueRoutes') },
+            { target: 98, suffix: '%', label: t('satisfactionRate') },
           ].map((stat, i) => (
             <div key={stat.label} className={`text-center ${i > 0 ? 'border-l border-white/15 pl-6 md:pl-10' : ''}`}>
               <AnimatedCounter target={stat.target} suffix={stat.suffix} />

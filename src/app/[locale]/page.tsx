@@ -10,6 +10,8 @@ const MemoriesSection = dynamic(() => import('@/components/MemoriesSection'));
 const SafariCraftingSection = dynamic(() => import('@/components/SafariCraftingSection'));
 const BestTimeToVisit = dynamic(() => import('@/components/BestTimeToVisit'));
 const ItinerariesSection = dynamic(() => import('@/components/ItinerariesSection'));
+const KilimanjaroSection = dynamic(() => import('@/components/KilimanjaroSection'));
+const BalloonSection = dynamic(() => import('@/components/BalloonSection'));
 const PhotoGallery = dynamic(() => import('@/components/PhotoGallery'));
 const ValueSection = dynamic(() => import('@/components/ValueSection'));
 const SustainabilitySection = dynamic(() => import('@/components/SustainabilitySection'));
@@ -21,6 +23,7 @@ const CTABanner = dynamic(() => import('@/components/CTABanner'));
 const WhatsAppButton = dynamic(() => import('@/components/WhatsAppButton'));
 const ScrollToTop = dynamic(() => import('@/components/ScrollToTop'));
 const CookieConsent = dynamic(() => import('@/components/CookieConsent'));
+const LiveChat = dynamic(() => import('@/components/LiveChat'));
 
 export default function Home() {
   return (
@@ -47,6 +50,12 @@ export default function Home() {
 
         {/* Itineraries - Clean white, glass cards, scrollable */}
         <ItinerariesSection />
+
+        {/* Kilimanjaro - Dark immersive call-to-action for treks */}
+        <KilimanjaroSection />
+
+        {/* Balloon Safari - Immersive dark section */}
+        <BalloonSection />
 
         {/* Photo Gallery - Masonry grid with lightbox */}
         <PhotoGallery />
@@ -78,6 +87,7 @@ export default function Home() {
       <WhatsAppButton />
       <ScrollToTop />
       <CookieConsent />
+      <LiveChat />
     </div>
   );
 }

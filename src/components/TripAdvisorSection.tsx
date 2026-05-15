@@ -3,6 +3,7 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { Star, Quote, ExternalLink, ChevronLeft, ChevronRight, Award, ShieldCheck, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const reviews = [
   {
@@ -79,14 +80,15 @@ const reviews = [
   },
 ];
 
-const trustIndicators = [
-  { icon: Star, label: '4.9/5', sublabel: 'TripAdvisor Rating', color: 'from-[#B78A42] to-[#D5BC92]' },
-  { icon: Users, label: '500+', sublabel: 'Verified Reviews', color: 'from-emerald-500 to-teal-600' },
-  { icon: Award, label: '2024', sublabel: 'Certificate of Excellence', color: 'from-amber-500 to-orange-600' },
-  { icon: ShieldCheck, label: '100%', sublabel: 'Trusted Operator', color: 'from-blue-500 to-indigo-600' },
+const trustIndicatorKeys = [
+  { icon: Star, label: '4.9/5', sublabelKey: 'tripAdvisorRating', color: 'from-[#B78A42] to-[#D5BC92]' },
+  { icon: Users, label: '500+', sublabelKey: 'verifiedReviews', color: 'from-emerald-500 to-teal-600' },
+  { icon: Award, label: '2024', sublabelKey: 'certificateOfExcellence', color: 'from-amber-500 to-orange-600' },
+  { icon: ShieldCheck, label: '100%', sublabelKey: 'trustedOperator', color: 'from-blue-500 to-indigo-600' },
 ];
 
 export default function TripAdvisorSection() {
+  const t = useTranslations('tripAdvisor');
   const ref = useRef(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -141,11 +143,11 @@ export default function TripAdvisorSection() {
           className="max-w-7xl mx-auto px-4 md:px-6 mb-16"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {trustIndicators.map((badge, i) => {
+            {trustIndicatorKeys.map((badge, i) => {
               const Icon = badge.icon;
               return (
                 <motion.div
-                  key={badge.sublabel}
+                  key={badge.sublabelKey}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
@@ -158,7 +160,7 @@ export default function TripAdvisorSection() {
                     <Icon className="w-5 h-5 text-white" />
                   </div>
                   <p className="text-2xl font-bold text-[#333333] mb-0.5">{badge.label}</p>
-                  <p className="text-[11px] font-medium text-[#333333]/40 tracking-wide uppercase">{badge.sublabel}</p>
+                  <p className="text-[11px] font-medium text-[#333333]/40 tracking-wide uppercase">{t(badge.sublabelKey)}</p>
                 </motion.div>
               );
             })}
@@ -176,13 +178,13 @@ export default function TripAdvisorSection() {
             <div>
               <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
                 <Star className="w-3.5 h-3.5 fill-[#B78A42]" />
-                Testimonials
+                {t('label')}
               </span>
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
-                What Our <span className="text-[#B78A42]">Travelers</span> Say
+                {t('title')}
               </h2>
               <p className="text-base text-[#333333]/50 max-w-xl leading-relaxed">
-                Real experiences from travelers who discovered the magic of Tanzania with us
+                {t('description')}
               </p>
             </div>
 
@@ -204,7 +206,7 @@ export default function TripAdvisorSection() {
                       <Star key={s} className="w-3 h-3 fill-[#B78A42] text-[#B78A42]" />
                     ))}
                   </div>
-                  <p className="text-[10px] font-semibold text-[#333333]/50 tracking-wider uppercase">Rated 4.9/5 on TripAdvisor</p>
+                  <p className="text-[10px] font-semibold text-[#333333]/50 tracking-wider uppercase">{t('ratedOnTripAdvisor')}</p>
                 </div>
               </div>
             </div>
@@ -344,7 +346,7 @@ export default function TripAdvisorSection() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/15"
           >
-            See All Reviews on TripAdvisor
+            {t('seeAllReviews')}
             <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </motion.div>

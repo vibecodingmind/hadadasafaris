@@ -4,38 +4,41 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
-const pageMessages: Record<string, string> = {
-  '/camps-lodges': 'Hello! I\'m interested in your partner camps and lodges. Can you help me choose the right one for my safari?',
-  '/domestic-flights': 'Hello! I\'d like to know more about domestic flights for my safari. Can you help with booking?',
-  '/destinations/balloon-safari': 'Hello! I\'m interested in booking a balloon safari over the Serengeti. What are the options?',
-  '/destinations/serengeti': 'Hello! I\'d love to plan a safari to the Serengeti. Can you help me create an itinerary?',
-  '/destinations/ngorongoro': 'Hello! I\'m interested in visiting the Ngorongoro Crater. Can you help plan my trip?',
-  '/destinations/zanzibar': 'Hello! I\'d like to plan a trip to Zanzibar. Can you help me with options?',
-  '/destinations/kilimanjaro': 'Hello! I\'m interested in climbing Mount Kilimanjaro. Which route do you recommend?',
-  '/itineraries': 'Hello! I\'d like to explore your safari itineraries. Can you recommend one for me?',
-  '/contact': 'Hello! I\'d like to get in touch about planning a safari.',
-  '/booking': 'Hello! I\'d like to book a safari. I\'ve filled in the booking form and would like to discuss my trip.',
+const pageMessageKeys: Record<string, string> = {
+  '/camps-lodges': 'campsLodgesMessage',
+  '/domestic-flights': 'flightsMessage',
+  '/destinations/balloon-safari': 'balloonMessage',
+  '/destinations/serengeti': 'serengetiMessage',
+  '/destinations/ngorongoro': 'ngorongoroMessage',
+  '/destinations/zanzibar': 'zanzibarMessage',
+  '/destinations/kilimanjaro': 'kilimanjaroMessage',
+  '/itineraries': 'itinerariesMessage',
+  '/contact': 'contactMessage',
+  '/booking': 'bookingMessage',
 };
 
 export default function WhatsAppButton() {
+  const t = useTranslations('whatsapp');
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
 
   const getMessage = () => {
     // Check exact path first
-    if (pageMessages[pathname]) return pageMessages[pathname];
+    if (pageMessageKeys[pathname]) return t(pageMessageKeys[pathname]);
     // Check Kilimanjaro routes
     if (pathname.startsWith('/kilimanjaro/')) {
       const route = pathname.split('/').pop();
-      return `Hello! I'm interested in climbing Kilimanjaro via the ${route ? route.charAt(0).toUpperCase() + route.slice(1) : ''} route. Can you help me plan?`;
+      const routeName = route ? route.charAt(0).toUpperCase() + route.slice(1) : '';
+      return t('kilimanjaroRouteMessage', { route: routeName });
     }
     // Check destination pages
     if (pathname.startsWith('/destinations/')) {
-      return 'Hello! I\'m interested in one of your safari destinations. Can you help me plan my trip?';
+      return t('destinationMessage');
     }
     // Default
-    return 'Hello Hadada Safaris! I\'m interested in planning a safari in Tanzania.';
+    return t('defaultMessage');
   };
 
   const waUrl = `https://wa.me/255788071035?text=${encodeURIComponent(getMessage())}`;
@@ -66,7 +69,7 @@ export default function WhatsAppButton() {
               className="bg-white/90 backdrop-blur-xl text-[#333333] text-sm font-semibold px-4 py-2 rounded-full shadow-lg border border-[#25D366]/20 whitespace-nowrap"
               role="tooltip"
             >
-              Chat with us
+              {t('chatWithUs')}
             </motion.span>
           )}
         </AnimatePresence>

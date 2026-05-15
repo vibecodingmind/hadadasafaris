@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie, X, Shield } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function CookieConsent() {
+  const t = useTranslations('cookieConsent');
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -52,29 +54,29 @@ export default function CookieConsent() {
               <Cookie className="w-5 h-5 text-[#B78A42]" />
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="font-bold text-sm text-[#333333] mb-1">We value your privacy</h4>
+              <h4 className="font-bold text-sm text-[#333333] mb-1">{t('title')}</h4>
               <p id="cookie-consent-description" className="text-xs text-[#333333]/50 leading-relaxed mb-3">
-                We use cookies to enhance your browsing experience, analyze our traffic, and serve targeted content. By clicking &quot;Accept&quot;, you consent to our use of cookies as described in our{' '}
-                <Link href="/privacy" className="text-[#B78A42] hover:underline underline-offset-2">Privacy Policy</Link>.
-                You can learn more about how we handle your data in our{' '}
-                <Link href="/terms" className="text-[#B78A42] hover:underline underline-offset-2">Terms of Service</Link>.
+                {t('description')}{' '}
+                <Link href="/privacy" className="text-[#B78A42] hover:underline underline-offset-2">{t('privacyPolicy')}</Link>.
+                {t('and')}{' '}
+                <Link href="/terms" className="text-[#B78A42] hover:underline underline-offset-2">{t('termsOfService')}</Link>.
               </p>
               <div className="flex items-center gap-2 mb-3">
                 <Shield className="w-3 h-3 text-[#B78A42]/50 flex-shrink-0" />
-                <span className="text-[10px] text-[#333333]/35">GDPR compliant — you may decline non-essential cookies at any time.</span>
+                <span className="text-[10px] text-[#333333]/35">{t('gdprNote')}</span>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={accept}
                   className="px-5 py-2 bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] text-white text-xs font-bold rounded-full tracking-wider transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#B78A42]/50 focus:ring-offset-2 shadow-md shadow-[#B78A42]/10"
                 >
-                  ACCEPT
+                  {t('accept')}
                 </button>
                 <button
                   onClick={decline}
                   className="px-5 py-2 bg-[#FAFAF7] hover:bg-[#F0EDE5] text-[#333333]/50 text-xs font-bold rounded-full tracking-wider transition-colors focus:outline-none focus:ring-2 focus:ring-[#333333]/20 focus:ring-offset-2"
                 >
-                  DECLINE
+                  {t('decline')}
                 </button>
               </div>
             </div>

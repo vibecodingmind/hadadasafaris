@@ -3,6 +3,7 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { Camera, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const photos = [
   { src: '/images/serengeti-elephants.png', alt: 'Elephants in Serengeti', span: 'col-span-2 row-span-2' },
@@ -18,6 +19,7 @@ const photos = [
 ];
 
 export default function PhotoGallery() {
+  const t = useTranslations('photoGallery');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -112,13 +114,13 @@ export default function PhotoGallery() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
             <Camera className="w-3.5 h-3.5" />
-            Gallery
+            {t('label')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
-            Safari <span className="text-[#B78A42]">Moments</span>
+            {t('title')}
           </h2>
           <p className="text-base text-[#333333]/50 max-w-xl mx-auto leading-relaxed">
-            A glimpse into the extraordinary experiences awaiting you in Tanzania — click any image to explore
+            {t('description')}
           </p>
         </motion.div>
 
@@ -286,11 +288,11 @@ export default function PhotoGallery() {
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px]">←</kbd>
                   <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px]">→</kbd>
-                  Navigate
+                  {t('navigate')}
                 </span>
                 <span className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-white/10 rounded text-[10px]">Esc</kbd>
-                  Close
+                  {t('close')}
                 </span>
               </div>
             </motion.div>

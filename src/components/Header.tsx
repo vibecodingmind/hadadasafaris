@@ -6,62 +6,65 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, MessageSquare, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
 interface NavChild {
-  label: string;
+  labelKey: string;
   href: string;
   description?: string;
 }
 
 interface NavItem {
-  label: string;
+  labelKey: string;
   href: string;
   children?: NavChild[];
   noClick?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { label: 'DESTINATIONS', href: '/destinations' },
+  { labelKey: 'destinations', href: '/destinations' },
   {
-    label: 'ITINERARIES',
+    labelKey: 'itineraries',
     href: '/itineraries',
     children: [
-      { label: 'Amazing Departure in 2024/27', href: '/itineraries' },
-      { label: 'Migration Safari Program', href: '/itineraries' },
-      { label: 'Luxury Honeymoon Package', href: '/itineraries' },
-      { label: 'Luxury Summer Zanzibar', href: '/itineraries' },
-      { label: 'Dry Season Private Safari', href: '/itineraries' },
-      { label: 'Immersive Culture Trips', href: '/itineraries' },
-      { label: 'Custom and Traditional Trip', href: '/itineraries' },
+      { labelKey: 'amazingDeparture', href: '/itineraries' },
+      { labelKey: 'migrationSafari', href: '/itineraries' },
+      { labelKey: 'luxuryHoneymoon', href: '/itineraries' },
+      { labelKey: 'luxuryZanzibar', href: '/itineraries' },
+      { labelKey: 'drySeasonSafari', href: '/itineraries' },
+      { labelKey: 'cultureTrips', href: '/itineraries' },
+      { labelKey: 'customTrip', href: '/itineraries' },
     ],
   },
+  { labelKey: 'blog', href: '/blog' },
   {
-    label: 'MT. KILIMANJARO',
+    labelKey: 'kilimanjaro',
     href: '#',
     noClick: true,
     children: [
-      { label: 'Machame Route', href: '/kilimanjaro/machame' },
-      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho' },
-      { label: 'Marangu Route', href: '/kilimanjaro/marangu' },
-      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe' },
-      { label: 'Rongai Route', href: '/kilimanjaro/rongai' },
-      { label: 'Shira Route', href: '/kilimanjaro/shira' },
+      { labelKey: 'machameRoute', href: '/kilimanjaro/machame' },
+      { labelKey: 'lemoshoRoute', href: '/kilimanjaro/lemosho' },
+      { labelKey: 'maranguRoute', href: '/kilimanjaro/marangu' },
+      { labelKey: 'umbweRoute', href: '/kilimanjaro/umbwe' },
+      { labelKey: 'rongaiRoute', href: '/kilimanjaro/rongai' },
+      { labelKey: 'shiraRoute', href: '/kilimanjaro/shira' },
     ],
   },
   {
-    label: 'SUPPLIERS',
+    labelKey: 'suppliers',
     href: '#',
     noClick: true,
     children: [
-      { label: 'Camp & Lodges', href: '/camps-lodges' },
-      { label: 'Domestic Flights', href: '/domestic-flights' },
-      { label: 'Balloon Safaris', href: '/destinations/balloon-safari' },
+      { labelKey: 'campLodges', href: '/camps-lodges' },
+      { labelKey: 'domesticFlights', href: '/domestic-flights' },
+      { labelKey: 'balloonSafaris', href: '/destinations/balloon-safari' },
     ],
   },
-  { label: 'CONTACT', href: '/contact' },
+  { labelKey: 'contact', href: '/contact' },
 ];
 
 export default function Header() {
+  const t = useTranslations('nav');
   const [isScrolled, setIsScrolled] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -120,9 +123,9 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
             {navItems.map((item) => (
               <div
-                key={item.label}
+                key={item.labelKey}
                 className="relative"
-                onMouseEnter={() => item.children && setOpenDropdown(item.label)}
+                onMouseEnter={() => item.children && setOpenDropdown(item.labelKey)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
                 {item.noClick ? (
@@ -130,11 +133,11 @@ export default function Header() {
                     className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] ${
                       isScrolled ? 'text-[#333333]' : 'text-white'
                     }`}
-                    aria-expanded={openDropdown === item.label}
+                    aria-expanded={openDropdown === item.labelKey}
                     aria-haspopup="true"
-                    aria-label={`${item.label} menu`}
+                    aria-label={`${t(item.labelKey)} menu`}
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                     <ChevronDown className="w-3 h-3" aria-hidden="true" />
                   </button>
                 ) : (
@@ -143,16 +146,16 @@ export default function Header() {
                     className={`px-3 py-3 text-[13px] font-semibold tracking-wider flex items-center gap-1.5 transition-all duration-300 rounded-md hover:text-[#B78A42] focus:outline-none focus:ring-2 focus:ring-[#B78A42]/40 focus:ring-offset-2 ${
                       isScrolled ? 'text-[#333333]' : 'text-white'
                     } ${pathname === item.href ? 'text-[#B78A42]' : ''}`}
-                    aria-expanded={item.children ? openDropdown === item.label : undefined}
+                    aria-expanded={item.children ? openDropdown === item.labelKey : undefined}
                     aria-haspopup={item.children ? 'true' : undefined}
                   >
-                    {item.label}
+                    {t(item.labelKey)}
                     {item.children && <ChevronDown className="w-3 h-3" aria-hidden="true" />}
                   </Link>
                 )}
 
                 <AnimatePresence>
-                  {item.children && openDropdown === item.label && (
+                  {item.children && openDropdown === item.labelKey && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -161,21 +164,21 @@ export default function Header() {
                       className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-[1001]"
                     >
                       <div className={`bg-white/95 backdrop-blur-2xl shadow-2xl shadow-[#333333]/15 border border-[#B78A42]/10 rounded-2xl overflow-hidden ${
-                        item.label === 'DESTINATIONS' ? 'w-[340px]' : item.label === 'MT. KILIMANJARO' ? 'w-[320px]' : item.label === 'SUPPLIERS' ? 'w-[240px]' : 'w-[280px]'
+                        item.labelKey === 'destinations' ? 'w-[340px]' : item.labelKey === 'kilimanjaro' ? 'w-[320px]' : item.labelKey === 'suppliers' ? 'w-[240px]' : 'w-[280px]'
                       }`}>
                         {/* Top accent line */}
                         <div className="h-[2px] bg-gradient-to-r from-transparent via-[#B78A42] to-transparent" />
                         
                         {/* Column header */}
                         <div className="px-5 pt-4 pb-2">
-                          <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#B78A42]">{item.label}</span>
+                          <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#B78A42]">{t(item.labelKey)}</span>
                         </div>
 
                         {/* Items */}
                         <div className="px-2 pb-2 max-h-[60vh] overflow-y-auto scrollbar-hide">
                           {item.children.map((child) => (
                             <Link
-                              key={child.label}
+                              key={child.labelKey}
                               href={child.href}
                               onClick={() => setOpenDropdown(null)}
                               className="group/item flex items-center gap-3 px-3 py-2.5 hover:bg-[#B78A42]/5 transition-all duration-200"
@@ -183,7 +186,7 @@ export default function Header() {
                               <div className="w-1 h-1 bg-[#B78A42]/30 group-hover/item:bg-[#B78A42] rounded-full transition-all duration-200 flex-shrink-0" />
                               <div className="min-w-0 flex-1">
                                 <span className="block text-[13px] font-medium text-[#333333]/80 group-hover/item:text-[#B78A42] transition-colors duration-200 tracking-wide truncate">
-                                  {child.label}
+                                  {t(child.labelKey)}
                                 </span>
                                 {child.description && (
                                   <span className="block text-[10px] text-[#333333]/35 mt-0.5 tracking-wide">{child.description}</span>
@@ -200,7 +203,7 @@ export default function Header() {
                             href={item.href}
                             className="group/view flex items-center justify-between px-5 py-3 border-t border-[#B78A42]/5 hover:bg-[#B78A42]/5 transition-all duration-200"
                           >
-                            <span className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#B78A42]">View All</span>
+                            <span className="text-[11px] font-semibold tracking-[0.15em] uppercase text-[#B78A42]">{t('viewAll')}</span>
                             <ArrowRight className="w-3.5 h-3.5 text-[#B78A42] group-hover/view:translate-x-1 transition-transform duration-200" />
                           </Link>
                         )}
@@ -213,7 +216,7 @@ export default function Header() {
             <LanguageSwitcher isScrolled={isScrolled} />
             <Link href="/booking" aria-label="Book a safari now">
               <Button className="ml-3 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 focus:outline-none focus:ring-2 focus:ring-[#B78A42]/50 focus:ring-offset-2">
-                BOOK NOW
+                {t('bookNow')}
               </Button>
             </Link>
           </nav>
@@ -223,7 +226,7 @@ export default function Header() {
               isScrolled ? 'text-[#333333]' : 'text-white'
             }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={mobileMenuOpen ? t('closeMenu') : t('openMenu')}
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -242,11 +245,11 @@ export default function Header() {
           >
             <div className="max-w-7xl mx-auto px-4 py-4 max-h-[80vh] overflow-y-auto">
               {navItems.map((item) => (
-                <div key={item.label} className="border-b border-[#333333]/6 last:border-0">
+                <div key={item.labelKey} className="border-b border-[#333333]/6 last:border-0">
                   <div className="flex items-center justify-between">
                     {item.noClick ? (
                       <span className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80">
-                        {item.label}
+                        {t(item.labelKey)}
                       </span>
                     ) : (
                       <Link
@@ -254,26 +257,26 @@ export default function Header() {
                         className="flex-1 py-3 text-sm font-semibold tracking-wider text-[#333333]/80 hover:text-[#B78A42] transition-colors"
                         onClick={() => !item.children && setMobileMenuOpen(false)}
                       >
-                        {item.label}
+                        {t(item.labelKey)}
                       </Link>
                     )}
                     {item.children && (
                       <button
                         onClick={() =>
-                          setMobileDropdown(mobileDropdown === item.label ? null : item.label)
+                          setMobileDropdown(mobileDropdown === item.labelKey ? null : item.labelKey)
                         }
                         className="p-2 text-[#333333]/40 hover:text-[#B78A42]"
                       >
                         <ChevronDown
                           className={`w-4 h-4 transition-transform duration-300 ${
-                            mobileDropdown === item.label ? 'rotate-180' : ''
+                            mobileDropdown === item.labelKey ? 'rotate-180' : ''
                           }`}
                         />
                       </button>
                     )}
                   </div>
                   <AnimatePresence>
-                    {item.children && mobileDropdown === item.label && (
+                    {item.children && mobileDropdown === item.labelKey && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -284,12 +287,12 @@ export default function Header() {
                         <div className="pb-3 pl-4">
                           {item.children.map((child) => (
                             <Link
-                              key={child.label}
+                              key={child.labelKey}
                               href={child.href}
                               className="block py-2 text-sm text-[#333333]/50 hover:text-[#B78A42] transition-colors tracking-wide"
                               onClick={() => setMobileMenuOpen(false)}
                             >
-                              {child.label}
+                              {t(child.labelKey)}
                               {child.description && (
                                 <span className="block text-[10px] text-[#333333]/30 mt-0.5">{child.description}</span>
                               )}
@@ -307,7 +310,7 @@ export default function Header() {
                 </div>
                 <Link href="/booking" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider py-3 rounded-full">
-                    BOOK NOW
+                    {t('bookNow')}
                   </Button>
                 </Link>
                 <div className="flex gap-3">
@@ -316,7 +319,7 @@ export default function Header() {
                     className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#FAFAF7] border border-[#B78A42]/15 rounded-full text-[#333333] text-xs font-semibold tracking-wider hover:bg-[#B78A42]/5 transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#B78A42]" />
-                    CALL US
+                    {t('callUs')}
                   </a>
                   <a
                     href="https://wa.me/255123456789"
@@ -325,7 +328,7 @@ export default function Header() {
                     className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#25D366]/10 border border-[#25D366]/20 rounded-full text-[#25D366] text-xs font-semibold tracking-wider hover:bg-[#25D366]/15 transition-colors"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
-                    WHATSAPP
+                    {t('whatsapp')}
                   </a>
                 </div>
               </div>

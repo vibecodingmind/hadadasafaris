@@ -5,8 +5,10 @@ import { useRef, useState } from 'react';
 import { Mail, Send, CheckCircle2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function NewsletterSection() {
+  const t = useTranslations('newsletter');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [email, setEmail] = useState('');
@@ -42,19 +44,16 @@ export default function NewsletterSection() {
           {/* Badge */}
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-xl border border-white/15 rounded-full text-[#D5BC92] text-xs font-semibold tracking-[0.2em] uppercase mb-6">
             <Sparkles className="w-3.5 h-3.5" />
-            Newsletter
+            {t('label')}
           </span>
 
           {/* Heading */}
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
-            Stay Inspired,{' '}
-            <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">
-              Stay Wild
-            </span>
+            {t('title')}
           </h2>
 
           <p className="text-base md:text-lg text-white/50 max-w-xl mx-auto leading-relaxed mb-10">
-            Get exclusive safari tips, seasonal migration updates, and special offers delivered to your inbox.
+            {t('description')}
           </p>
 
           {/* Glass form card */}
@@ -77,8 +76,8 @@ export default function NewsletterSection() {
                 <div className="w-14 h-14 bg-gradient-to-br from-[#B78A42] to-[#D5BC92] rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-[#B78A42]/20">
                   <CheckCircle2 className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">You&apos;re In!</h3>
-                <p className="text-sm text-white/40">Welcome to the Hadada Safaris family. Check your inbox for a confirmation email.</p>
+                <h3 className="text-lg font-bold text-white mb-2">{t('successTitle')}</h3>
+                <p className="text-sm text-white/40">{t('successMessage')}</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="relative z-10">
@@ -91,7 +90,7 @@ export default function NewsletterSection() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Your email address"
+                      placeholder={t('placeholder')}
                       className="w-full pl-11 pr-4 py-3.5 bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-xl text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#B78A42]/50 focus:bg-white/[0.08] focus:shadow-md focus:shadow-[#B78A42]/10 transition-all duration-300"
                       aria-label="Email address for newsletter"
                     />
@@ -100,25 +99,25 @@ export default function NewsletterSection() {
                     type="submit"
                     className="bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] text-white font-bold text-sm tracking-wider px-6 py-3.5 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/10 focus:outline-none focus:ring-2 focus:ring-[#B78A42]/50 focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
                   >
-                    SUBSCRIBE
+                    {t('subscribe')}
                     <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
 
                 <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                  <span className="text-[10px] text-white/25 tracking-wide">Join 5,000+ safari enthusiasts</span>
+                  <span className="text-[10px] text-white/25 tracking-wide">{t('socialProof')}</span>
                   <span className="hidden sm:inline text-white/10">·</span>
-                  <span className="text-[10px] text-white/25 tracking-wide">We respect your privacy. Unsubscribe anytime.</span>
+                  <span className="text-[10px] text-white/25 tracking-wide">{t('privacyNote')}</span>
                 </div>
 
                 <p className="mt-3 text-[10px] text-white/15 text-center">
-                  By subscribing, you agree to our{' '}
+                  {t('agreement')}{' '}
                   <Link href="/privacy" className="text-[#B78A42]/40 hover:text-[#B78A42]/60 hover:underline underline-offset-2 transition-colors">
-                    Privacy Policy
+                    {t('privacyPolicy')}
                   </Link>
-                  {' '}and{' '}
+                  {' '}{t('and')}{' '}
                   <Link href="/terms" className="text-[#B78A42]/40 hover:text-[#B78A42]/60 hover:underline underline-offset-2 transition-colors">
-                    Terms of Service
+                    {t('termsOfService')}
                   </Link>
                   .
                 </p>

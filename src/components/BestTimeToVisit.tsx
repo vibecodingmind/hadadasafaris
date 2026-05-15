@@ -3,35 +3,37 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Sun, CloudRain, Cloud, Thermometer } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const seasons = [
   {
-    name: 'Dry Season',
-    period: 'Jun – Oct',
+    nameKey: 'drySeason',
+    periodKey: 'drySeasonPeriod',
+    descriptionKey: 'drySeasonDescription',
+    ratingKey: 'drySeasonRating',
     icon: Sun,
     color: '#B78A42',
-    description: 'Peak safari season. Animals gather around water sources, making sightings exceptional. The Great Migration river crossings happen in the Serengeti.',
-    rating: 'Best',
   },
   {
-    name: 'Green Season',
-    period: 'Nov – May',
+    nameKey: 'greenSeason',
+    periodKey: 'greenSeasonPeriod',
+    descriptionKey: 'greenSeasonDescription',
+    ratingKey: 'greenSeasonRating',
     icon: CloudRain,
     color: '#6B9E78',
-    description: 'Lush landscapes, fewer crowds, and lower rates. Great for birdwatching and photography. Calving season brings predator action in the Southern Serengeti.',
-    rating: 'Good',
   },
   {
-    name: 'Shoulder Season',
-    period: 'Jan – Feb',
+    nameKey: 'shoulderSeason',
+    periodKey: 'shoulderSeasonPeriod',
+    descriptionKey: 'shoulderSeasonDescription',
+    ratingKey: 'shoulderSeasonRating',
     icon: Cloud,
     color: '#7BA7C9',
-    description: 'Short dry spell within the green season. Perfect for Kilimanjaro treks and calving season in Ndutu. Warm days and mild nights.',
-    rating: 'Great',
   },
 ];
 
 export default function BestTimeToVisit() {
+  const t = useTranslations('bestTime');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -48,20 +50,20 @@ export default function BestTimeToVisit() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
             <Thermometer className="w-3.5 h-3.5" />
-            Plan Your Trip
+            {t('label')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
-            Best Time to <span className="text-[#B78A42]">Visit</span>
+            {t('title')}
           </h2>
           <p className="text-base text-[#333333]/50 max-w-xl mx-auto leading-relaxed">
-            Tanzania is incredible year-round, but each season offers something unique
+            {t('description')}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {seasons.map((season, i) => (
             <motion.div
-              key={season.name}
+              key={season.nameKey}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.2 + i * 0.15, duration: 0.6 }}
@@ -72,20 +74,20 @@ export default function BestTimeToVisit() {
                   <season.icon className="w-6 h-6" style={{ color: season.color }} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#333333]">{season.name}</h3>
-                  <span className="text-xs text-[#333333]/40 tracking-wider">{season.period}</span>
+                  <h3 className="font-bold text-[#333333]">{t(season.nameKey)}</h3>
+                  <span className="text-xs text-[#333333]/40 tracking-wider">{t(season.periodKey)}</span>
                 </div>
               </div>
 
               <p className="text-sm text-[#333333]/50 leading-relaxed mb-4">
-                {season.description}
+                {t(season.descriptionKey)}
               </p>
 
               <span
                 className="inline-block px-3 py-1 text-[10px] font-bold tracking-wider uppercase rounded-full"
                 style={{ backgroundColor: `${season.color}12`, color: season.color }}
               >
-                {season.rating}
+                {t(season.ratingKey)}
               </span>
             </motion.div>
           ))}

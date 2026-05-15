@@ -4,8 +4,10 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Heart, Camera, Star, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 export default function MemoriesSection() {
+  const t = useTranslations('memories');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -24,26 +26,23 @@ export default function MemoriesSection() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
               <Heart className="w-3.5 h-3.5" />
-              Memories That Last
+              {t('label')}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
-              Ready to Create Memories That Last{' '}
-              <span className="text-[#B78A42]">Forever?</span>
+              {t('title')}
             </h2>
 
             <p className="text-base text-[#333333]/55 leading-relaxed mb-8">
-              At Hadada Safari, every journey is more than just a trip — it&apos;s a collection
-              of moments that you&apos;ll cherish forever. From witnessing majestic wildlife up
-              close to sharing laughter under the African sky, your adventure is waiting.
+              {t('description')}
             </p>
 
             {/* Feature pills - glass style */}
             <div className="flex flex-wrap gap-3 mb-10">
               {[
-                { icon: Camera, label: 'Wildlife Encounters' },
-                { icon: Heart, label: 'Cultural Immersion' },
-                { icon: Star, label: 'Luxury in the Wild' },
+                { icon: Camera, label: t('wildlifeEncounters') },
+                { icon: Heart, label: t('culturalImmersion') },
+                { icon: Star, label: t('luxuryInTheWild') },
               ].map((item) => (
                 <span
                   key={item.label}
@@ -56,7 +55,7 @@ export default function MemoriesSection() {
             </div>
 
             <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/20 group">
-              EXPLORE MORE
+              {t('exploreMore')}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </motion.div>

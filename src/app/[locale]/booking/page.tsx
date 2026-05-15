@@ -11,7 +11,7 @@ import {
   MapPin, Calendar, Users, Heart, ChevronRight, ChevronLeft,
   Send, CheckCircle2, MessageSquare, Sparkles, Mountain,
   TreePine, Sun, Umbrella, Camera, Bird, ArrowRight, Phone, Mail,
-  HelpCircle, Shield, Clock, Star
+  HelpCircle, Shield, Clock, Star, Loader2, AlertCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
@@ -60,6 +60,8 @@ const budgets = [
 export default function BookingPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Form state
   const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
@@ -96,8 +98,45 @@ export default function BookingPage() {
     }
   };
 
-  const handleSubmit = () => {
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setErrorMessage('');
+    setIsLoading(true);
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/info@hadadasafaris.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email,
+          phone: phone || 'Not provided',
+          country: country || 'Not provided',
+          destinations: selectedDestinations.join(', ') || 'None selected',
+          tripType: tripType || 'Not selected',
+          duration: duration || 'Not selected',
+          travelDates: travelDates || 'Flexible',
+          accommodation: accommodation || 'Not selected',
+          budget: budget || 'Not selected',
+          groupSize: groupSize || 'Not specified',
+          specialRequests: specialRequests || 'None',
+          _subject: 'New Booking Request - Hadada Safaris Website',
+          _captcha: 'false',
+          _template: 'table',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit booking. Please try again.');
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again or contact us directly.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -640,12 +679,29 @@ export default function BookingPage() {
                       <Button
                         type="button"
                         onClick={handleSubmit}
-                        className="bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] text-white font-bold text-sm tracking-wider px-8 py-3 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/10"
+                        disabled={isLoading}
+                        className="bg-gradient-to-r from-[#B78A42] to-[#A67A35] hover:from-[#A67A35] hover:to-[#967030] disabled:from-[#B78A42]/50 disabled:to-[#A67A35]/50 disabled:text-white/60 text-white font-bold text-sm tracking-wider px-8 py-3 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group shadow-lg shadow-[#B78A42]/10"
                       >
-                        <Send className="w-4 h-4 mr-2" /> SUBMIT BOOKING
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> SUBMITTING...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4 mr-2" /> SUBMIT BOOKING
+                          </>
+                        )}
                       </Button>
                     )}
                   </div>
+
+                  {/* Error Message */}
+                  {errorMessage && (
+                    <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm mt-4 relative z-10">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* ─── Floating Help Bar ─── */}

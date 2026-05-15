@@ -1,54 +1,8 @@
+'use client';
+
 import { Link } from '@/i18n/navigation';
 import { MapPin, Phone, Mail, Instagram, Facebook, Youtube } from 'lucide-react';
-
-const footerLinks: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: 'Explore',
-    links: [
-      { label: 'Serengeti National Park', href: '/destinations/serengeti' },
-      { label: 'Ngorongoro Crater', href: '/destinations/ngorongoro' },
-      { label: 'Zanzibar Island', href: '/destinations/zanzibar' },
-      { label: 'Mount Kilimanjaro', href: '/destinations/kilimanjaro' },
-      { label: 'Tarangire National Park', href: '/destinations/tarangire' },
-      { label: 'Lake Manyara', href: '/destinations/lake-manyara' },
-      { label: 'Balloon Safari', href: '/destinations/balloon-safari' },
-    ],
-  },
-  {
-    title: 'Itineraries',
-    links: [
-      { label: 'Amazing Departure 2024/27', href: '/itineraries' },
-      { label: 'Migration Safari Program', href: '/itineraries' },
-      { label: 'Luxury Honeymoon Package', href: '/itineraries' },
-      { label: 'Luxury Summer Zanzibar', href: '/itineraries' },
-      { label: 'Dry Season Private Safari', href: '/itineraries' },
-      { label: 'Immersive Culture Trips', href: '/itineraries' },
-    ],
-  },
-  {
-    title: 'Kilimanjaro Routes',
-    links: [
-      { label: 'Machame Route', href: '/kilimanjaro/machame' },
-      { label: 'Lemosho Route', href: '/kilimanjaro/lemosho' },
-      { label: 'Marangu Route', href: '/kilimanjaro/marangu' },
-      { label: 'Umbwe Route', href: '/kilimanjaro/umbwe' },
-      { label: 'Rongai Route', href: '/kilimanjaro/rongai' },
-      { label: 'Shira Route', href: '/kilimanjaro/shira' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Camp & Lodges', href: '/camps-lodges' },
-      { label: 'Domestic Flights', href: '/domestic-flights' },
-      { label: 'Book a Safari', href: '/booking' },
-      { label: 'Contact', href: '/contact' },
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-    ],
-  },
-];
+import { useTranslations } from 'next-intl';
 
 // X/Twitter custom SVG icon component
 function XTwitterIcon({ className }: { className?: string }) {
@@ -119,14 +73,123 @@ const paymentMethods = [
   },
 ];
 
-const trustBadges = [
-  { name: 'TALA Licensed', description: 'Tanzania Tourism', icon: '🛡️' },
-  { name: 'TANAPA Partner', description: 'National Parks', icon: '🏞️' },
-  { name: 'ATTA Member', description: 'Africa Travel Assoc.', icon: '🌍' },
-  { name: 'SafariBookings', description: 'Verified Operator', icon: '✓' },
+// --- Trust Badge SVG Icon Components ---
+
+/** Shield with checkmark — TALA (Tanzania Tourism Licensing Authority) */
+function ShieldCheckIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+      <path d="M10 1.5L3 4.5V9c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V4.5L10 1.5z" stroke="#B78A42" strokeWidth="1.4" strokeLinejoin="round" />
+      <path d="M7 10l2 2 4-4" stroke="#B78A42" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Tree and mountain — TANAPA (Tanzania National Parks) */
+function MountainTreeIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+      <path d="M3 17l4-7 2.5 3L13 6l4 11H3z" stroke="#B78A42" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M14.5 10V7M14.5 7l-1.5 2h3l-1.5-2zM14.5 7V5.5" stroke="#B78A42" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Globe with Africa outline — ATTA (African Travel and Tourism Association) */
+function GlobeAfricaIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+      <circle cx="10" cy="10" r="8" stroke="#B78A42" strokeWidth="1.3" />
+      <ellipse cx="10" cy="10" rx="3.5" ry="8" stroke="#B78A42" strokeWidth="1.1" />
+      <path d="M2 10h16M3 5.5h14M3 14.5h14" stroke="#B78A42" strokeWidth="0.8" strokeLinecap="round" />
+      <path d="M11 3.5c.5.8.3 1.5-.2 2s-.8 1.2-.3 2c.4.6.2 1.2-.3 1.7-.4.4-.6 1-.3 1.6.3.5.1 1-.3 1.5s-.4 1-.1 1.6" stroke="#B78A42" strokeWidth="0.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Compass / map icon — TATO (Tanzania Association of Tour Operators) */
+function CompassIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+      <circle cx="10" cy="10" r="8" stroke="#B78A42" strokeWidth="1.3" />
+      <path d="M10 2v2M10 16v2M2 10h2M16 10h2" stroke="#B78A42" strokeWidth="0.9" strokeLinecap="round" />
+      <path d="M12 7l-4 2.5L12 13V7z" stroke="#B78A42" strokeWidth="1.1" strokeLinejoin="round" />
+      <circle cx="10" cy="10" r="1" fill="#B78A42" />
+    </svg>
+  );
+}
+
+/** Star rating badge — SafariBookings */
+function StarBadgeIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+      <path d="M10 1.5l2.2 4.4 4.8.7-3.5 3.4.8 4.8L10 12.2 5.7 14.8l.8-4.8L3 6.6l4.8-.7L10 1.5z" stroke="#B78A42" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M8.5 10l1 1 2.5-3" stroke="#B78A42" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const trustBadgeKeys = [
+  { nameKey: 'talaLicensed', icon: ShieldCheckIcon },
+  { nameKey: 'tanapaPartner', icon: MountainTreeIcon },
+  { nameKey: 'attaMember', icon: GlobeAfricaIcon },
+  { nameKey: 'tatoMember', icon: CompassIcon },
+  { nameKey: 'safariBookings', icon: StarBadgeIcon },
 ];
 
 export default function Footer() {
+  const t = useTranslations('footer');
+
+  const footerLinks: { titleKey: string; links: { labelKey: string; href: string }[] }[] = [
+    {
+      titleKey: 'explore',
+      links: [
+        { labelKey: 'serengetiNationalPark', href: '/destinations/serengeti' },
+        { labelKey: 'ngorongoroCrater', href: '/destinations/ngorongoro' },
+        { labelKey: 'zanzibarIsland', href: '/destinations/zanzibar' },
+        { labelKey: 'mountKilimanjaro', href: '/destinations/kilimanjaro' },
+        { labelKey: 'tarangirePark', href: '/destinations/tarangire' },
+        { labelKey: 'lakeManyara', href: '/destinations/lake-manyara' },
+        { labelKey: 'balloonSafari', href: '/destinations/balloon-safari' },
+      ],
+    },
+    {
+      titleKey: 'itineraries',
+      links: [
+        { labelKey: 'amazingDeparture', href: '/itineraries' },
+        { labelKey: 'migrationSafariProgram', href: '/itineraries' },
+        { labelKey: 'luxuryHoneymoonPackage', href: '/itineraries' },
+        { labelKey: 'luxurySummerZanzibar', href: '/itineraries' },
+        { labelKey: 'drySeasonPrivateSafari', href: '/itineraries' },
+        { labelKey: 'immersiveCultureTrips', href: '/itineraries' },
+      ],
+    },
+    {
+      titleKey: 'kilimanjaroRoutes',
+      links: [
+        { labelKey: 'machameRoute', href: '/kilimanjaro/machame' },
+        { labelKey: 'lemoshoRoute', href: '/kilimanjaro/lemosho' },
+        { labelKey: 'maranguRoute', href: '/kilimanjaro/marangu' },
+        { labelKey: 'umbweRoute', href: '/kilimanjaro/umbwe' },
+        { labelKey: 'rongaiRoute', href: '/kilimanjaro/rongai' },
+        { labelKey: 'shiraRoute', href: '/kilimanjaro/shira' },
+      ],
+    },
+    {
+      titleKey: 'company',
+      links: [
+        { labelKey: 'aboutUs', href: '/about' },
+        { labelKey: 'campLodges', href: '/camps-lodges' },
+        { labelKey: 'domesticFlights', href: '/domestic-flights' },
+        { labelKey: 'bookASafari', href: '/booking' },
+        { labelKey: 'contact', href: '/contact' },
+        { labelKey: 'blog', href: '/blog' },
+        { labelKey: 'privacy', href: '/privacy' },
+        { labelKey: 'terms', href: '/terms' },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-[#1a1a1a] text-white relative overflow-hidden">
       {/* Decorative top border gradient */}
@@ -147,8 +210,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-white/40 text-sm leading-relaxed mb-6 max-w-sm">
-              Creating exceptional safari experiences that connect you to Tanzania&apos;s
-              breathtaking landscapes, vibrant cultures, and magnificent wildlife since 2009.
+              {t('description')}
             </p>
             <div className="flex flex-col gap-2.5 text-sm mb-8">
               <a href="mailto:info@hadadasafaris.com" className="flex items-center gap-2.5 text-white/40 hover:text-[#B78A42] transition-colors group">
@@ -174,7 +236,7 @@ export default function Footer() {
             {/* Follow Us — Social links */}
             <div>
               <h4 className="text-xs font-bold tracking-[0.2em] text-[#B78A42] uppercase mb-4">
-                Follow Us
+                {t('followUs')}
               </h4>
               <div className="flex items-center gap-2.5">
                 {socialLinks.map((social) => {
@@ -198,18 +260,18 @@ export default function Footer() {
 
           {/* Link columns */}
           {footerLinks.map((section) => (
-            <div key={section.title}>
+            <div key={section.titleKey}>
               <h4 className="text-xs font-bold tracking-[0.15em] text-[#B78A42] mb-5 uppercase">
-                {section.title}
+                {t(section.titleKey)}
               </h4>
               <ul className="space-y-2.5">
                 {section.links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.labelKey}>
                     <Link
                       href={link.href}
                       className="text-sm text-white/35 hover:text-white hover:pl-1 transition-all duration-200 inline-block"
                     >
-                      {link.label}
+                      {t(link.labelKey)}
                     </Link>
                   </li>
                 ))}
@@ -224,30 +286,32 @@ export default function Footer() {
             {/* Tour Operator Badges */}
             <div>
               <h4 className="text-xs font-bold tracking-[0.15em] text-white/25 uppercase mb-5">
-                Trusted &amp; Certified
+                {t('trusted')}
               </h4>
               <div className="flex flex-wrap gap-3">
-                {trustBadges.map((badge) => (
-                  <div
-                    key={badge.name}
-                    className="flex items-center gap-2.5 px-4 py-2.5 bg-white/[0.03] border border-[#B78A42]/10 rounded-xl hover:border-[#B78A42]/25 hover:bg-white/[0.05] transition-all duration-300 group/badge"
-                  >
-                    <div className="w-8 h-8 bg-gradient-to-br from-[#B78A42]/20 to-[#D5BC92]/10 rounded-lg flex items-center justify-center border border-[#B78A42]/15 group-hover/badge:border-[#B78A42]/30 transition-colors">
-                      <span className="text-[#B78A42] text-xs">{badge.icon}</span>
+                {trustBadgeKeys.map((badge) => {
+                  const Icon = badge.icon;
+                  return (
+                    <div
+                      key={badge.nameKey}
+                      className="flex items-center gap-2.5 px-4 py-2.5 bg-white/[0.03] border border-[#B78A42]/10 rounded-xl hover:border-[#B78A42]/25 hover:bg-white/[0.05] transition-all duration-300 group/badge"
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-br from-[#B78A42]/20 to-[#D5BC92]/10 rounded-lg flex items-center justify-center border border-[#B78A42]/15 group-hover/badge:border-[#B78A42]/30 transition-colors">
+                        <Icon />
+                      </div>
+                      <div>
+                        <span className="text-[11px] font-semibold text-white/60 block leading-tight">{t(badge.nameKey)}</span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[11px] font-semibold text-white/60 block leading-tight">{badge.name}</span>
-                      <span className="text-[9px] text-white/25 leading-tight">{badge.description}</span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
             {/* Payment Methods */}
             <div>
               <h4 className="text-xs font-bold tracking-[0.15em] text-white/25 uppercase mb-5">
-                Payment Methods
+                {t('payments')}
               </h4>
               <div className="flex flex-wrap gap-3">
                 {paymentMethods.map((method) => (
@@ -274,12 +338,12 @@ export default function Footer() {
       <div className="border-t border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/20">
-            &copy; {new Date().getFullYear()} Hadada Safaris. All rights reserved.
+            &copy; {new Date().getFullYear()} Hadada Safaris. {t('rights')}
           </p>
           <div className="flex items-center gap-6 text-xs text-white/20">
-            <Link href="/privacy" className="hover:text-white/40 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white/40 transition-colors">Terms of Service</Link>
-            <Link href="/contact" className="hover:text-white/40 transition-colors">Contact</Link>
+            <Link href="/privacy" className="hover:text-white/40 transition-colors">{t('privacy')}</Link>
+            <Link href="/terms" className="hover:text-white/40 transition-colors">{t('terms')}</Link>
+            <Link href="/contact" className="hover:text-white/40 transition-colors">{t('contact')}</Link>
           </div>
         </div>
       </div>

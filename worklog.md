@@ -209,3 +209,309 @@ Both pages enhanced with:
 
 ### Files Created
 - `src/components/NewsletterSection.tsx` — New newsletter signup component
+
+---
+
+# Worklog — Wire Up Contact & Booking Form Submissions
+
+## Date: 2026-03-06
+
+### Task 7: Wire up Contact and Booking form submissions via FormSubmit.co
+
+Both forms previously just set a `submitted = true` state client-side without sending data anywhere. Now they POST to FormSubmit.co which forwards submissions as emails to `info@hadadasafaris.com`.
+
+#### Contact Form (`src/app/[locale]/contact/page.tsx`)
+
+1. **Added new state variables** — `isLoading` (boolean) and `errorMessage` (string)
+2. **Added imports** — `FormEvent` from React, `Loader2` and `AlertCircle` from lucide-react
+3. **Replaced inline form handler** — The `onSubmit` handler now:
+   - Prevents default form behavior
+   - Clears any previous error message
+   - Sets `isLoading = true`
+   - Collects form data via `FormData` API from the native form element
+   - Builds a JSON payload with all fields: name, email, phone, travelDates, groupSize, budget, interests, message
+   - Includes FormSubmit hidden fields: `_subject` ("New Safari Inquiry - Hadada Safaris Website"), `_captcha` ("false"), `_template` ("table")
+   - POSTs to `https://formsubmit.co/ajax/info@hadadasafaris.com` with JSON content type and Accept headers
+   - On success: sets `submitted = true` (keeps existing success animation)
+   - On failure: sets `errorMessage` with the error message
+   - Finally: sets `isLoading = false`
+4. **Added error message display** — Red alert box with `AlertCircle` icon, shown conditionally when `errorMessage` is truthy
+5. **Added loading state to submit button** — Disabled during loading, shows spinning `Loader2` icon with "SENDING..." text; normal state shows "SEND INQUIRY" with Send icon
+6. **Added disabled styling** — Faded gradient (`from-[#B78A42]/50 to-[#A67A35]/50`) and reduced text opacity when disabled
+
+#### Booking Form (`src/app/[locale]/booking/page.tsx`)
+
+1. **Added new state variables** — `isLoading` (boolean) and `errorMessage` (string)
+2. **Added imports** — `Loader2` and `AlertCircle` from lucide-react
+3. **Replaced `handleSubmit`** — Was `() => setSubmitted(true)`, now:
+   - Clears any previous error message
+   - Sets `isLoading = true`
+   - Builds a comprehensive JSON payload with ALL booking fields: name, email, phone, country, destinations, tripType, duration, travelDates, accommodation, budget, groupSize, specialRequests
+   - Includes FormSubmit hidden fields: `_subject` ("New Booking Request - Hadada Safaris Website"), `_captcha` ("false"), `_template` ("table")
+   - POSTs to `https://formsubmit.co/ajax/info@hadadasafaris.com` with JSON content type and Accept headers
+   - On success: sets `submitted = true` (keeps existing success animation)
+   - On failure: sets `errorMessage` with the error message
+   - Finally: sets `isLoading = false`
+4. **Added error message display** — Red alert box with `AlertCircle` icon, placed below the navigation buttons inside the form card, shown conditionally when `errorMessage` is truthy
+5. **Added loading state to submit button** — Disabled during loading, shows spinning `Loader2` icon with "SUBMITTING..." text; normal state shows "SUBMIT BOOKING" with Send icon
+6. **Added disabled styling** — Same faded gradient pattern as contact form
+
+#### FormSubmit.co Configuration
+
+- **Endpoint**: `https://formsubmit.co/ajax/info@hadadasafaris.com` (AJAX endpoint returns JSON)
+- **Headers**: `Content-Type: application/json`, `Accept: application/json`
+- **Contact form subject**: "New Safari Inquiry - Hadada Safaris Website"
+- **Booking form subject**: "New Booking Request - Hadada Safaris Website"
+- **Captcha**: Disabled (`_captcha: "false"`) — we have our own form validation
+- **Template**: Table format (`_template: "table"`) — nice formatted email
+
+### Build Verification
+- `bun run lint` — Pre-existing lint error in `camps-lodges/page.tsx` (unrelated to this task). No new errors from contact/booking changes.
+- Dev server running on port 3000
+
+### Files Modified
+- `src/app/[locale]/contact/page.tsx` — FormSubmit.co integration, loading/error states
+- `src/app/[locale]/booking/page.tsx` — FormSubmit.co integration, loading/error states
+
+---
+
+# Worklog — Live Chat Widget & Footer Badge SVG Icons
+
+## Date: 2026-03-05
+
+### Task 6-a: Add Tawk.to Live Chat Widget + Replace Footer Emoji Badges with SVG Icons
+
+#### Task 1: Tawk.to Live Chat Widget
+
+**File created: `src/components/LiveChat.tsx`**
+
+1. **'use client' component** — Client-side only since it interacts with the DOM
+2. **Async script injection** — Uses `useEffect` to inject the Tawk.to script tag after page render, so it never blocks initial page load
+3. **Property ID placeholder** — Uses `YOUR_TAWK_TO_PROPERTY_ID` as the property ID, with detailed comments explaining how to obtain the real ID from the Tawk.to dashboard (Administration > Property)
+4. **Duplicate script prevention** — Checks for existing script element by ID to prevent double-injection in React Strict Mode
+5. **Global API stubs** — Initializes `window.Tawk_API` and `window.Tawk_LoadStart` before script load as required by Tawk.to
+6. **Cleanup on unmount** — Removes the script tag and any Tawk.to iframe elements when the component unmounts
+7. **Returns null** — The component renders nothing visually; the Tawk.to widget manages its own UI
+
+**File modified: `src/app/[locale]/page.tsx`**
+
+1. Added dynamic import: `const LiveChat = dynamic(() => import('@/components/LiveChat'));`
+2. Added `<LiveChat />` after `<CookieConsent />` in the floating elements section
+
+#### Task 2: Replace Emoji Footer Badges with SVG Icons
+
+**File modified: `src/components/Footer.tsx`**
+
+Replaced the `trustBadges` array's emoji-based icons with proper SVG icon components:
+
+1. **TALA Licensed** — `ShieldCheckIcon`: Shield outline with a checkmark inside, representing the Tanzania Tourism Licensing Authority
+2. **TANAPA Partner** — `MountainTreeIcon`: Mountain range with a tree, representing Tanzania National Parks
+3. **ATTA Member** — `GlobeAfricaIcon`: Globe with latitude/longitude lines and an Africa continent outline, representing the African Travel and Tourism Association
+4. **TATO Member** — `CompassIcon`: Compass circle with cardinal marks and a compass needle, representing the Tanzania Association of Tour Operators. This **replaces** the old "SafariBookings" badge position
+5. **SafariBookings** — `StarBadgeIcon`: Star outline with a checkmark inside, representing verified tour operator status. This is kept with a proper SVG icon
+
+Design details for all SVG icons:
+- **ViewBox**: 20×20 for consistent sizing
+- **Style**: Clean, minimal line art — stroke-based (not filled) for consistency
+- **Color**: `#B78A42` (golden brown) used for all strokes and the compass center dot
+- **Stroke width**: 1.1–1.4 for visual balance across different icon complexities
+- **CSS class**: `w-4 h-4` for 16px rendering within the 8×8 badge container
+
+Updated the `trustBadges` array:
+- Removed the `icon: string` field (emoji)
+- Replaced with `icon: React.ComponentType` (SVG component reference)
+- Updated all descriptions to full organization names
+- Changed rendering from `<span>{badge.icon}</span>` to `const Icon = badge.icon; <Icon />`
+
+### Lint Verification
+- `npx eslint src/components/LiveChat.tsx src/components/Footer.tsx "src/app/[locale]/page.tsx"` — ✅ No errors in changed files
+- Pre-existing lint error in `camps-lodges/page.tsx` (unrelated to this task)
+
+### Files Created
+- `src/components/LiveChat.tsx` — Tawk.to live chat widget component
+
+### Files Modified
+- `src/app/[locale]/page.tsx` — Added LiveChat dynamic import and component
+- `src/components/Footer.tsx` — Replaced emoji badges with SVG icon components, added TATO Member badge
+
+---
+
+# Worklog — Internationalization: Replace Hardcoded English with useTranslations()
+
+## Date: 2026-03-06
+
+### Task 8: Make ALL components use useTranslations() instead of hardcoded English text
+
+The English translation file at `/messages/en.json` has 593+ translation strings across 31 categories, but most components had hardcoded English text and never called `useTranslations()`. When users switch languages, the content stayed in English. This task replaced ALL hardcoded English text with `t('key')` calls in 21 components.
+
+#### Pattern Applied
+
+Every component updated follows this pattern:
+```tsx
+'use client';
+import { useTranslations } from 'next-intl';
+
+export default function MyComponent() {
+  const t = useTranslations('sectionName');
+  return <h1>{t('title')}</h1>;
+}
+```
+
+#### Components Updated (21 total)
+
+1. **`HeroSection.tsx`** — `useTranslations('hero')` for tagline, title, cta, secondary, description, stat labels (yearsExperience, happyTravelers, uniqueRoutes, satisfactionRate)
+
+2. **`DestinationsSection.tsx`** — `useTranslations('destinations')` for all destination names and taglines using key-based arrays (`nameKey` + `nameKey + 'Tagline'` pattern), section labels
+
+3. **`HowItWorksSection.tsx`** — `useTranslations('howItWorks')` for label, title, description, step titles/descriptions via `titleKey`/`descriptionKey` keys
+
+4. **`MemoriesSection.tsx`** — `useTranslations('memories')` for label, title, description, feature pill labels, explore button
+
+5. **`SafariCraftingSection.tsx`** — `useTranslations('safariCrafting')` for label, title, descriptions, button labels
+
+6. **`BestTimeToVisit.tsx`** — `useTranslations('bestTime')` for season names, periods, descriptions, ratings via `nameKey`/`periodKey`/`descriptionKey`/`ratingKey` pattern
+
+7. **`ItinerariesSection.tsx`** — `useTranslations('itineraries')` for section labels, itinerary titles via `titleKey` pattern
+
+8. **`KilimanjaroSection.tsx`** — `useTranslations('kilimanjaro')` for label, title, description, route names/difficulties/descriptions via `nameKey` pattern, difficulty color mapping uses translated difficulty values
+
+9. **`BalloonSection.tsx`** — `useTranslations('balloon')` for label, title, description, startingFrom, bookNow
+
+10. **`PhotoGallery.tsx`** — `useTranslations('photoGallery')` for label, title, description, navigate, close
+
+11. **`ValueSection.tsx`** — `useTranslations('value')` for label, title, description, learnMore, and all value card titles/descriptions/highlights via `titleKey`/`descriptionKey`/`highlightKey` pattern
+
+12. **`SustainabilitySection.tsx`** — `useTranslations('sustainability')` for label, title, description, pillar titles/descriptions, stat labels (revenueToConservation, localGuides, singleUsePlastics)
+
+13. **`TripAdvisorSection.tsx`** — `useTranslations('tripAdvisor')` for section labels, trust indicator sublabels, rated text, seeAllReviews CTA. Review text kept in English since they're quotes.
+
+14. **`FAQSection.tsx`** — `useTranslations('faq')` for label, title, description, all questions (q1-q6) and answers (a1-a6) via key arrays
+
+15. **`PartnersStrip.tsx`** — `useTranslations('partners')` for label, description
+
+16. **`NewsletterSection.tsx`** — `useTranslations('newsletter')` for label, title, description, placeholder, subscribe, socialProof, privacyNote, agreement, privacyPolicy, termsOfService, and, successTitle, successMessage
+
+17. **`CTABanner.tsx`** — `useTranslations('ctaBanner')` for label, title, description, startPlanning, viewItineraries
+
+18. **`CookieConsent.tsx`** — `useTranslations('cookieConsent')` for title, description, privacyPolicy, and, termsOfService, gdprNote, accept, decline
+
+19. **`Footer.tsx`** — `useTranslations('footer')` for description, followUs, section titles (explore, itineraries, kilimanjaroRoutes, company), all link labels, trusted, payments, trust badge names (talaLicensed, tanapaPartner, attaMember, tatoMember, safariBookings), bottom bar rights/privacy/terms/contact. Added `'use client'` directive. Refactored `footerLinks` to use `titleKey`/`labelKey` pattern.
+
+20. **`WhatsAppButton.tsx`** — `useTranslations('whatsapp')` for chatWithUs tooltip, all page-specific messages (campsLodgesMessage, flightsMessage, balloonMessage, etc.), defaultMessage, destinationMessage, kilimanjaroRouteMessage with `{route}` interpolation
+
+21. **`Header.tsx`** — `useTranslations('nav')` for all navigation labels (destinations, itineraries, blog, kilimanjaro, suppliers, contact, bookNow), dropdown item labels, viewAll, callUs, whatsapp, openMenu, closeMenu. Refactored `navItems` to use `labelKey` pattern for items and children.
+
+#### Translation File Updates
+
+**`messages/en.json`** — Added 13 new keys to the `nav` section:
+- `amazingDeparture`, `migrationSafari`, `luxuryHoneymoon`, `luxuryZanzibar`, `drySeasonSafari`, `cultureTrips`, `customTrip` (itinerary dropdown items)
+- `machameRoute`, `lemoshoRoute`, `maranguRoute`, `umbweRoute`, `rongaiRoute`, `shiraRoute` (Kilimanjaro dropdown items)
+
+#### Key Architecture Patterns
+
+- **Key-based data arrays**: Instead of hardcoding text in data arrays, components now store translation keys (`nameKey`, `titleKey`, `labelKey`, etc.) and call `t(key)` at render time
+- **Dynamic key composition**: Taglines use `${nameKey}Tagline` pattern (e.g., `kilimanjaro` → `kilimanjaroTagline`)
+- **Interpolation support**: WhatsAppButton uses `t('kilimanjaroRouteMessage', { route: routeName })` for dynamic route names
+- **Difficulty color mapping**: KilimanjaroSection dynamically maps translated difficulty strings to CSS classes
+
+### Lint Verification
+- All 21 component files pass ESLint with zero errors
+- Pre-existing lint error in `camps-lodges/page.tsx` (unrelated to this task)
+- Dev server running on port 3000
+
+### Files Modified
+- `src/components/HeroSection.tsx` — Added useTranslations('hero')
+- `src/components/DestinationsSection.tsx` — Added useTranslations('destinations')
+- `src/components/HowItWorksSection.tsx` — Added useTranslations('howItWorks')
+- `src/components/MemoriesSection.tsx` — Added useTranslations('memories')
+- `src/components/SafariCraftingSection.tsx` — Added useTranslations('safariCrafting')
+- `src/components/BestTimeToVisit.tsx` — Added useTranslations('bestTime')
+- `src/components/ItinerariesSection.tsx` — Added useTranslations('itineraries')
+- `src/components/KilimanjaroSection.tsx` — Added useTranslations('kilimanjaro')
+- `src/components/BalloonSection.tsx` — Added useTranslations('balloon')
+- `src/components/PhotoGallery.tsx` — Added useTranslations('photoGallery')
+- `src/components/ValueSection.tsx` — Added useTranslations('value')
+- `src/components/SustainabilitySection.tsx` — Added useTranslations('sustainability')
+- `src/components/TripAdvisorSection.tsx` — Added useTranslations('tripAdvisor')
+- `src/components/FAQSection.tsx` — Added useTranslations('faq')
+- `src/components/PartnersStrip.tsx` — Added useTranslations('partners')
+- `src/components/NewsletterSection.tsx` — Added useTranslations('newsletter')
+- `src/components/CTABanner.tsx` — Added useTranslations('ctaBanner')
+- `src/components/CookieConsent.tsx` — Added useTranslations('cookieConsent')
+- `src/components/Footer.tsx` — Added useTranslations('footer') + 'use client'
+- `src/components/WhatsAppButton.tsx` — Added useTranslations('whatsapp')
+- `src/components/Header.tsx` — Added useTranslations('nav')
+- `messages/en.json` — Added 13 keys to nav section
+
+---
+
+# Worklog — Fix German JSON & Complete Spanish + Dutch Translations
+
+## Date: 2026-03-06
+
+### Task 9: Fix de.json and complete es.json + nl.json translation files
+
+The English translation file at `/messages/en.json` has 606 strings across 32 sections. The German file had invalid JSON due to smart quotes, and both Spanish and Dutch files only had 85 strings across 7 sections.
+
+#### de.json Fix
+
+**File: `messages/de.json`**
+
+The file was already complete with all 606 strings, but had invalid JSON caused by smart quotes on line 282:
+
+- **Root cause**: The `cookieConsent.description` string contained German-style quotation marks `„Akzeptieren"` where the closing `"` (U+201D right double quotation mark) was actually a plain ASCII `"` (U+0022), which prematurely terminated the JSON string at column 191.
+- **Fix**: Replaced the smart quote pair `„Akzeptieren"` with escaped ASCII quotes `\"Akzeptieren\"` inside the JSON string value.
+- **Result**: File now parses as valid JSON with all 606 strings across 32 sections. Keys match perfectly with en.json.
+- **No smart/Unicode quotes** remain anywhere in the file.
+
+#### es.json — Complete Rewrite
+
+**File: `messages/es.json`**
+
+Previously had only 85 strings across 7 sections (nav, hero, footer, campsLodges, flights, contact, common) with mismatched key structure. Completely regenerated from scratch with:
+
+- All 606 strings across all 32 sections matching en.json key structure exactly
+- Neutral Latin American Spanish with formal "usted" form
+- Natural travel vocabulary (safari, sabana, selva, vida silvestre)
+- Brand names preserved: Hadada Safaris, Serengeti, Kilimanjaro, Ngorongoro, Zanzibar, Tarangire, WhatsApp, TripAdvisor
+- HTML/formatting preserved where present
+- FAQ answers translated naturally, not word-for-word
+- Only regular ASCII double quotes used; no smart quotes
+- Escaped quotes used where needed (e.g., `\"Aceptar\"` in cookieConsent.description)
+
+#### nl.json — Complete Rewrite
+
+**File: `messages/nl.json`**
+
+Previously had only 85 strings across 7 sections with mismatched key structure. Completely regenerated from scratch with:
+
+- All 606 strings across all 32 sections matching en.json key structure exactly
+- Formal "u" form throughout
+- Concise Dutch style with natural travel vocabulary (safari, wildernis, savanne, wildlife)
+- Brand names preserved: Hadada Safaris, Serengeti, Kilimanjaro, Ngorongoro, Zanzibar, Tarangire, WhatsApp, TripAdvisor
+- HTML/formatting preserved where present
+- FAQ answers translated naturally, not word-for-word
+- Only regular ASCII double quotes used; no smart quotes
+- Escaped quotes used where needed (e.g., `\"Accepteren\"` in cookieConsent.description)
+- Initial write had a JSON syntax error on line 55 where `'s Werelds Grootste Caldera` used single quotes as JSON delimiters — fixed to `"'s Werelds Grootste Caldera"` with proper double-quote delimiters
+
+#### Validation Results
+
+All three files validated:
+- **de.json**: Valid JSON, 606 strings, 32 sections, keys match en.json, no smart quotes
+- **es.json**: Valid JSON, 606 strings, 32 sections, keys match en.json, no smart quotes
+- **nl.json**: Valid JSON, 606 strings, 32 sections, keys match en.json, no smart quotes
+
+#### Section Coverage (all 32 sections)
+
+nav (28), hero (9), destinations (36), howItWorks (10), memories (8), safariCrafting (7), bestTime (16), itineraries (13), kilimanjaro (27), balloon (6), photoGallery (6), value (14), sustainability (15), tripAdvisor (10), faq (16), partners (2), newsletter (13), ctaBanner (6), cookieConsent (8), footer (42), whatsapp (14), about (28), booking (86), contact (73), campsLodges (12), flights (40), itinerariesPage (16), destinationsPage (8), kilimanjaroPage (17), privacy (6), terms (5), common (9)
+
+#### Lint Verification
+
+- `bun run lint` — Pre-existing lint error in `camps-lodges/page.tsx` (unrelated to this task). No new errors from translation file changes.
+
+### Files Modified
+
+- `messages/de.json` — Fixed smart quote in cookieConsent.description (line 282)
+- `messages/es.json` — Complete rewrite from 85 to 606 strings
+- `messages/nl.json` — Complete rewrite from 85 to 606 strings

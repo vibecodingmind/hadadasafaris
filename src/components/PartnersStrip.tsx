@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 const partners = [
   { name: 'Entara Camps', logo: '⛺' },
@@ -15,6 +16,7 @@ const partners = [
 ];
 
 export default function PartnersStrip() {
+  const t = useTranslations('partners');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -28,9 +30,9 @@ export default function PartnersStrip() {
           className="text-center mb-10"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
-            Trusted Partners
+            {t('label')}
           </span>
-          <h3 className="text-lg text-[#333333]/40 font-medium">Working with the best in Tanzania</h3>
+          <h3 className="text-lg text-[#333333]/40 font-medium">{t('description')}</h3>
         </motion.div>
 
         {/* Infinite scroll strip */}

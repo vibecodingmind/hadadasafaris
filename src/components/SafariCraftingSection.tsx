@@ -4,8 +4,10 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Compass, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 export default function SafariCraftingSection() {
+  const t = useTranslations('safariCrafting');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -45,32 +47,28 @@ export default function SafariCraftingSection() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
               <Compass className="w-3.5 h-3.5" />
-              Expert Craftsmanship
+              {t('label')}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
-              Crafting Exceptional{' '}
-              <span className="text-[#B78A42]">Safaris</span>
+              {t('title')}
             </h2>
 
             <p className="text-base text-[#333333]/55 leading-relaxed mb-5">
-              From thrilling game drives in the Serengeti to serene moments in the
-              Ngorongoro Crater, our expertly crafted itineraries ensure you experience
-              the very best of Tanzania&apos;s wildlife and landscapes.
+              {t('description1')}
             </p>
 
             <p className="text-sm text-[#333333]/40 leading-relaxed mb-8">
-              Every detail of your safari is thoughtfully planned — from the luxury lodges
-              you&apos;ll stay in, to the hidden gems only our experienced guides know about.
+              {t('description2')}
             </p>
 
             <div className="flex flex-wrap gap-3">
               <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-xs tracking-wider px-7 py-5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20 group">
-                VIEW ITINERARIES
+                {t('viewItineraries')}
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button variant="outline" className="border-[#B78A42]/30 text-[#B78A42] hover:bg-[#B78A42]/5 hover:border-[#B78A42]/50 font-semibold text-xs tracking-wider px-7 py-5 rounded-full transition-all duration-300">
-                CUSTOM TRIP
+                {t('customTrip')}
               </Button>
             </div>
           </motion.div>

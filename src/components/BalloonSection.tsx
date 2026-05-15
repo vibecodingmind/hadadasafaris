@@ -3,8 +3,11 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Sparkles } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function BalloonSection() {
+  const t = useTranslations('balloon');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -28,16 +31,13 @@ export default function BalloonSection() {
         >
           <span className="inline-flex items-center gap-2 text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-6">
             <Sparkles className="w-4 h-4" />
-            Once In A Lifetime
+            {t('label')}
           </span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Experience the Serengeti{' '}
-            <span className="text-[#B78A42]">From Above</span>
+            {t('title')}
           </h2>
           <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl mx-auto">
-            Float silently over the endless plains as the sun rises, witnessing herds of
-            wildlife from a perspective few ever experience. Our balloon safaris are the
-            crown jewel of any Tanzanian adventure.
+            {t('description')}
           </p>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -46,16 +46,16 @@ export default function BalloonSection() {
             className="inline-flex items-center gap-4 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full"
           >
             <div className="text-left">
-              <div className="text-xs text-white/50 tracking-wider">Starting From</div>
+              <div className="text-xs text-white/50 tracking-wider">{t('startingFrom')}</div>
               <div className="text-2xl font-bold text-[#B78A42]">$599</div>
             </div>
             <div className="w-px h-10 bg-white/20" />
-            <a
-              href="#"
+            <Link
+              href="/destinations/balloon-safari"
               className="px-6 py-2.5 bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm rounded-full tracking-wider transition-all duration-300 hover:shadow-lg hover:shadow-[#B78A42]/20"
             >
-              BOOK NOW
-            </a>
+              {t('bookNow')}
+            </Link>
           </motion.div>
         </motion.div>
       </div>

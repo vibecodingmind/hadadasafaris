@@ -3,31 +3,17 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Leaf, Heart, Users, TreePine } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-const pillars = [
-  {
-    icon: TreePine,
-    title: 'Conservation First',
-    description: 'We partner with parks and reserves that prioritize wildlife conservation. A portion of every safari goes directly to protecting Tanzania\'s endangered species and their habitats.',
-  },
-  {
-    icon: Users,
-    title: 'Community Empowerment',
-    description: 'We employ local guides, support Maasai women\'s cooperatives, and invest in village education programs. Your safari directly benefits the communities you visit.',
-  },
-  {
-    icon: Leaf,
-    title: 'Eco-Friendly Practices',
-    description: 'From carbon-offset transportation to plastic-free camps, we minimize our environmental footprint. Our partner lodges use solar power and sustainable water management.',
-  },
-  {
-    icon: Heart,
-    title: 'Responsible Tourism',
-    description: 'We enforce strict wildlife viewing guidelines to ensure animals are never disturbed. Our safaris promote observation, not interference, preserving the natural balance.',
-  },
+const pillarKeys = [
+  { icon: TreePine, titleKey: 'conservationTitle', descriptionKey: 'conservationDescription' },
+  { icon: Users, titleKey: 'communityTitle', descriptionKey: 'communityDescription' },
+  { icon: Leaf, titleKey: 'ecoTitle', descriptionKey: 'ecoDescription' },
+  { icon: Heart, titleKey: 'responsibleTitle', descriptionKey: 'responsibleDescription' },
 ];
 
 export default function SustainabilitySection() {
+  const t = useTranslations('sustainability');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -45,41 +31,38 @@ export default function SustainabilitySection() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#6B9E78]/10 rounded-full text-[#6B9E78] text-xs font-semibold tracking-[0.2em] uppercase mb-5">
               <Leaf className="w-3.5 h-3.5" />
-              Sustainability
+              {t('label')}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#333333] mb-6 leading-tight">
-              Travel With{' '}
-              <span className="text-[#6B9E78]">Purpose</span>
+              {t('title')}
             </h2>
 
             <p className="text-base text-[#333333]/55 leading-relaxed mb-8">
-              At Hadada Safaris, we believe that extraordinary travel and environmental
-              responsibility go hand in hand. Every safari we craft not only creates memories
-              for you — it contributes to preserving Tanzania&apos;s wild heritage for generations to come.
+              {t('description')}
             </p>
 
             <div className="flex gap-6">
               <div>
                 <div className="text-3xl font-bold text-[#6B9E78]">5%</div>
-                <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Revenue to Conservation</div>
+                <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">{t('revenueToConservation')}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-[#6B9E78]">100%</div>
-                <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Local Guides</div>
+                <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">{t('localGuides')}</div>
               </div>
               <div>
                 <div className="text-3xl font-bold text-[#6B9E78]">0</div>
-                <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">Single-Use Plastics</div>
+                <div className="text-[10px] text-[#333333]/40 tracking-wider uppercase mt-0.5">{t('singleUsePlastics')}</div>
               </div>
             </div>
           </motion.div>
 
           {/* Right - Pillar cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {pillars.map((pillar, i) => (
+            {pillarKeys.map((pillar, i) => (
               <motion.div
-                key={pillar.title}
+                key={pillar.titleKey}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
@@ -88,8 +71,8 @@ export default function SustainabilitySection() {
                 <div className="w-10 h-10 bg-[#6B9E78]/8 rounded-xl flex items-center justify-center mb-3 group-hover:bg-[#6B9E78]/15 transition-colors">
                   <pillar.icon className="w-5 h-5 text-[#6B9E78]" />
                 </div>
-                <h3 className="font-bold text-[#333333] text-sm mb-2">{pillar.title}</h3>
-                <p className="text-xs text-[#333333]/45 leading-relaxed">{pillar.description}</p>
+                <h3 className="font-bold text-[#333333] text-sm mb-2">{t(pillar.titleKey)}</h3>
+                <p className="text-xs text-[#333333]/45 leading-relaxed">{t(pillar.descriptionKey)}</p>
               </motion.div>
             ))}
           </div>

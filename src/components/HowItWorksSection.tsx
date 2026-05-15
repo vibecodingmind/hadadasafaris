@@ -3,29 +3,31 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { MessageSquare, Sliders, Compass } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const steps = [
   {
     icon: MessageSquare,
     number: '01',
-    title: 'Share Your Inquiry',
-    description: 'Tell us about your dream safari — your interests, preferred dates, group size, and budget. We listen to every detail.',
+    titleKey: 'step1Title',
+    descriptionKey: 'step1Description',
   },
   {
     icon: Sliders,
     number: '02',
-    title: 'We Customize Your Trip',
-    description: 'Our experts design a tailor-made itinerary just for you, handpicking lodges, routes, and experiences that match your vision.',
+    titleKey: 'step2Title',
+    descriptionKey: 'step2Description',
   },
   {
     icon: Compass,
     number: '03',
-    title: 'Live Your Adventure',
-    description: 'Arrive in Tanzania and immerse yourself in the journey of a lifetime. We handle every detail so you can focus on the wonder.',
+    titleKey: 'step3Title',
+    descriptionKey: 'step3Description',
   },
 ];
 
 export default function HowItWorksSection() {
+  const t = useTranslations('howItWorks');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -42,13 +44,13 @@ export default function HowItWorksSection() {
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
-            How It Works
+            {t('label')}
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
-            Three Simple <span className="text-[#B78A42]">Steps</span>
+            {t('title')}
           </h2>
           <p className="text-base text-[#333333]/50 max-w-xl mx-auto leading-relaxed">
-            Planning your dream safari is easier than you think
+            {t('description')}
           </p>
         </motion.div>
 
@@ -74,9 +76,9 @@ export default function HowItWorksSection() {
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-[#333333] mb-3">{step.title}</h3>
+              <h3 className="text-lg font-bold text-[#333333] mb-3">{t(step.titleKey)}</h3>
               <p className="text-sm text-[#333333]/50 leading-relaxed max-w-xs mx-auto">
-                {step.description}
+                {t(step.descriptionKey)}
               </p>
             </motion.div>
           ))}

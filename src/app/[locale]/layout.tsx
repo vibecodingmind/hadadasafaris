@@ -3,6 +3,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Toaster } from '@/components/ui/toaster';
+import ClientPreloader from '@/components/ClientPreloader';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -173,6 +174,7 @@ export default async function LocaleLayout({
         />
       </head>
       <NextIntlClientProvider messages={messages}>
+        <ClientPreloader />
         {children}
       </NextIntlClientProvider>
       <Toaster />

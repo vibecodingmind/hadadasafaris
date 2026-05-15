@@ -5,8 +5,10 @@ import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function CTABanner() {
+  const t = useTranslations('ctaBanner');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -35,28 +37,27 @@ export default function CTABanner() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white text-xs font-semibold tracking-[0.2em] uppercase mb-6">
             <span className="w-2 h-2 bg-[#B78A42] rounded-full animate-pulse" />
-            Start Your Journey
+            {t('label')}
           </span>
 
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Ready to Plan Your{' '}
-            <span className="bg-gradient-to-r from-[#D5BC92] to-[#B78A42] bg-clip-text text-transparent">Dream Safari?</span>
+            {t('title')}
           </h2>
 
           <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl mx-auto">
-            Let us craft a personalized Tanzanian adventure tailored to your interests, budget, and travel style. Your unforgettable journey starts with a single inquiry.
+            {t('description')}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link href="/booking">
               <Button className="bg-[#B78A42] hover:bg-[#A67A35] text-white font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-[#B78A42]/25 group">
-                START PLANNING
+                {t('startPlanning')}
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link href="/itineraries">
               <Button className="bg-white/10 backdrop-blur-xl border border-white/25 text-white hover:bg-white/20 hover:border-white/40 font-bold text-sm tracking-wider px-8 py-6 rounded-full transition-all duration-300">
-                VIEW ITINERARIES
+                {t('viewItineraries')}
               </Button>
             </Link>
           </div>

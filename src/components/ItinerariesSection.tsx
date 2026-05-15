@@ -4,53 +4,19 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { Calendar, ArrowRight, Clock, Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
-const itineraries = [
-  {
-    title: 'Amazing Departure in 2024/27',
-    image: '/images/hero-safari.png',
-    duration: '7 Days',
-    groupSize: '2-6 People',
-    tag: 'Popular',
-  },
-  {
-    title: 'Migration Safari Program',
-    image: '/images/migration.png',
-    duration: '10 Days',
-    groupSize: '2-8 People',
-    tag: 'Signature',
-  },
-  {
-    title: 'Luxury Honeymoon Package',
-    image: '/images/luxury-camp.png',
-    duration: '8 Days',
-    groupSize: '2 People',
-    tag: 'Romance',
-  },
-  {
-    title: 'Luxury Summer Zanzibar',
-    image: '/images/zanzibar-beach.png',
-    duration: '6 Days',
-    groupSize: '2-4 People',
-    tag: 'Beach',
-  },
-  {
-    title: 'Dry Season Private Safari',
-    image: '/images/serengeti-elephants.png',
-    duration: '9 Days',
-    groupSize: '2-6 People',
-    tag: 'Exclusive',
-  },
-  {
-    title: 'Immersive Culture Trips',
-    image: '/images/cultural-experience.png',
-    duration: '5 Days',
-    groupSize: '4-10 People',
-    tag: 'Culture',
-  },
+const itineraryKeys = [
+  { titleKey: 'amazingDeparture', image: '/images/hero-safari.png', duration: '7 Days', groupSize: '2-6 People', tag: 'Popular' },
+  { titleKey: 'migrationSafari', image: '/images/migration.png', duration: '10 Days', groupSize: '2-8 People', tag: 'Signature' },
+  { titleKey: 'luxuryHoneymoon', image: '/images/luxury-camp.png', duration: '8 Days', groupSize: '2 People', tag: 'Romance' },
+  { titleKey: 'luxuryZanzibar', image: '/images/zanzibar-beach.png', duration: '6 Days', groupSize: '2-4 People', tag: 'Beach' },
+  { titleKey: 'drySeasonSafari', image: '/images/serengeti-elephants.png', duration: '9 Days', groupSize: '2-6 People', tag: 'Exclusive' },
+  { titleKey: 'cultureTrips', image: '/images/cultural-experience.png', duration: '5 Days', groupSize: '4-10 People', tag: 'Culture' },
 ];
 
 export default function ItinerariesSection() {
+  const t = useTranslations('itineraries');
   const ref = useRef(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -101,17 +67,17 @@ export default function ItinerariesSection() {
             <div>
               <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#B78A42]/8 rounded-full text-[#B78A42] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
                 <Calendar className="w-3.5 h-3.5" />
-                Itineraries
+                {t('label')}
               </span>
               <h2 className="text-3xl md:text-5xl font-bold text-[#333333] mb-3">
-                Curated Safari <span className="text-[#B78A42]">Experiences</span>
+                {t('title')}
               </h2>
               <p className="text-base text-[#333333]/50 max-w-xl leading-relaxed">
-                Choose from our handpicked itineraries or let us customize one just for you
+                {t('description')}
               </p>
             </div>
 
-            {/* Navigation arrows + View All */}
+            {/* Navigation arrows */}
             <div className="flex items-center gap-3 flex-shrink-0">
 
               <button
@@ -153,9 +119,9 @@ export default function ItinerariesSection() {
             className="flex gap-5 overflow-x-auto scrollbar-hide pl-4 md:pl-[max(1rem,calc((100vw-80rem)/2+1rem))] pr-4 md:pr-8 py-2"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {itineraries.map((item, i) => (
+            {itineraryKeys.map((item, i) => (
               <Link
-                key={item.title}
+                key={item.titleKey}
                 href="/itineraries"
                 >
               <motion.div
@@ -168,7 +134,7 @@ export default function ItinerariesSection() {
                 <div className="relative h-52 overflow-hidden rounded-t-2xl">
                   <img
                     src={item.image}
-                    alt={item.title}
+                    alt={t(item.titleKey)}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/40 via-transparent to-transparent" />
@@ -194,7 +160,7 @@ export default function ItinerariesSection() {
                 {/* Content */}
                 <div className="p-5">
                   <h3 className="text-base font-bold text-[#333333] leading-snug truncate group-hover:text-[#B78A42] transition-colors">
-                    {item.title}
+                    {t(item.titleKey)}
                   </h3>
                 </div>
               </motion.div>
@@ -210,8 +176,8 @@ export default function ItinerariesSection() {
                 <ArrowRight className="w-6 h-6 text-[#B78A42]" />
               </div>
               <div className="text-center px-4">
-                <span className="text-[#333333] font-bold text-sm block">View All</span>
-                <span className="text-[#333333]/40 text-xs">Itineraries</span>
+                <span className="text-[#333333] font-bold text-sm block">{t('viewAllShort')}</span>
+                <span className="text-[#333333]/40 text-xs">{t('itinerariesLabel')}</span>
               </div>
             </Link>
           </div>
